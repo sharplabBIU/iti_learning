@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slot Machine Task</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: gray;
+            color: white;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .bandit-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* for overlay */
+        }
+
+        .bandit-image {
+            width: 18vw;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 0.2vw;
+            border: none;
+            background-color: transparent;
+            display: block;
+        }
+
+        /* Overlay that appears ON TOP of the chosen image (does NOT replace it) */
+        .outcome-overlay {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* shown only after choice */
+            align-items: center;
+            justify-content: center;
+            background: white;
+            padding: 0.35em 0.7em;
+            border-radius: 0.35em;
+            font-size: 4.5vmin;
+            font-weight: bold;
+            box-shadow: 0 0.6vmin 1.2vmin rgba(0,0,0,0.35);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6vw;
+            width: 100%;
+        }
+
+        #feedback {
+            font-size: 6vmin;
+            height: 10vh;
+            margin-bottom: 2vh;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .instruction-box {
+            background: #1a1a1a;
+            padding: 4vw;
+            border-radius: 1.5vw;
+            width: 50vw;
+            max-width: 90vw;
+            border: 0.1vw solid #444;
+            line-height: 1.6;
+            text-align: left;
+            font-size: 4.2vmin;
+        }
+
+        
+        .instruction-box b { color: #e74c3c; font-weight: bold; }
+        /* Screen 1: only Q/T/P should be red */
+        .qtp { color: #e74c3c; font-weight: bold; }
+.btn-action {
+            display: block;
+            width: 18vw;
+            margin: 2vh auto 0;
+            padding: 1.2vw;
+            font-size: 2vmin;
+            cursor: pointer;
+            background: #2ecc71;
+            color: black;
+            border: none;
+            border-radius: 0.6vw;
+            font-weight: bold;
+        }
+
+        #fixation-cross {
+            position: absolute;
+            font-size: 10vmin;
+            display: none;
+        }
+
+        .key-hint {
+            margin-top: 1.5vh;
+            color: black;
+            font-family: monospace;
+            font-size: 5vmin;
+
+            /* white outline for better contrast */
+            text-shadow:
+                -1px -1px 0 #fff,
+                 1px -1px 0 #fff,
+                -1px  1px 0 #fff,
+                 1px  1px 0 #fff,
+                 0px  0px 2px #fff;
+        }
+
+        #trial-counter {
+            position: absolute;
+            top: 5vh;
+            color: black;
+            font-size: 4vmin;
+        }
+
+        /* IMPORTANT: anything in bold should be red (instructions) */
+        #setup-screen-1 b,
+        #setup-screen-2 b {
+            color: #e74c3c;
+        }
+
+        /* Optional: if you want ALL bold text to be red globally, uncomment:
+        b { color: #e74c3c; }
+        */
+    </style>
+</head>
+<body>
+
+<!-- Instructions screen 1 -->
+<div id="setup-screen-1" class="instruction-box">
+    <h1 style="text-align:center; color:#f1c40f;">Instructions</h1>
+
+    <p>The goal of the game is to win as much money as possible.</p>
+
+    <p>Choose between three images using your keyboard.<br>
+    Each image has a different probability of reward.</p>
+
+    <p><span class="qtp">Q</span> = Left image<br>
+    <span class="qtp">T</span> = Middle image<br>
+    <span class="qtp">P</span> = Right image</p>
+
+    <button class="btn-action" onclick="goToInstruction2()">NEXT</button>
+</div>
+
+<!-- Instructions screen 2 (bonus + time rule on one screen) -->
+<div id="setup-screen-2" class="instruction-box" style="display:none;">
+    <h1 style="text-align:center; color:#f1c40f;">Instructions</h1>
+
+    <p>You will receive bonus money based on your performance.<br>
+    The bonus will be calculated based on 10 random trials from the game.</p>
+
+    <p>Once the images appear on the screen, you have <b>2 seconds</b> to make your choice.</p>
+
+    <p>If you do not choose an image within <b>2 seconds</b> in <b>5 total trials or more</b>, <b>the game will end</b>.</p>
+
+    <button class="btn-action" onclick="startExperiment()">START PRACTICE</button>
+</div>
+
+<div id="transition-screen" class="instruction-box" style="display:none; text-align:center;">
+    <h1>Practice Complete</h1>
+    <p>The stimuli will now change. You are starting the real experiment.</p>
+    <button class="btn-action" onclick="startRealTask()">START REAL EXPERIMENT</button>
+</div>
+
+<div id="game-screen" style="display:none; flex-direction: column; align-items: center;">
+    <div id="trial-counter"></div>
+    <div id="feedback"></div>
+
+    <div id="container">
+        <div class="bandit-container">
+            <img id="img-0" class="bandit-image" src="" alt="">
+            <div id="overlay-0" class="outcome-overlay"></div>
+            <div class="key-hint">Q</div>
+        </div>
+        <div class="bandit-container">
+            <img id="img-1" class="bandit-image" src="" alt="">
+            <div id="overlay-1" class="outcome-overlay"></div>
+            <div class="key-hint">T</div>
+        </div>
+        <div class="bandit-container">
+            <img id="img-2" class="bandit-image" src="" alt="">
+            <div id="overlay-2" class="outcome-overlay"></div>
+            <div class="key-hint">P</div>
+        </div>
+    </div>
+
+    <div id="fixation-cross">+</div>
+</div>
+
+<div id="end-screen" style="display:none; text-align:center;">
+    <h1 id="end-msg" style="font-size: 6vmin;">Session Complete</h1>
+    <button class="btn-action" style="background:#3498db" onclick="exportToCSV()">Download Results (.CSV)</button>
+</div>
+
+<script>
+    // --- STATE & CONFIG ---
+    let trialCount = 0;
+    let missedTrials = 0; // cumulative across practice + task
+    let isPractice = true;
+    let subjectId = Date.now();
+    let canClick = false;
+    let timerInterval;
+    let startTime;
+    let results = [];
+
+    const ITI_SHORT = 500;   // ms
+const ITI_LONG = 1500;   // ms
+
+const TOTAL_TRIALS = 100;
+    const PRACTICE_TRIALS = 6;
+    const MAX_MISSES_ALLOWED = 5;
+    const FEEDBACK_DURATION = 1250; // ms
+
+    // === Random-walk parameters ===
+    const RW_SD = 0.06;
+    const RW_LOW = 0.1;
+    const RW_HIGH = 0.9;
+
+    // Fixed seed: every participant gets the same trajectories
+    const ITI_SEED = 77777; // fixed seed for ITI (same order for all participants)
+const RW_SEED_REAL = 20260105;
+    const RW_SEED_PRACTICE = 20260106;
+
+    // Optional debug plot toggle (kept off for participants)
+    const DEBUG_PLOT = false;
+
+    const makeSvgDataUri = (label) => {
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400">
+  <rect width="100%" height="100%" fill="white"/>
+  <circle cx="200" cy="200" r="140" fill="none" stroke="black" stroke-width="12"/>
+  <text x="200" y="225" font-size="120" text-anchor="middle" font-family="Arial" fill="black">${label}</text>
+</svg>`;
+        return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    };
+
+    // If you have your own PNG files, keep them in the same folder as this HTML.
+    // If a file is missing, we automatically fall back to simple inline SVG icons.
+    const STIMULI_FILES = {
+        practice: ["p1.png", "p2.png", "p3.png"],
+        real: ["r1.png", "r2.png", "r3.png"]
+    };
+
+    const STIMULI_FALLBACK = {
+        practice: [makeSvgDataUri("1"), makeSvgDataUri("2"), makeSvgDataUri("3")],
+        real: [makeSvgDataUri("1"), makeSvgDataUri("2"), makeSvgDataUri("3")]
+    };
+
+
+    // ITIs (kept as in your original; note: this is randomized per session because Math.random())
+    const getItis = (len) => Array(Math.floor(len/2)).fill(1).concat(Array(len - Math.floor(len/2)).fill(4)).sort(() => Math.random() - 0.5);
+    const FIXED_ITIS = getItis(TOTAL_TRIALS);
+    const PRACTICE_ITIS = getItis(PRACTICE_TRIALS);
+
+    // -------- Seeded RNG + Normal --------
+    function mulberry32(seed) {
+        let t = seed >>> 0;
+        return function () {
+            t += 0x6D2B79F5;
+            let x = Math.imul(t ^ (t >>> 15), 1 | t);
+            x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+            return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+        };
+    }
+
+    function randn(rng) {
+        // Box-Muller, returns N(0,1)
+        let u = 0, v = 0;
+        while (u === 0) u = rng();
+        while (v === 0) v = rng();
+        return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    }
+
+    function reflectToBounds(x, low, high) {
+        while (x < low || x > high) {
+            if (x < low) x = low + (low - x);
+            if (x > high) x = high - (x - high);
+        }
+        if (x < low) x = low;
+        if (x > high) x = high;
+        return x;
+    }
+
+    function generateRandomWalkTrajectories(nTrials, startPs, sd, low, high, seed) {
+        const rng = mulberry32(seed);
+        return startPs.map(p0 => {
+            const p = new Array(nTrials);
+            p[0] = reflectToBounds(p0, low, high);
+            for (let t = 1; t < nTrials; t++) {
+                const prev = p[t - 1];
+                const proposal = prev + sd * randn(rng); // mean = prev, sd fixed
+                p[t] = reflectToBounds(proposal, low, high);
+            }
+            return p;
+        });
+    }
+
+    function argmax3(a, b, c) {
+        if (a >= b && a >= c) return 0;
+        if (b >= a && b >= c) return 1;
+        return 2;
+    }
+
+    function countSwitches(bestIdxArr) {
+        let switches = 0;
+        for (let t = 1; t < bestIdxArr.length; t++) {
+            if (bestIdxArr[t] !== bestIdxArr[t - 1]) switches++;
+        }
+        return switches;
+    }
+
+    function switchPositions(bestIdxArr) {
+        const pos = [];
+        for (let t = 1; t < bestIdxArr.length; t++) {
+            if (bestIdxArr[t] !== bestIdxArr[t - 1]) pos.push(t); // switch occurs at t
+        }
+        return pos;
+    }
+
+    function switchesAreSpread(bestIdxArr, minGap) {
+        const pos = switchPositions(bestIdxArr);
+        for (let i = 1; i < pos.length; i++) {
+            if (pos[i] - pos[i - 1] < minGap) return false;
+        }
+        return true;
+    }
+
+    function eachBanditBestAtLeastOnce(bestIdxArr) {
+        const seen = new Set(bestIdxArr);
+        return seen.has(0) && seen.has(1) && seen.has(2);
+    }
+
+    // Generate trajectories until constraints are met:
+    // - Random walk: mean = previous p, SD fixed
+    // - Enforce bounds [low, high]
+    // - Best bandit (argmax) switches exactly targetSwitches times across nTrials
+    // - Each bandit is best at least once
+    // Deterministic: uses seed + attempt so all participants get identical trajectories.
+    function generateTrajectoriesWithExactlyKSwitches(nTrials, startPs, sd, low, high, seed, targetSwitches, minGap=10, maxAttempts=5000) {
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            const traj = generateRandomWalkTrajectories(nTrials, startPs, sd, low, high, seed + attempt);
+
+            const best = new Array(nTrials);
+            for (let t = 0; t < nTrials; t++) {
+                best[t] = argmax3(traj[0][t], traj[1][t], traj[2][t]);
+            }
+
+            const switches = countSwitches(best);
+            const coverageOK = eachBanditBestAtLeastOnce(best);
+            const spreadOK = switchesAreSpread(best, minGap);
+
+            if (switches === targetSwitches && coverageOK && spreadOK) {
+                return { traj, best, switches, attemptUsed: attempt };
+            }
+        }
+        throw new Error("Could not find trajectories meeting constraints within maxAttempts.");
+    }
+
+    // Trajectories:
+    // - real: length TOTAL_TRIALS, start [0.25, 0.50, 0.75]
+    // - practice: length PRACTICE_TRIALS, start [0.25, 0.50, 0.75] (seed differs, still fixed)
+    const REAL_GEN = generateTrajectoriesWithExactlyKSwitches(TOTAL_TRIALS, [0.25, 0.50, 0.75], RW_SD, RW_LOW, RW_HIGH, RW_SEED_REAL, 6, 10);
+    const REAL_PATH = REAL_GEN.traj;
+const PRACTICE_PATH = generateRandomWalkTrajectories(PRACTICE_TRIALS, [0.25, 0.50, 0.75], RW_SD, RW_LOW, RW_HIGH, RW_SEED_PRACTICE);
+    // Debug info (open console): shows that the best bandit switches exactly 3 times
+    console.log("REAL_PATH switches=", REAL_GEN.switches, "minGap=", 10, "attemptUsed=", REAL_GEN.attemptUsed);
+
+
+    function currentPath() {
+        return isPractice ? PRACTICE_PATH : REAL_PATH;
+    }
+
+    // Optional debug plot (simple inline canvas). Off by default.
+    function maybePlotTrajectories() {
+        if (!DEBUG_PLOT) return;
+        const W = 900, H = 350, pad = 40;
+        const canvas = document.createElement('canvas');
+        canvas.width = W; canvas.height = H;
+        canvas.style.position = 'absolute';
+        canvas.style.left = '10px';
+        canvas.style.bottom = '10px';
+        canvas.style.border = '1px solid #333';
+        canvas.style.background = 'white';
+        document.body.appendChild(canvas);
+
+        const ctx = canvas.getContext('2d');
+        const path = REAL_PATH;
+        const n = path[0].length;
+
+        // axes
+        ctx.strokeStyle = '#000';
+        ctx.beginPath();
+        ctx.moveTo(pad, pad);
+        ctx.lineTo(pad, H - pad);
+        ctx.lineTo(W - pad, H - pad);
+        ctx.stroke();
+
+        // map functions
+        const xToPx = (t) => pad + (t / (n - 1)) * (W - 2 * pad);
+        const yToPx = (p) => (H - pad) - ((p - 0.1) / (0.9 - 0.1)) * (H - 2 * pad);
+
+        const colors = ['#e74c3c', '#3498db', '#2ecc71'];
+        for (let b = 0; b < 3; b++) {
+            ctx.strokeStyle = colors[b];
+            ctx.beginPath();
+            for (let t = 0; t < n; t++) {
+                const x = xToPx(t);
+                const y = yToPx(path[b][t]);
+                if (t === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        }
+    }
+
+    // --- UI Helpers ---
+    function goToInstruction2() {
+        document.getElementById('setup-screen-1').style.display = 'none';
+        document.getElementById('setup-screen-2').style.display = 'block';
+    }
+
+    function updateStimuli() {
+        const set = isPractice ? STIMULI_FILES.practice : STIMULI_FILES.real;
+        const fallback = isPractice ? STIMULI_FALLBACK.practice : STIMULI_FALLBACK.real;
+
+        for (let i = 0; i < 3; i++) {
+            const img = document.getElementById(`img-${i}`);
+            img.alt = `Option ${i + 1}`;
+            img.onerror = () => {
+                // If the file doesn't exist, use a built-in SVG so icons always show.
+                img.onerror = null;
+                img.src = fallback[i];
+            };
+            img.src = set[i];
+        }
+    }
+
+    function hideAllOverlays() {
+        for (let i = 0; i < 3; i++) {
+            const o = document.getElementById(`overlay-${i}`);
+            o.style.display = 'none';
+            o.innerText = '';
+        }
+    }
+
+    // --- LOGIC ---
+    function startExperiment() {
+        isPractice = true;
+        updateStimuli();
+        hideAllOverlays();
+        document.getElementById('setup-screen-2').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'flex';
+        maybePlotTrajectories();
+        nextTrial();
+    }
+
+    function startRealTask() {
+        isPractice = false;
+        trialCount = 0;
+        // do NOT reset missedTrials here (cumulative rule)
+        updateStimuli();
+        hideAllOverlays();
+        document.getElementById('transition-screen').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'flex';
+        nextTrial();
+    }
+
+    function nextTrial() {
+        if (missedTrials >= MAX_MISSES_ALLOWED) {
+            return terminate("Game Over - Too Many Misses");
+        }
+
+        const limit = isPractice ? PRACTICE_TRIALS : TOTAL_TRIALS;
+        if (trialCount >= limit) {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById(isPractice ? 'transition-screen' : 'end-screen').style.display = 'block';
+            return;
+        }
+
+        hideAllOverlays();
+        document.getElementById('trial-counter').style.display = 'block';
+        document.getElementById('trial-counter').innerText = (isPractice ? "PRACTICE " : "TRIAL ") + (trialCount + 1);
+
+        document.getElementById('fixation-cross').style.display = 'none';
+        document.getElementById('container').style.display = 'flex';
+
+        const fb = document.getElementById('feedback');
+        fb.innerText = "";
+        fb.style.color = "white";
+
+        canClick = true;
+        startTime = Date.now();
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (Date.now() - startTime >= 2000) {
+                clearInterval(timerInterval);
+                if (canClick) handleTimeout();
+            }
+        }, 20);
+    }
+
+    function handleTimeout() {
+        canClick = false;
+        missedTrials++;
+
+        // Record miss (keep existing structure)
+        saveTrial(-1, 2000, 0, 0, 1);
+
+        // Screen should be blank except message
+        hideAllOverlays();
+        document.getElementById('container').style.display = 'none';
+        document.getElementById('fixation-cross').style.display = 'none';
+        document.getElementById('trial-counter').style.display = 'none';
+
+        const fb = document.getElementById('feedback');
+        fb.innerText = "TOO SLOW!";
+        fb.style.color = "#e74c3c";
+
+        setTimeout(() => {
+            trialCount++;
+            nextTrial();
+        }, 1000);
+    }
+
+    function makeChoice(idx) {
+        if (!canClick) return;
+        canClick = false;
+        clearInterval(timerInterval);
+
+        const rt = Date.now() - startTime;
+
+        const path = currentPath(); // [3][nTrials]
+        const p = path[idx][trialCount];
+
+        const rand = window.crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296;
+        const win = rand < p ? 1 : 0;
+        const reward = win === 1 ? 1 : -1;
+
+        const iti = isPractice ? PRACTICE_ITIS[trialCount] : FIXED_ITIS[trialCount];
+
+        saveTrial(idx, rt, win, reward, iti);
+
+        // Show overlay that COVERS the chosen image
+        hideAllOverlays();
+        const overlay = document.getElementById(`overlay-${idx}`);
+        overlay.innerText = (win === 1) ? "You won $1" : "You lost $1";
+        overlay.style.color = (win === 1) ? "#2ecc71" : "#e74c3c";
+        overlay.style.display = "inline-flex";
+
+        // Keep everything else unchanged for the feedback duration
+        setTimeout(() => {
+            // Move to ITI fixation screen (as in original)
+            document.getElementById('container').style.display = 'none';
+            document.getElementById('feedback').innerText = "";
+            document.getElementById('fixation-cross').style.display = 'block';
+
+            setTimeout(() => {
+                trialCount++;
+                nextTrial();
+            }, iti * 1000);
+        }, FEEDBACK_DURATION);
+    }
+
+    function saveTrial(choice, rt, win, reward, iti) {
+        if (isPractice) return;
+
+        const path = currentPath();
+        results.push({
+            subject: subjectId,
+            trial: trialCount + 1,
+            choice: choice + 1,
+            rt,
+            win,
+            reward,
+            iti,
+            p1: path[0][trialCount],
+            p2: path[1][trialCount],
+            p3: path[2][trialCount]
+        });
+
+        localStorage.setItem('slot_results', JSON.stringify(results));
+    }
+
+    function terminate(msg) {
+        document.getElementById('game-screen').style.display = 'none';
+        document.getElementById('end-screen').style.display = 'block';
+        document.getElementById('end-msg').innerText = msg;
+    }
+
+    function exportToCSV() {
+        if (!results.length) return alert("No data recorded.");
+        const header = "subject_id,trial,choice,rt,win,reward,iti,p1,p2,p3\n";
+        const rows = results.map(r => Object.values(r).join(",")).join("\n");
+        const csv = header + rows;
+
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+        link.download = `results_${subjectId}.csv`;
+        link.click();
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (!canClick) return;
+        if (e.code === 'KeyQ') makeChoice(0);
+        else if (e.code === 'KeyT') makeChoice(1);
+        else if (e.code === 'KeyP') makeChoice(2);
+    });
+
+// ---- Seeded ITI sequence: exactly 50% short / 50% long ----
+function generateSeededITISequence(nTrials, seed) {
+  const rng = mulberry32(seed);
+  const seq = [];
+  const half = Math.floor(nTrials / 2);
+  for (let i = 0; i < half; i++) seq.push(ITI_SHORT);
+  for (let i = half; i < nTrials; i++) seq.push(ITI_LONG);
+
+  // Fisher–Yates shuffle with seeded RNG
+  for (let i = seq.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [seq[i], seq[j]] = [seq[j], seq[i]];
+  }
+  return seq;
+}
+
+const ITI_SEQUENCE = generateSeededITISequence(TOTAL_TRIALS, ITI_SEED);
+
+</script>
+</body>
+</html>
