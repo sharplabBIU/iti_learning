@@ -332,7 +332,7 @@ def fig1():
     a = fig.add_axes([0.03, r1b, 0.94, r1t - r1b]); panel_task_schematic(a, 1)
     g2 = GridSpec(1, 2, figure=fig, wspace=0.3, left=0.085, right=0.985, bottom=r2b, top=r2t)
     b = fig.add_subplot(g2[0, 0]); panel_trajectories(b, 1, "Reward probabilities")
-    c = fig.add_subplot(g2[0, 1]); panel_learning(c, 1, "Participants learned")
+    c = fig.add_subplot(g2[0, 1]); panel_learning(c, 1, "Learning over the task")
     g3 = GridSpec(1, 3, figure=fig, wspace=0.6, left=0.085, right=0.985, bottom=r3b, top=r3t)
     d = fig.add_subplot(g3[0, 0]); panel_by_outcome(d, 1, "By previous outcome")
     e = panel_by_half(fig, g3[0, 1:3], 1, "By previous outcome, in each half of the session")
