@@ -1,0 +1,20 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": {
+    "site": "bandit-task-950d2",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "!{/data-viewer.html,/**/*.js,/**/*.css,/**/*.png,/**/*.jpg}",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

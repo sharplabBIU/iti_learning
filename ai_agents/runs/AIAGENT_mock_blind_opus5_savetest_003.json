@@ -1,0 +1,1486 @@
+{
+  "pid": "AIAGENT_mock_blind_opus5_savetest_003",
+  "model": "mock",
+  "condition": "time_blind",
+  "study_id": "AI_AGENTS",
+  "session_id": "mock_time_blind",
+  "url": "https://bandit-task-v2.web.app/?PROLIFIC_PID=AIAGENT_mock_blind_opus5_savetest_003&STUDY_ID=AI_AGENTS&SESSION_ID=mock_time_blind",
+  "started": "2026-09-28T11:16:35+00:00",
+  "dry_run": false,
+  "images": true,
+  "sim_rt_ms": 600,
+  "effort": null,
+  "persona": null,
+  "trials": [
+    {
+      "counter": "PRACTICE 1",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "practice"
+    },
+    {
+      "counter": "PRACTICE 2",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "practice"
+    },
+    {
+      "counter": "PRACTICE 3",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "practice"
+    },
+    {
+      "counter": "PRACTICE 4",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "practice"
+    },
+    {
+      "counter": "PRACTICE 5",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "practice"
+    },
+    {
+      "counter": "PRACTICE 6",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "practice"
+    },
+    {
+      "counter": "TRIAL 1",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 2",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 3",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 4",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 5",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 6",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 7",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 8",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 9",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 10",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 11",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 12",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 13",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 14",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 15",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 16",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 17",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 18",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 19",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 20",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 21",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 22",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 23",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 24",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 25",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 26",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 27",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 28",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 29",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 30",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 31",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 32",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 33",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 34",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 35",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 36",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 37",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 38",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 39",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 40",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 41",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 42",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 43",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 44",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 45",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 46",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 47",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 48",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 49",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 50",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 51",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 52",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 53",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 54",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 55",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 56",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 57",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 58",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 59",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 60",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 61",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 62",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 63",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 64",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 65",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 66",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 67",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 68",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 69",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 70",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 71",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 72",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 73",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 74",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 75",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 76",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 77",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 78",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 79",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 80",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 81",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 82",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 83",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 84",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 85",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 86",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 87",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 88",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 89",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 90",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 91",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 92",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 93",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 94",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 95",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 96",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 97",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 98",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 99",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 100",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    }
+  ],
+  "status": "completed",
+  "end_screen": "Session Complete\n\nThank you for participating!\n\nComplete Study",
+  "saved_in_firestore": true,
+  "finished": "2026-09-28T11:16:58+00:00",
+  "page_errors": [],
+  "console": [
+    "log: REAL ITIs: 100 trials, Short(1)=50, Long(4)=50, Max consecutive=4",
+    "log: PRACTICE ITIs: 10 trials, Short(1)=3, Long(4)=7, Max consecutive=4",
+    "log: REAL ITIs: short(1) per 10-trial bin = [5, 6, 5, 5, 5, 5, 5, 5, 5, 4]",
+    "log: REAL_PATH switches= 6 minGap= 10 attemptUsed= 0",
+    "log: Firestore initialized: Firestore",
+    "log: Starting Firestore save... {hasDb: true, hasSetDoc: true, hasDoc: true, hasCollection: true, subjectId: AIAGENT_mock_blind_opus5_savetest_003}",
+    "log: Saving participant metadata...",
+    "log: \u2705 Participant metadata saved",
+    "log: Saving trials CSV... {csvLength: 18338}",
+    "log: \u2705 Trials CSV saved",
+    "log: Saving PSWQ CSV... {csvLength: 4027}",
+    "log: \u2705 PSWQ CSV saved",
+    "log: \u2705 All data saved to Firestore for subject: AIAGENT_mock_blind_opus5_savetest_003",
+    "log:    - Trials CSV: participants/AIAGENT_mock_blind_opus5_savetest_003/data/trials",
+    "log:    - PSWQ CSV: participants/AIAGENT_mock_blind_opus5_savetest_003/data/pswq"
+  ],
+  "firestore_requests": [
+    "-> GET https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js",
+    "<- 200 https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js",
+    "-> POST https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?VER=8&database=projects%2Fbandit-task-v2%2Fdatabases%2F(default)&RID=87251&CVER=22&",
+    "<- 200 https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?VER=8&database=projects%2Fbandit-task-v2%2Fdatabases%2F(default)&RID=87251&CVER=22&",
+    "-> GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?gsessionid=SUyre1-Mw_xQezSGFUemi7_-8aEKeqZLXjuiYGNYjIzdubR0cZQekQ&VER=8&database=pr",
+    "<- 200 https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?gsessionid=SUyre1-Mw_xQezSGFUemi7_-8aEKeqZLXjuiYGNYjIzdubR0cZQekQ&VER=8&database=pr",
+    "-> POST https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?VER=8&database=projects%2Fbandit-task-v2%2Fdatabases%2F(default)&gsessionid=SUyre1-",
+    "<- 200 https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?VER=8&database=projects%2Fbandit-task-v2%2Fdatabases%2F(default)&gsessionid=SUyre1-",
+    "-> POST https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?VER=8&database=projects%2Fbandit-task-v2%2Fdatabases%2F(default)&gsessionid=SUyre1-",
+    "<- 200 https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?VER=8&database=projects%2Fbandit-task-v2%2Fdatabases%2F(default)&gsessionid=SUyre1-",
+    "-> POST https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?VER=8&database=projects%2Fbandit-task-v2%2Fdatabases%2F(default)&gsessionid=SUyre1-",
+    "<- 200 https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?VER=8&database=projects%2Fbandit-task-v2%2Fdatabases%2F(default)&gsessionid=SUyre1-"
+  ],
+  "usage": {
+    "requests": 114
+  },
+  "cost_usd_estimate": 0.0,
+  "system_prompt": "You are taking part in an online research study as a participant. The study runs in a web browser. Each message shows you what is on the screen at that moment, as text and sometimes as an image of the screen. Respond to each screen in the format requested at the end of the message, and with nothing else. Take part as you normally would.",
+  "exchanges": [
+    {
+      "t": "2026-09-28T11:16:37+00:00",
+      "kind": "button",
+      "prompt": "[Screen]\n\nInformed Consent\n\nYou are invited to participate in a research study about decision-making, which aims to better understand how people learn and plan.\n\nThis study is being conducted by researchers at Bar-Ilan University, led by Dr. Paul Sharp.\n\nYou will first play an online computer-based decision-making task. This session should take less than 15 minutes, and you may receive a monetary bonus based on your performance in the task.\n\nAfter completing the task, you will complete a short questionnaire.\n\nPayment rate: You will receive a rate of $9 per hour, calculated based on the estimated time required to complete the study.\n\nBy providing your consent to participate, you agree to take part in all parts of the study.\n\nParticipation is entirely voluntary. You may choose not to participate, or to stop participating at any time, even after you have agreed, without any negative consequences.\n\nYou have the right to withdraw your consent at any point. Data collected prior to withdrawal may still be used for research purposes.\n\nParticipation may not provide direct personal benefit; however, the knowledge gained from this study may benefit others in the future.\n\nThere are no known risks or discomforts associated with participation in this study.\n\nAll responses are fully anonymized. Your Prolific ID will be replaced with a non-identifiable code, and no personally identifying information will be stored with the data.\n\nThe data collected will be used for scientific research and securely stored. Research findings may be shared through academic publications, conferences, and data repositories, and may also be used for educational purposes or future research.\n\nBy clicking \"I Consent\" below, you indicate that you have read and understood this consent form, and you agree to participate in this research study.\n\nI Consent\n\nReply with the label of the button you click: \"I Consent\".",
+      "reply": "I Consent"
+    },
+    {
+      "t": "2026-09-28T11:16:37+00:00",
+      "kind": "button",
+      "prompt": "[Screen]\n\nInstructions\n\nThe goal of the game is to win as much money as possible.\n\nChoose between three images using your keyboard.\nEach image has a different probability of reward.\n\nQ = Left image\nT = Middle image\nP = Right image\n\nNEXT\n\nReply with the label of the button you click: \"NEXT\".",
+      "reply": "NEXT"
+    },
+    {
+      "t": "2026-09-28T11:16:37+00:00",
+      "kind": "button",
+      "prompt": "[Screen]\n\nInstructions\n\nYou will receive bonus money based on your performance.\nThe bonus will be calculated based on 10 random trials from the game.\n\nOnce the images appear on the screen, you have 2 seconds to make your choice.\n\nIf you do not choose an image within 2 seconds in 5 total trials or more, the game will end.\n\nNEXT\n\nReply with the label of the button you click: \"NEXT\".",
+      "reply": "NEXT"
+    },
+    {
+      "t": "2026-09-28T11:16:37+00:00",
+      "kind": "text",
+      "prompt": "[Screen]\n\nBefore we begin\n\nHow old are you?\n\nPlease enter your age using numbers only (for example: 25).\n\nSTART PRACTICE\n\nReply with exactly what you type into the box.",
+      "reply": "34"
+    },
+    {
+      "t": "2026-09-28T11:16:37+00:00",
+      "kind": "key",
+      "prompt": "[image of the screen]\nPRACTICE 1\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:37+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nPRACTICE 2\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:37+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nPRACTICE 3\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:38+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nPRACTICE 4\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:38+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nPRACTICE 5\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:38+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nPRACTICE 6\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:38+00:00",
+      "kind": "button",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\n[Screen]\n\nPractice Complete\n\nThe stimuli will now change. You are starting the real experiment.\n\nSTART REAL EXPERIMENT\n\nReply with the label of the button you click: \"START REAL EXPERIMENT\".",
+      "reply": "START REAL EXPERIMENT"
+    },
+    {
+      "t": "2026-09-28T11:16:38+00:00",
+      "kind": "key",
+      "prompt": "[image of the screen]\nTRIAL 1\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:38+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 2\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:38+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 3\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:39+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 4\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:39+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 5\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:39+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 6\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:39+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 7\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:39+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 8\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:39+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 9\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:39+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 10\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:40+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 11\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:40+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 12\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:40+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 13\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:40+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 14\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:40+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 15\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:40+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 16\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:40+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 17\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:41+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 18\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:41+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 19\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:41+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 20\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:41+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 21\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:41+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 22\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:41+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 23\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:41+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 24\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:42+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 25\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:42+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 26\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:42+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 27\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:42+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 28\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:42+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 29\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:42+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 30\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:42+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 31\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:43+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 32\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:43+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 33\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:43+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 34\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:43+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 35\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:43+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 36\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:43+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 37\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:43+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 38\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:44+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 39\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:44+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 40\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:44+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 41\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:44+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 42\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:44+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 43\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:44+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 44\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:44+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 45\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:45+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 46\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:45+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 47\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:45+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 48\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:45+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 49\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:45+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 50\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:45+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 51\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:45+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 52\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:46+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 53\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:46+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 54\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:46+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 55\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:46+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 56\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:46+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 57\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:46+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 58\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:46+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 59\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:47+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 60\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:47+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 61\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:47+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 62\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:47+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 63\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:47+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 64\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:47+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 65\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:47+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 66\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:48+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 67\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:48+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 68\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:48+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 69\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:48+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 70\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:48+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 71\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:48+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 72\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:48+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 73\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:49+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 74\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:49+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 75\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:49+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 76\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:49+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 77\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:49+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 78\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:49+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 79\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:49+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 80\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:50+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 81\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:50+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 82\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:50+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 83\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:50+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 84\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:50+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 85\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:50+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 86\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:50+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 87\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:51+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 88\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:51+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 89\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:51+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 90\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:51+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 91\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:51+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 92\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:51+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 93\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:51+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 94\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:52+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 95\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:52+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 96\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:52+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 97\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T"
+    },
+    {
+      "t": "2026-09-28T11:16:52+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 98\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:52+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 99\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q"
+    },
+    {
+      "t": "2026-09-28T11:16:52+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 100\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P"
+    },
+    {
+      "t": "2026-09-28T11:16:52+00:00",
+      "kind": "text",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\n[Screen]\n\nPlease answer the following question\n\nWhat is your birth year?\n\nPlease enter your birth year using numbers only (for example: 1995).\n\nContinue\n\nReply with exactly what you type into the box.",
+      "reply": "1992"
+    },
+    {
+      "t": "2026-09-28T11:16:53+00:00",
+      "kind": "form",
+      "prompt": "[Screen]\nPlease answer the following questions\nRead each statement and indicate how much it describes you.\nRarely/Never \u00a0\u2192\u00a0 Almost Always/Always\n\n1. I plan tasks carefully.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n2. I do things without thinking.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n3. I don\u2019t \u201cpay attention.\u201d\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n4. I am self-controlled.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n5. Attention check: please choose the third option.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n6. I concentrate easily.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n7. I am a careful thinker.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n8. I say things without thinking.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n9. I act on the spur of the moment.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n[button: Continue]\n\nReply with one line per numbered statement, in the form <statement number>: <option number>, for all 9 statements.",
+      "reply": "1: 2\n2: 2\n3: 1\n4: 1\n5: 4\n6: 3\n7: 2\n8: 2\n9: 4"
+    },
+    {
+      "t": "2026-09-28T11:16:53+00:00",
+      "kind": "form",
+      "prompt": "[Screen]\nPlease answer the following questions\nRead each statement and select the response that best describes you.\n\n1. I would enjoy my favourite television or radio programme.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n2. I would enjoy being with my family or close friends.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n3. I would find pleasure in my hobbies and pastimes.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n4. I would be able to enjoy my favourite meal.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n5. I would enjoy a warm bath or refreshing shower.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n6. I would find pleasure in the scent of flowers or the smell of a fresh sea breeze or freshly baked bread.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n7. I would enjoy seeing other people\u2019s smiling faces.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n8. I would enjoy looking smart when I have made an effort with my appearance.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n9. I would enjoy reading a book, magazine or newspaper.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n10. I would enjoy a cup of tea or coffee or my favourite drink.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n11. I would find pleasure in small things, e.g. a bright sunny day, a telephone call from a friend.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n12. I would be able to enjoy a beautiful landscape or view.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n13. I would get pleasure from helping others.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n14. I would feel pleasure when I receive praise from other people.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n[button: Submit]\n\nReply with one line per numbered statement, in the form <statement number>: <option number>, for all 14 statements.",
+      "reply": "1: 3\n2: 4\n3: 4\n4: 3\n5: 1\n6: 3\n7: 1\n8: 4\n9: 3\n10: 2\n11: 2\n12: 1\n13: 3\n14: 1"
+    }
+  ],
+  "wall_seconds": 23.7
+}

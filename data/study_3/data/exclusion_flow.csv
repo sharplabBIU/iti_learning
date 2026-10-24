@@ -1,0 +1,13 @@
+stage,n
+participants with trial data,488
+main sample: session reached trial 90 of 100,439
+  not in the main sample: session ended before trial 90,49
+"  main sample, completed all 100 trials",436
+"  main sample, at least one missed trial",193
+"  main sample, largest number of missed trials of a participant",5
+  main sample with a BIS-11 impulsivity (8 items) score,439
+  main sample with a SHAPS anhedonia score,439
+"failed the BIS attention check (flag only), all participants",1
+  of which in the main sample,1
+"|age - (2026 - birth year)| > 2 (flag only), all participants",5
+  of which in the main sample,5

@@ -1,0 +1,2730 @@
+{
+  "pid": "AIAGENT_blind_opus5_timecost1_001",
+  "model": "claude-opus-5",
+  "condition": "time_blind",
+  "study_id": "AI_AGENTS",
+  "session_id": "claude-opus-5_time_blind",
+  "url": "https://bandit-task-v2.web.app/?PROLIFIC_PID=AIAGENT_blind_opus5_timecost1_001&STUDY_ID=AI_AGENTS&SESSION_ID=claude-opus-5_time_blind",
+  "started": "2026-09-28T12:27:54+00:00",
+  "dry_run": false,
+  "images": true,
+  "sim_rt_ms": 600,
+  "effort": null,
+  "persona": "Play like a human that is sensitive to time costs.",
+  "trials": [
+    {
+      "counter": "PRACTICE 1",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "practice"
+    },
+    {
+      "counter": "PRACTICE 2",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "practice"
+    },
+    {
+      "counter": "PRACTICE 3",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "practice"
+    },
+    {
+      "counter": "PRACTICE 4",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "practice"
+    },
+    {
+      "counter": "PRACTICE 5",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "practice"
+    },
+    {
+      "counter": "PRACTICE 6",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "practice"
+    },
+    {
+      "counter": "TRIAL 1",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 2",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 3",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 4",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 5",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 6",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 7",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 8",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 9",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 10",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 11",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 12",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 13",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 14",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 15",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 16",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 17",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 18",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 19",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 20",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 21",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 22",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 23",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 24",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 25",
+      "key": "Q",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 26",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 27",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 28",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 29",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 30",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 31",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 32",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 33",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 34",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 35",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 36",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 37",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 38",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 39",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 40",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 41",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 42",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 43",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 44",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 45",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 46",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 47",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 48",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 49",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 50",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 51",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 52",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 53",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 54",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 55",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 56",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 57",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 58",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 59",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 60",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 61",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 62",
+      "key": "P",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 63",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 64",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 65",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 66",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 67",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 68",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 69",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 70",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 71",
+      "key": "P",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 72",
+      "key": "Q",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 73",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 74",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 75",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 76",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 77",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 78",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 79",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 80",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 81",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 82",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 83",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 84",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 85",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 86",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 87",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 88",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 89",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 90",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 91",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 92",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 93",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 94",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 95",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 96",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 97",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 98",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 99",
+      "key": "T",
+      "outcome": "You won $1",
+      "fixation_ms": 4000,
+      "phase": "task"
+    },
+    {
+      "counter": "TRIAL 100",
+      "key": "T",
+      "outcome": "You lost $1",
+      "fixation_ms": 1000,
+      "phase": "task"
+    }
+  ],
+  "status": "completed",
+  "end_screen": "Session Complete\n\nThank you for participating!\n\nComplete Study",
+  "saved_in_firestore": true,
+  "finished": "2026-09-28T12:32:09+00:00",
+  "page_errors": [],
+  "console": [
+    "log: REAL ITIs: 100 trials, Short(1)=50, Long(4)=50, Max consecutive=4",
+    "log: PRACTICE ITIs: 10 trials, Short(1)=3, Long(4)=7, Max consecutive=4",
+    "log: REAL ITIs: short(1) per 10-trial bin = [5, 6, 5, 5, 5, 5, 5, 5, 5, 4]",
+    "log: REAL_PATH switches= 6 minGap= 10 attemptUsed= 0",
+    "log: Firestore initialized: Firestore",
+    "log: Starting Firestore save... {hasDb: true, hasSetDoc: true, hasDoc: true, hasCollection: true, subjectId: AIAGENT_blind_opus5_timecost1_001}",
+    "log: Saving participant metadata...",
+    "log: \u2705 Participant metadata saved",
+    "log: Saving trials CSV... {csvLength: 18433}",
+    "log: \u2705 Trials CSV saved",
+    "log: Saving PSWQ CSV... {csvLength: 4052}",
+    "log: \u2705 PSWQ CSV saved",
+    "log: \u2705 All data saved to Firestore for subject: AIAGENT_blind_opus5_timecost1_001",
+    "log:    - Trials CSV: participants/AIAGENT_blind_opus5_timecost1_001/data/trials",
+    "log:    - PSWQ CSV: participants/AIAGENT_blind_opus5_timecost1_001/data/pswq"
+  ],
+  "usage": {
+    "input_tokens": 228,
+    "output_tokens": 1470,
+    "cache_creation_input_tokens": 63606,
+    "cache_read_input_tokens": 822784,
+    "requests": 114
+  },
+  "cost_usd_estimate": 0.8468195,
+  "system_prompt": "You are taking part in an online research study as a participant. The study runs in a web browser. Each message shows you what is on the screen at that moment, as text and sometimes as an image of the screen. Respond to each screen in the format requested at the end of the message, and with nothing else. Take part as you normally would. Play like a human that is sensitive to time costs.",
+  "exchanges": [
+    {
+      "t": "2026-09-28T12:27:58+00:00",
+      "kind": "button",
+      "prompt": "[Screen]\n\nInformed Consent\n\nYou are invited to participate in a research study about decision-making, which aims to better understand how people learn and plan.\n\nThis study is being conducted by researchers at Bar-Ilan University, led by Dr. Paul Sharp.\n\nYou will first play an online computer-based decision-making task. This session should take less than 15 minutes, and you may receive a monetary bonus based on your performance in the task.\n\nAfter completing the task, you will complete a short questionnaire.\n\nPayment rate: You will receive a rate of $9 per hour, calculated based on the estimated time required to complete the study.\n\nBy providing your consent to participate, you agree to take part in all parts of the study.\n\nParticipation is entirely voluntary. You may choose not to participate, or to stop participating at any time, even after you have agreed, without any negative consequences.\n\nYou have the right to withdraw your consent at any point. Data collected prior to withdrawal may still be used for research purposes.\n\nParticipation may not provide direct personal benefit; however, the knowledge gained from this study may benefit others in the future.\n\nThere are no known risks or discomforts associated with participation in this study.\n\nAll responses are fully anonymized. Your Prolific ID will be replaced with a non-identifiable code, and no personally identifying information will be stored with the data.\n\nThe data collected will be used for scientific research and securely stored. Research findings may be shared through academic publications, conferences, and data repositories, and may also be used for educational purposes or future research.\n\nBy clicking \"I Consent\" below, you indicate that you have read and understood this consent form, and you agree to participate in this research study.\n\nI Consent\n\nReply with the label of the button you click: \"I Consent\".",
+      "reply": "I Consent",
+      "raw_reply": "{\"button\":\"I Consent\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqVQ8eDCbnars3pEHHR",
+      "usage": {
+        "input": 2,
+        "output": 13,
+        "cache_write": 851,
+        "cache_read": 0
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:00+00:00",
+      "kind": "button",
+      "prompt": "[Screen]\n\nInstructions\n\nThe goal of the game is to win as much money as possible.\n\nChoose between three images using your keyboard.\nEach image has a different probability of reward.\n\nQ = Left image\nT = Middle image\nP = Right image\n\nNEXT\n\nReply with the label of the button you click: \"NEXT\".",
+      "reply": "NEXT",
+      "raw_reply": "{\"button\":\"NEXT\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqVYD4qt83Co6WHZABk",
+      "usage": {
+        "input": 2,
+        "output": 13,
+        "cache_write": 964,
+        "cache_read": 0
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:02+00:00",
+      "kind": "button",
+      "prompt": "[Screen]\n\nInstructions\n\nYou will receive bonus money based on your performance.\nThe bonus will be calculated based on 10 random trials from the game.\n\nOnce the images appear on the screen, you have 2 seconds to make your choice.\n\nIf you do not choose an image within 2 seconds in 5 total trials or more, the game will end.\n\nNEXT\n\nReply with the label of the button you click: \"NEXT\".",
+      "reply": "NEXT",
+      "raw_reply": "{\"button\":\"NEXT\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqVimZd6aeS4iYE4QVs",
+      "usage": {
+        "input": 2,
+        "output": 13,
+        "cache_write": 143,
+        "cache_read": 964
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:04+00:00",
+      "kind": "text",
+      "prompt": "[Screen]\n\nBefore we begin\n\nHow old are you?\n\nPlease enter your age using numbers only (for example: 25).\n\nSTART PRACTICE\n\nReply with exactly what you type into the box.",
+      "reply": "28",
+      "raw_reply": "{\"typed\":\"28\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqVrvCwdCKkguryGbgo",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 1164,
+        "cache_read": 0
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:07+00:00",
+      "kind": "key",
+      "prompt": "[image of the screen]\nPRACTICE 1\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqW3dsfd3iEa53oCkRs",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 1662,
+        "cache_read": 0
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:09+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nPRACTICE 2\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqWDTUXc7sj5jyXyH8d",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 110,
+        "cache_read": 1662
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:11+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nPRACTICE 3\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqWMnXhGY64Qduz1ktc",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 1772
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:13+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nPRACTICE 4\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqWWZd2kx87Wqc4K83E",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 1880
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:15+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nPRACTICE 5\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqWfdKtzF3eEBCuwm88",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 1988
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:17+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nPRACTICE 6\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqWq28ZtZUc81LzMMks",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 2096
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:20+00:00",
+      "kind": "button",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\n[Screen]\n\nPractice Complete\n\nThe stimuli will now change. You are starting the real experiment.\n\nSTART REAL EXPERIMENT\n\nReply with the label of the button you click: \"START REAL EXPERIMENT\".",
+      "reply": "START REAL EXPERIMENT",
+      "raw_reply": "{\"button\":\"START REAL EXPERIMENT\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqWyLwAXFCbGu97Af5x",
+      "usage": {
+        "input": 2,
+        "output": 21,
+        "cache_write": 2323,
+        "cache_read": 0
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:22+00:00",
+      "kind": "key",
+      "prompt": "[image of the screen]\nTRIAL 1\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqXBwxxXzh6CSjJXrRD",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 601,
+        "cache_read": 2204
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:24+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 2\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqXLomndE3moF65dwET",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 109,
+        "cache_read": 2805
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:27+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 3\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqXXg89KKeuyM8Bx5Mj",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 2914
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:29+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 4\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqXiXEj78hdPBhzp1qE",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 3022
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:31+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 5\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqXtWWNbBnmEmHBN86F",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 3128
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:34+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 6\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqY3DswniezU6FvYeyY",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 3234
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:36+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 7\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqYCEMyH65Bmuh6JdZK",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 3341
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:38+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 8\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqYM5v3x48aB83Y3XLU",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 3448
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:40+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 9\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqYVxDV4xnq2Uu2rhAA",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 3555
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:42+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 10\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqYewxanq1z22Q5mbKS",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 108,
+        "cache_read": 3662
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:44+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 11\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqYosEK8hc7dVWoqY2R",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 109,
+        "cache_read": 3770
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:46+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 12\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqYxyAzjA5a8kM3aesZ",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 3879
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:48+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 13\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqZ8VQgBaFQQnsqeeTQ",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 3986
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:51+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 14\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqZJ38rgyhgGP4JHANT",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 4093
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:53+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 15\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqZTHWFDAPra12nXyBp",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 4200
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:55+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 16\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqZbW7oemuxQmUhCzcF",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 4307
+      }
+    },
+    {
+      "t": "2026-09-28T12:28:57+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 17\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqZjs9s2i6TEiKeTBBA",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 4414
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:00+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 18\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqZufm9axps9BPwTBWy",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 4522
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:05+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 19\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "Tracking my results so far, T is at 5/10, P at 2/5, and Q at 0/2 \u2014 T still looks like the strongest option, but I should keep sampling P occasionally rather than abandoning it entirely.",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqa9UEC3iRDbNpn62hD",
+      "usage": {
+        "input": 2,
+        "output": 107,
+        "cache_write": 108,
+        "cache_read": 4630
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:07+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 20\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqaVbSi6ZAWodSqMB9S",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 204,
+        "cache_read": 4738
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:09+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 21\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqadhc753f3v7thdnpY",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 4942
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:11+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 22\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqamuDdjjZWge1Hyd7Q",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 5050
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:14+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 23\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "T's success rate is around 46%, P is 33%, and Q hasn't landed yet at 0/3 -- maybe I should give Q another shot to see if things shift.",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqavCHmPerJXAjXGuGh",
+      "usage": {
+        "input": 2,
+        "output": 58,
+        "cache_write": 108,
+        "cache_read": 5157
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:17+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 24\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqbCGBG49UJAZSTAYWd",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 155,
+        "cache_read": 5265
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:19+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 25\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqbNULsMcKXqxLtT1hS",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 108,
+        "cache_read": 5420
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:21+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 26\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqbWyZfQz3AGic7nF7t",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 108,
+        "cache_read": 5528
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:23+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 27\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqbfJsRPKRatsN2HdPs",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 109,
+        "cache_read": 5636
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:24+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 28\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqborZtRTc8Cj4VSm7P",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 109,
+        "cache_read": 5745
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:26+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 29\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqbwnK67MKbAXbbJiLa",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 109,
+        "cache_read": 5854
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:28+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 30\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqc5ioa1T2Nef1KTNMi",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 5963
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:30+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 31\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqcEUABejuAuXDUvzG1",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 6070
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:32+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 32\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqcPEGFdL4miBmYpGav",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 6178
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:34+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 33\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqcXNu8oGF44CErugKP",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 107,
+        "cache_read": 6286
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:36+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 34\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqcfnvFNdZLpommwjmE",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 109,
+        "cache_read": 6393
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:39+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 35\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqcpnAT2qmAxqKGNFb6",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 6502
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:42+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 36\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqczK9DQ29SKvzVwkpN",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 108,
+        "cache_read": 6610
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:44+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 37\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqdDEH15JLgNyN3n1iJ",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 109,
+        "cache_read": 6718
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:46+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 38\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqdMhmU9kF32yxQvW7e",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 6827
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:47+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 39\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqdW4YybCR4FZ5Prs3g",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 6933
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:50+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 40\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqdeM8MwLkneicMGSJt",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 7039
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:52+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 41\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqdo2GmXPXqmMYp8F4N",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 7145
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:54+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 42\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqdxAC9QE6maAq9YrkJ",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 7251
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:56+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 43\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqe7BB29yffLxRcviRf",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 7357
+      }
+    },
+    {
+      "t": "2026-09-28T12:29:58+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 44\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqeHotLtSTTMWpiGdbS",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 7463
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:01+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 45\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqeTTKbAMixKNZ6cCiC",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 7569
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:03+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 46\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqecHtCzQGojFYXX6jM",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 7675
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:05+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 47\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqemT3fyR8ALwgDRmSj",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 7781
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:07+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 48\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqev8vuz8nruLHa3Kmv",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 7887
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:09+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 49\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqf4ZwAw5GckQv1f1j4",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 7993
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:11+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 50\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqfDgs9mDf19ZfHdyEt",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 8099
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:13+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 51\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqfMjZEc1ruXmLTjv28",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 8205
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:15+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 52\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqfW4N9FGcurgJpZ1W1",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 8311
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:17+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 53\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqfg6MnSrDs1fL4R9Rh",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 8417
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:19+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 54\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqfpdozbyZaQUxQ5AB7",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 8523
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:21+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 55\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqfyZq8hBfib8QnMbSh",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 8629
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:23+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 56\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqg8Kgt5rPBNdHqopnB",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 8735
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:25+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 57\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqgGZHVRUhotK7MCGXF",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 8841
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:27+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 58\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqgRCCCEnC57Xow6ce3",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 8947
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:29+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 59\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqgZJMSH1vcw46wVsDC",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 9053
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:31+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 60\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqghdAEi8PUhXZycMkq",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 9159
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:33+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 61\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqgrjr83rJVJ3MpBSwk",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 9265
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:35+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 62\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqh1GoQ77zqxouBwwxv",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 9371
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:37+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 63\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqh9E3ArVEynMHDdApK",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 106,
+        "cache_read": 9477
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:39+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 64\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqhJfKAXx7KHNppYo1S",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 9583
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:41+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 65\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqhT7Zc1iNiSXnyRE8T",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 9690
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:45+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 66\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "Three losses in a row is odd given P's long win streak before that - maybe things are shifting, but I'll try P once more and switch if it loses again.",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqhbJgLn7XRkDftDQEU",
+      "usage": {
+        "input": 2,
+        "output": 48,
+        "cache_write": 107,
+        "cache_read": 9797
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:47+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 67\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqhrbwSLkjGF9kk5waf",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 145,
+        "cache_read": 9904
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:49+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 68\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqi1Asz76wybyPQoHHn",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 10049
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:51+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 69\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqi9uz2aUzMQXgTQieE",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 10156
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:53+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 70\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqiJhKxUS2KLNH3bCfh",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 10263
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:55+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 71\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "P",
+      "raw_reply": "{\"key\":\"P\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqiTEnJqhJT8tKMFiia",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 10371
+      }
+    },
+    {
+      "t": "2026-09-28T12:30:57+00:00",
+      "kind": "key",
+      "prompt": "You pressed P (right image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 72\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "Q",
+      "raw_reply": "{\"key\":\"Q\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqibjkvwBF2hvUEHQoT",
+      "usage": {
+        "input": 2,
+        "output": 11,
+        "cache_write": 107,
+        "cache_read": 10479
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:00+00:00",
+      "kind": "key",
+      "prompt": "You pressed Q (left image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 73\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqimMT2aV7ZFNcjWauZ",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 109,
+        "cache_read": 10586
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:03+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 74\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqiyBqr7nCe8sVeidpp",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 10695
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:05+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 75\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqjCivyEWfzQK86mHxt",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 10802
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:07+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 76\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqjLuovayFuoHhExc73",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 10910
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:09+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 77\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqjV5gZBqa8X7P7sWVq",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 11017
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:11+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 78\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqjdYBUVYYxMP4p1m7A",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 11125
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:13+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 79\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqjmvxAecwEMbQwA79E",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 11232
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:15+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 80\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqjvMiaGEMvfMPGG5g1",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 11339
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:17+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 81\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqk4qhNhc12QYgRgo8J",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 11446
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:19+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 82\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqkDHSjEX4weD5m9QMN",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 11553
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:21+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 83\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqkMjwPrFyQhiywsPBg",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 11660
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:22+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 84\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqkW2mH9NDx68cTJUzw",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 11768
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:24+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 85\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqkeHMYrnNtobphnto7",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 11875
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:26+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 86\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqknrJHTRRUkend4oj9",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 11982
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:29+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 87\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqkwYvgzp8puccH4Keg",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 12090
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:31+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 88\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqm6p3FLqfMsPPGhGo9",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 12197
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:33+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 89\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqmFdrtF2aPDa6R3ZKf",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 12304
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:35+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 90\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqmQDJ77bGUjNBjANYx",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 12411
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:37+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 91\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqmZ5bc6EN9ubCqbzcD",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 12518
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:39+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 92\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqmhoiSQjEBqaDUx2sP",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 12626
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:41+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 93\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqmr8H2AMGjjYK7YaPH",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 12733
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:43+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 94\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqmzdk3KYPvcHucxBpN",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 12840
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:45+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 95\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqn9bFWhYK2cR6Z2jgd",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 12948
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:47+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 96\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqnHxYGeCsqA2ZB9SzH",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 13055
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:49+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 97\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqnSr5MnX1wNKUW42mq",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 108,
+        "cache_read": 13163
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:51+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 98\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqnbfu92unxK51YDuaQ",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 13271
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:53+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 99\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqnks3ZNUpfcmwY3Y1H",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 13378
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:55+00:00",
+      "kind": "key",
+      "prompt": "You pressed T (middle image). You won $1\n\nThe images disappear and a fixation cross (+) is shown.\n\nTRIAL 100\n\nThree images are shown side by side. The key shown under each image selects it: Q = left, T = middle, P = right.\n\nReply with the key you press: Q, T or P.",
+      "reply": "T",
+      "raw_reply": "{\"key\":\"T\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqnu9sURMqZjwR54irm",
+      "usage": {
+        "input": 2,
+        "output": 10,
+        "cache_write": 107,
+        "cache_read": 13485
+      }
+    },
+    {
+      "t": "2026-09-28T12:31:58+00:00",
+      "kind": "text",
+      "prompt": "You pressed T (middle image). You lost $1\n\nThe images disappear and a fixation cross (+) is shown.\n\n[Screen]\n\nPlease answer the following question\n\nWhat is your birth year?\n\nPlease enter your birth year using numbers only (for example: 1995).\n\nContinue\n\nReply with exactly what you type into the box.",
+      "reply": "1997",
+      "raw_reply": "{\"typed\":\"1997\"}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqo4YfknucjBfKqoN7c",
+      "usage": {
+        "input": 2,
+        "output": 12,
+        "cache_write": 13677,
+        "cache_read": 0
+      }
+    },
+    {
+      "t": "2026-09-28T12:32:01+00:00",
+      "kind": "form",
+      "prompt": "[Screen]\nPlease answer the following questions\nRead each statement and indicate how much it describes you.\nRarely/Never \u00a0\u2192\u00a0 Almost Always/Always\n\n1. I plan tasks carefully.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n2. I do things without thinking.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n3. I don\u2019t \u201cpay attention.\u201d\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n4. I am self-controlled.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n5. Attention check: please choose the third option.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n6. I concentrate easily.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n7. I am a careful thinker.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n8. I say things without thinking.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n9. I act on the spur of the moment.\n   Options: 1 = Rarely/Never, 2 = Occasionally, 3 = Often, 4 = Almost Always/Always\n[button: Continue]\n\nReply with one line per numbered statement, in the form <statement number>: <option number>, for all 9 statements.",
+      "reply": "1: 3\n2: 2\n3: 2\n4: 3\n5: 3\n6: 3\n7: 3\n8: 2\n9: 2",
+      "raw_reply": "{\"answers\":{\"1\":3,\"2\":2,\"3\":2,\"4\":3,\"5\":3,\"6\":3,\"7\":3,\"8\":2,\"9\":2}}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqoGJbs2KLQFS7FCt8c",
+      "usage": {
+        "input": 2,
+        "output": 54,
+        "cache_write": 14783,
+        "cache_read": 0
+      }
+    },
+    {
+      "t": "2026-09-28T12:32:04+00:00",
+      "kind": "form",
+      "prompt": "[Screen]\nPlease answer the following questions\nRead each statement and select the response that best describes you.\n\n1. I would enjoy my favourite television or radio programme.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n2. I would enjoy being with my family or close friends.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n3. I would find pleasure in my hobbies and pastimes.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n4. I would be able to enjoy my favourite meal.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n5. I would enjoy a warm bath or refreshing shower.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n6. I would find pleasure in the scent of flowers or the smell of a fresh sea breeze or freshly baked bread.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n7. I would enjoy seeing other people\u2019s smiling faces.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n8. I would enjoy looking smart when I have made an effort with my appearance.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n9. I would enjoy reading a book, magazine or newspaper.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n10. I would enjoy a cup of tea or coffee or my favourite drink.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n11. I would find pleasure in small things, e.g. a bright sunny day, a telephone call from a friend.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n12. I would be able to enjoy a beautiful landscape or view.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n13. I would get pleasure from helping others.\n   Options: 1 = Strongly disagree, 2 = Disagree, 3 = Agree, 4 = Strongly agree\n14. I would feel pleasure when I receive praise from other people.\n   Options: 1 = Definitely agree, 2 = Agree, 3 = Disagree, 4 = Strongly disagree\n[button: Submit]\n\nReply with one line per numbered statement, in the form <statement number>: <option number>, for all 14 statements.",
+      "reply": "1: 3\n2: 1\n3: 3\n4: 1\n5: 2\n6: 3\n7: 2\n8: 3\n9: 2\n10: 3\n11: 3\n12: 1\n13: 3\n14: 2",
+      "raw_reply": "{\"answers\":{\"1\":3,\"2\":1,\"3\":3,\"4\":1,\"5\":2,\"6\":3,\"7\":2,\"8\":3,\"9\":2,\"10\":3,\"11\":3,\"12\":1,\"13\":3,\"14\":2}}",
+      "thinking_summary": "",
+      "stop_reason": "end_turn",
+      "model": "claude-opus-5",
+      "request_id": "req_011CfVqoUrA328wPuKXSYiFZ",
+      "usage": {
+        "input": 2,
+        "output": 79,
+        "cache_write": 16109,
+        "cache_read": 0
+      }
+    }
+  ],
+  "wall_seconds": 255.8
+}

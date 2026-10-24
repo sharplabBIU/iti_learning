@@ -1,0 +1,16 @@
+# environments and caches
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+node_modules/
+anaconda_projects/
+.claude/
+# the logs of reproduce.sh
+logs/
+# the Tomov et al. (2020) data and the tables built from them: downloaded by reproduce.sh, not redistributed
+fMRI_study_generalization/data/tomov2020/subjects/
+fMRI_study_generalization/data/tomov2020/data.csv
+fMRI_study_generalization/data/tomov2020/subj_example.csv
+fMRI_study_generalization/data/tomov2020/tidy.csv
+fMRI_study_generalization/data/tomov2020/model_table.csv

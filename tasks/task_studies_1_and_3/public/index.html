@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slot Machine Task</title>
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            projectId: "YOUR_PROJECT",
+            storageBucket: "YOUR_PROJECT.firebasestorage.app",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        try {
+            getAnalytics(app);
+        } catch (error) {
+            console.warn('Analytics not available:', error);
+        }
+        
+        // Make app and db available globally
+        window.firebaseApp = app;
+        window.firestoreDb = db;
+        
+        // Make Firestore functions available globally
+        window.firestoreCollection = collection;
+        window.firestoreAddDoc = addDoc;
+        window.firestoreSetDoc = setDoc;
+        window.firestoreDoc = doc;
+        
+        // Log Firestore initialization
+        console.log('Firestore initialized:', db);
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: gray;
+            color: white;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        body.consent-mode,
+        body.pswq-mode {
+            background-color: white;
+            color: black;
+        }
+
+        .bandit-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* for overlay */
+        }
+
+        .bandit-image {
+            width: 18vw;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 0.2vw;
+            border: none;
+            background-color: transparent;
+            display: block;
+        }
+
+        /* Overlay that appears ON TOP of the chosen image (does NOT replace it) */
+        .outcome-overlay {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* shown only after choice */
+            align-items: center;
+            justify-content: center;
+            background: white;
+            padding: 0.35em 0.7em;
+            border-radius: 0.35em;
+            font-size: 4.5vmin;
+            font-weight: bold;
+            box-shadow: 0 0.6vmin 1.2vmin rgba(0,0,0,0.35);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6vw;
+            width: 100%;
+        }
+
+        #feedback {
+            font-size: 6vmin;
+            height: 10vh;
+            margin-bottom: 2vh;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .instruction-box {
+            background: #1a1a1a;
+            padding: 4vw;
+            border-radius: 1.5vw;
+            width: 50vw;
+            max-width: 90vw;
+            border: 0.1vw solid #444;
+            line-height: 1.6;
+            text-align: left;
+            font-size: 4.2vmin;
+        }
+
+        .consent-container {
+            background: white;
+            color: #333;
+            padding: 3vw 4vw;
+            border-radius: 0.5vw;
+            width: 60vw;
+            max-width: 900px;
+            border: 1px solid #e0e0e0;
+            line-height: 1.7;
+            text-align: left;
+            font-size: 14px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .consent-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .consent-container::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .consent-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .btn-action:disabled {
+            background: #555;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .pswq-container {
+            background: white;
+            color: #333;
+            padding: 3vw 4vw;
+            border-radius: 0.5vw;
+            width: 70vw;
+            max-width: 1000px;
+            border: 1px solid #e0e0e0;
+            line-height: 1.7;
+            text-align: left;
+            font-size: 13px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .pswq-question {
+            margin-bottom: 2.5vh;
+            padding-bottom: 1.5vh;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .pswq-question-text {
+            margin-bottom: 1.2vh;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .pswq-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2vw;
+            flex-wrap: wrap;
+        }
+
+        .pswq-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5vh;
+        }
+
+        .pswq-option input[type="radio"] {
+            width: 2vmin;
+            height: 2vmin;
+            cursor: pointer;
+        }
+
+        .pswq-option label {
+            font-size: 12px;
+            cursor: pointer;
+            text-align: center;
+            color: #333;
+        }
+
+        .pswq-scale-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 1.5vh;
+            font-size: 11px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        
+        .instruction-box b { color: #e74c3c; font-weight: bold; }
+        /* Screen 1: only Q/T/P should be red */
+        .qtp { color: #e74c3c; font-weight: bold; }
+.btn-action {
+            display: block;
+            width: 18vw;
+            margin: 2vh auto 0;
+            padding: 1.2vw;
+            font-size: 2vmin;
+            cursor: pointer;
+            background: #2ecc71;
+            color: black;
+            border: none;
+            border-radius: 0.6vw;
+            font-weight: bold;
+        }
+
+        .consent-container .btn-action,
+        .pswq-container .btn-action {
+            width: auto;
+            min-width: 200px;
+            padding: 12px 30px;
+            font-size: 14px;
+            border-radius: 4px;
+            background: #3498db;
+            color: white;
+            transition: background 0.2s;
+        }
+
+        .consent-container .btn-action:hover:not(:disabled),
+        .pswq-container .btn-action:hover {
+            background: #2980b9;
+        }
+
+        #fixation-cross {
+            position: absolute;
+            font-size: 10vmin;
+            display: none;
+        }
+
+        .key-hint {
+            margin-top: 1.5vh;
+            color: black;
+            font-family: monospace;
+            font-size: 5vmin;
+
+            /* white outline for better contrast */
+            text-shadow:
+                -1px -1px 0 #fff,
+                 1px -1px 0 #fff,
+                -1px  1px 0 #fff,
+                 1px  1px 0 #fff,
+                 0px  0px 2px #fff;
+        }
+
+        #trial-counter {
+            position: absolute;
+            top: 5vh;
+            color: black;
+            font-size: 4vmin;
+        }
+
+        /* IMPORTANT: anything in bold should be red (instructions) */
+        #setup-screen-1 b,
+        #setup-screen-2 b,
+        #age-screen b {
+            color: #e74c3c;
+        }
+
+        #age-input,
+        .numeric-input {
+            display: block;
+            width: 140px;
+            margin: 2vh auto;
+            padding: 12px;
+            font-size: 18px;
+            text-align: center;
+            border: 2px solid #3498db;
+            border-radius: 4px;
+        }
+
+        #age-error {
+            color: #e74c3c;
+            font-size: 14px;
+            min-height: 1.2em;
+            margin-top: 1vh;
+        }
+
+        /* Optional: if you want ALL bold text to be red globally, uncomment:
+        b { color: #e74c3c; }
+        */
+    </style>
+</head>
+<body>
+
+<!-- Informed Consent Screen -->
+<div id="consent-screen" class="consent-container">
+    <h1 style="text-align:center; color:#2c3e50; margin-bottom: 2vh; font-size: 20px; font-weight: 600;">Informed Consent</h1>
+    <p style="font-size: 14px; color: #333;">You are invited to participate in a research study about decision-making, which aims to better understand how people learn and plan.</p>
+    
+    <p style="font-size: 14px; color: #333;">This study is being conducted by researchers at Bar-Ilan University, led by Dr. Paul Sharp.</p>
+    
+    <p style="font-size: 14px; color: #333;">You will first play an online computer-based decision-making task. This session should take less than 15 minutes, and you may receive a monetary bonus based on your performance in the task.</p>
+    
+    <p style="font-size: 14px; color: #333;">After completing the task, you will complete a short questionnaire.</p>
+    
+    <p style="font-size: 14px; color: #333;"><b>Payment rate:</b> You will receive a rate of $9 per hour, calculated based on the estimated time required to complete the study.</p>
+    
+    <p style="font-size: 14px; color: #333;">By providing your consent to participate, you agree to take part in all parts of the study.</p>
+    
+    <p style="font-size: 14px; color: #333;">Participation is entirely voluntary. You may choose not to participate, or to stop participating at any time, even after you have agreed, without any negative consequences.</p>
+    
+    <p style="font-size: 14px; color: #333;">You have the right to withdraw your consent at any point. Data collected prior to withdrawal may still be used for research purposes.</p>
+    
+    <p style="font-size: 14px; color: #333;">Participation may not provide direct personal benefit; however, the knowledge gained from this study may benefit others in the future.</p>
+    
+    <p style="font-size: 14px; color: #333;">There are no known risks or discomforts associated with participation in this study.</p>
+    
+    <p style="font-size: 14px; color: #333;">All responses are fully anonymized. Your Prolific ID will be replaced with a non-identifiable code, and no personally identifying information will be stored with the data.</p>
+    
+    <p style="font-size: 14px; color: #333;">The data collected will be used for scientific research and securely stored. Research findings may be shared through academic publications, conferences, and data repositories, and may also be used for educational purposes or future research.</p>
+    
+    <p style="margin-top: 4vh; font-weight: 600; font-size: 14px; color: #2c3e50;">By clicking "I Consent" below, you indicate that you have read and understood this consent form, and you agree to participate in this research study.</p>
+    
+    <button id="consent-btn" class="btn-action" onclick="handleConsent()" disabled>I Consent</button>
+</div>
+
+<!-- Instructions screen 1 -->
+<div id="setup-screen-1" class="instruction-box" style="display:none;">
+    <h1 style="text-align:center; color:#f1c40f;">Instructions</h1>
+
+    <p>The goal of the game is to win as much money as possible.</p>
+
+    <p>Choose between three images using your keyboard.<br>
+    Each image has a different probability of reward.</p>
+
+    <p><span class="qtp">Q</span> = Left image<br>
+    <span class="qtp">T</span> = Middle image<br>
+    <span class="qtp">P</span> = Right image</p>
+
+    <button class="btn-action" onclick="goToInstruction2()">NEXT</button>
+</div>
+
+<!-- Instructions screen 2 (bonus + time rule on one screen) -->
+<div id="setup-screen-2" class="instruction-box" style="display:none;">
+    <h1 style="text-align:center; color:#f1c40f;">Instructions</h1>
+
+    <p>You will receive bonus money based on your performance.<br>
+    The bonus will be calculated based on 10 random trials from the game.</p>
+
+    <p>Once the images appear on the screen, you have <b>2 seconds</b> to make your choice.</p>
+
+    <p>If you do not choose an image within <b>2 seconds</b> in <b>5 total trials or more</b>, <b>the game will end</b>.</p>
+
+    <button class="btn-action" onclick="goToAgeScreen()">NEXT</button>
+</div>
+
+<!-- Age question (before practice trials) -->
+<div id="age-screen" class="instruction-box" style="display:none; text-align:center;">
+    <h1 style="text-align:center; color:#f1c40f;">Before we begin</h1>
+
+    <p>How old are you?</p>
+    <p style="font-size: 14px; color: #555;">Please enter your age using <b>numbers only</b> (for example: 25).</p>
+
+    <input id="age-input" class="numeric-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off" placeholder="Age"
+           oninput="sanitizeNumericInput(this); document.getElementById('age-error').textContent = '';"
+           onkeydown="blockNonNumericKey(event)" onpaste="handleNumericPaste(event)">
+
+    <p id="age-error"></p>
+
+    <button class="btn-action" onclick="handleAgeSubmit()">START PRACTICE</button>
+</div>
+
+<div id="transition-screen" class="instruction-box" style="display:none; text-align:center;">
+    <h1>Practice Complete</h1>
+    <p>The stimuli will now change. You are starting the real experiment.</p>
+    <button class="btn-action" onclick="startRealTask()">START REAL EXPERIMENT</button>
+</div>
+
+<div id="game-screen" style="display:none; flex-direction: column; align-items: center;">
+    <div id="trial-counter"></div>
+    <div id="feedback"></div>
+
+    <div id="container">
+        <div class="bandit-container">
+            <img id="img-0" class="bandit-image" src="" alt="">
+            <div id="overlay-0" class="outcome-overlay"></div>
+            <div class="key-hint">Q</div>
+        </div>
+        <div class="bandit-container">
+            <img id="img-1" class="bandit-image" src="" alt="">
+            <div id="overlay-1" class="outcome-overlay"></div>
+            <div class="key-hint">T</div>
+        </div>
+        <div class="bandit-container">
+            <img id="img-2" class="bandit-image" src="" alt="">
+            <div id="overlay-2" class="outcome-overlay"></div>
+            <div class="key-hint">P</div>
+        </div>
+    </div>
+
+    <div id="fixation-cross">+</div>
+</div>
+
+<!-- Post-task questionnaire screens (content built dynamically) -->
+<div id="pswq-screen" class="pswq-container" style="display:none;"></div>
+
+
+<div id="end-screen" style="display:none; text-align:center;">
+    <h1 id="end-msg" style="font-size: 6vmin;">Session Complete</h1>
+    <p style="font-size: 3vmin; margin: 2vh 0;">Thank you for participating!</p>
+    <button class="btn-action" style="background:#2ecc71;" onclick="redirectToProlific()">Complete Study</button>
+</div>
+
+<script>
+    // --- STATE & CONFIG ---
+    let trialCount = 0;
+    let missedTrials = 0; // cumulative across practice + task
+    let isPractice = true;
+    let subjectId = Date.now();
+    let canClick = false;
+    let timerInterval;
+    let startTime;
+    let results = [];
+    let pswqResponses = {};
+    let participantAge = null;
+    let participantBirthYear = null;
+
+    // Capture Prolific parameters from URL
+    const params = new URLSearchParams(window.location.search);
+    const PROLIFIC_ID = params.get('PROLIFIC_PID');
+    const STUDY_ID = params.get('STUDY_ID');
+    const SESSION_ID = params.get('SESSION_ID');
+    
+    // Use Prolific ID as subject ID if available, otherwise use timestamp
+    if (PROLIFIC_ID) {
+        subjectId = PROLIFIC_ID;
+    }
+
+    const ITI_SHORT = 500;   // ms
+const ITI_LONG = 1500;   // ms
+
+const TOTAL_TRIALS = 100;
+    const PRACTICE_TRIALS = 6;
+    const MAX_MISSES_ALLOWED = 5;
+    const FEEDBACK_DURATION = 1250; // ms
+
+    // === Random-walk parameters ===
+    const RW_SD = 0.06;
+    const RW_LOW = 0.1;
+    const RW_HIGH = 0.9;
+
+    // Fixed seed: every participant gets the same trajectories
+    const ITI_SEED = 54321; // fixed seed for ITI (same order for all participants)
+const RW_SEED_REAL = 20263944;  // Seed that generates the exact probabilities from your CSV
+    const RW_SEED_PRACTICE = 20260106;
+
+    // Optional debug plot toggle (kept off for participants)
+    const DEBUG_PLOT = false;
+
+    const makeSvgDataUri = (label) => {
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400">
+  <rect width="100%" height="100%" fill="white"/>
+  <circle cx="200" cy="200" r="140" fill="none" stroke="black" stroke-width="12"/>
+  <text x="200" y="225" font-size="120" text-anchor="middle" font-family="Arial" fill="black">${label}</text>
+</svg>`;
+        return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    };
+
+    // If you have your own PNG files, keep them in the same folder as this HTML.
+    // If a file is missing, we automatically fall back to simple inline SVG icons.
+    const STIMULI_FILES = {
+        practice: ["p1.png", "p2.png", "p3.png"],
+        real: ["r1.png", "r2.png", "r3.png"]
+    };
+
+    const STIMULI_FALLBACK = {
+        practice: [makeSvgDataUri("1"), makeSvgDataUri("2"), makeSvgDataUri("3")],
+        real: [makeSvgDataUri("1"), makeSvgDataUri("2"), makeSvgDataUri("3")]
+    };
+
+    // -------- Seeded RNG (needed for ITI generation) --------
+    function mulberry32(seed) {
+        let t = seed >>> 0;
+        return function () {
+            t += 0x6D2B79F5;
+            let x = Math.imul(t ^ (t >>> 15), 1 | t);
+            x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+            return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+        };
+    }
+
+    // Seeded ITI generation: exactly 50% short (1), 50% long (4), max 4 consecutive repeats
+    // First 10 trials biased toward long ITIs for more variability
+    function generateSeededITIs(nTrials, seed, maxRepeats = 4) {
+        const rng = mulberry32(seed);
+        
+        // Generate full sequence with 50/50 split
+        const shortCount = Math.floor(nTrials / 2);
+        const longCount = nTrials - shortCount;
+        
+        // For first 10 trials: 7-8 long, 2-3 short
+        const first10Long = 7;
+        const first10Short = 3;
+        
+        // Build first 10 with more long ITIs
+        const first10 = [];
+        for (let i = 0; i < first10Short; i++) first10.push(1);
+        for (let i = 0; i < first10Long; i++) first10.push(4);
+        
+        // Shuffle first 10
+        for (let i = first10.length - 1; i > 0; i--) {
+            const j = Math.floor(rng() * (i + 1));
+            [first10[i], first10[j]] = [first10[j], first10[i]];
+        }
+        
+        // Build remaining to balance to 50/50
+        const remaining = [];
+        const remainingShort = shortCount - first10Short;
+        const remainingLong = longCount - first10Long;
+        for (let i = 0; i < remainingShort; i++) remaining.push(1);
+        for (let i = 0; i < remainingLong; i++) remaining.push(4);
+        
+        // Shuffle remaining
+        for (let shuffle = 0; shuffle < 3; shuffle++) {
+            for (let i = remaining.length - 1; i > 0; i--) {
+                const j = Math.floor(rng() * (i + 1));
+                [remaining[i], remaining[j]] = [remaining[j], remaining[i]];
+            }
+        }
+        
+        // Combine
+        const sequence = first10.concat(remaining);
+        
+        // Fix violations of max consecutive constraint
+        let fixed = true;
+        let iterations = 0;
+        const maxIterations = 1000;
+        
+        while (fixed && iterations < maxIterations) {
+            fixed = false;
+            iterations++;
+            
+            for (let i = 0; i < sequence.length; i++) {
+                // Count consecutive
+                let consecutiveCount = 1;
+                let j = i;
+                while (j + 1 < sequence.length && sequence[j + 1] === sequence[i]) {
+                    consecutiveCount++;
+                    j++;
+                }
+                
+                if (consecutiveCount > maxRepeats) {
+                    // Find a different value to swap with
+                    const currentValue = sequence[i];
+                    const neededValue = currentValue === 1 ? 4 : 1;
+                    
+                    // Look for the first occurrence of needed value after this run
+                    for (let k = i + consecutiveCount; k < sequence.length; k++) {
+                        if (sequence[k] === neededValue) {
+                            // Swap one from the run with the different value
+                            [sequence[i + maxRepeats], sequence[k]] = [sequence[k], sequence[i + maxRepeats]];
+                            fixed = true;
+                            break;
+                        }
+                    }
+                    if (fixed) break;
+                }
+            }
+        }
+        
+        return sequence;
+    }
+    
+    const FIXED_ITIS = generateSeededITIs(TOTAL_TRIALS, ITI_SEED, 4);
+    const PRACTICE_ITIS = generateSeededITIs(PRACTICE_TRIALS, ITI_SEED + 1, 4);
+    
+    // Verify ITI constraints (console output)
+    function verifyITIs(itis, name) {
+        let maxConsec = 0;
+        let currentConsec = 1;
+        let lastVal = itis[0];
+        const counts = { 1: 0, 4: 0 };
+        
+        for (let i = 0; i < itis.length; i++) {
+            counts[itis[i]]++;
+            if (i > 0) {
+                if (itis[i] === lastVal) {
+                    currentConsec++;
+                    maxConsec = Math.max(maxConsec, currentConsec);
+                } else {
+                    currentConsec = 1;
+                    lastVal = itis[i];
+                }
+            }
+        }
+        console.log(`${name} ITIs: ${itis.length} trials, Short(1)=${counts[1]}, Long(4)=${counts[4]}, Max consecutive=${maxConsec}`);
+    }
+    
+    verifyITIs(FIXED_ITIS, "REAL");
+    verifyITIs(PRACTICE_ITIS, "PRACTICE");
+
+    // -------- Normal distribution for random walk --------
+    function randn(rng) {
+        // Box-Muller, returns N(0,1)
+        let u = 0, v = 0;
+        while (u === 0) u = rng();
+        while (v === 0) v = rng();
+        return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    }
+
+    function reflectToBounds(x, low, high) {
+        while (x < low || x > high) {
+            if (x < low) x = low + (low - x);
+            if (x > high) x = high - (x - high);
+        }
+        if (x < low) x = low;
+        if (x > high) x = high;
+        return x;
+    }
+
+    function generateRandomWalkTrajectories(nTrials, startPs, sd, low, high, seed) {
+        const rng = mulberry32(seed);
+        return startPs.map(p0 => {
+            const p = new Array(nTrials);
+            p[0] = reflectToBounds(p0, low, high);
+            for (let t = 1; t < nTrials; t++) {
+                const prev = p[t - 1];
+                const proposal = prev + sd * randn(rng); // mean = prev, sd fixed
+                p[t] = reflectToBounds(proposal, low, high);
+            }
+            return p;
+        });
+    }
+
+    function argmax3(a, b, c) {
+        if (a >= b && a >= c) return 0;
+        if (b >= a && b >= c) return 1;
+        return 2;
+    }
+
+    function countSwitches(bestIdxArr) {
+        let switches = 0;
+        for (let t = 1; t < bestIdxArr.length; t++) {
+            if (bestIdxArr[t] !== bestIdxArr[t - 1]) switches++;
+        }
+        return switches;
+    }
+
+    function switchPositions(bestIdxArr) {
+        const pos = [];
+        for (let t = 1; t < bestIdxArr.length; t++) {
+            if (bestIdxArr[t] !== bestIdxArr[t - 1]) pos.push(t); // switch occurs at t
+        }
+        return pos;
+    }
+
+    function switchesAreSpread(bestIdxArr, minGap) {
+        const pos = switchPositions(bestIdxArr);
+        for (let i = 1; i < pos.length; i++) {
+            if (pos[i] - pos[i - 1] < minGap) return false;
+        }
+        return true;
+    }
+
+    function eachBanditBestAtLeastOnce(bestIdxArr) {
+        const seen = new Set(bestIdxArr);
+        return seen.has(0) && seen.has(1) && seen.has(2);
+    }
+
+    // Generate trajectories until constraints are met:
+    // - Random walk: mean = previous p, SD fixed
+    // - Enforce bounds [low, high]
+    // - Best bandit (argmax) switches exactly targetSwitches times across nTrials
+    // - Each bandit is best at least once
+    // Deterministic: uses seed + attempt so all participants get identical trajectories.
+    function generateTrajectoriesWithExactlyKSwitches(nTrials, startPs, sd, low, high, seed, targetSwitches, minGap=10, maxAttempts=5000) {
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            const traj = generateRandomWalkTrajectories(nTrials, startPs, sd, low, high, seed + attempt);
+
+            const best = new Array(nTrials);
+            for (let t = 0; t < nTrials; t++) {
+                best[t] = argmax3(traj[0][t], traj[1][t], traj[2][t]);
+            }
+
+            const switches = countSwitches(best);
+            const coverageOK = eachBanditBestAtLeastOnce(best);
+            const spreadOK = switchesAreSpread(best, minGap);
+
+            if (switches === targetSwitches && coverageOK && spreadOK) {
+                return { traj, best, switches, attemptUsed: attempt };
+            }
+        }
+        throw new Error("Could not find trajectories meeting constraints within maxAttempts.");
+    }
+
+    // Trajectories:
+    // - real: length TOTAL_TRIALS, start [0.25, 0.50, 0.75] (Machine 3 is best)
+    // - practice: length PRACTICE_TRIALS, start [0.75, 0.50, 0.25] (Machine 1 is best - DIFFERENT from real)
+    const REAL_GEN = generateTrajectoriesWithExactlyKSwitches(TOTAL_TRIALS, [0.25, 0.50, 0.75], RW_SD, RW_LOW, RW_HIGH, RW_SEED_REAL, 6, 10);
+    const REAL_PATH = REAL_GEN.traj;
+const PRACTICE_PATH = generateRandomWalkTrajectories(PRACTICE_TRIALS, [0.75, 0.50, 0.25], RW_SD, RW_LOW, RW_HIGH, RW_SEED_PRACTICE);
+    // Debug info (open console): shows that the best bandit switches exactly 3 times
+    console.log("REAL_PATH switches=", REAL_GEN.switches, "minGap=", 10, "attemptUsed=", REAL_GEN.attemptUsed);
+
+
+    function currentPath() {
+        return isPractice ? PRACTICE_PATH : REAL_PATH;
+    }
+
+    // Optional debug plot (simple inline canvas). Off by default.
+    function maybePlotTrajectories() {
+        if (!DEBUG_PLOT) return;
+        const W = 900, H = 350, pad = 40;
+        const canvas = document.createElement('canvas');
+        canvas.width = W; canvas.height = H;
+        canvas.style.position = 'absolute';
+        canvas.style.left = '10px';
+        canvas.style.bottom = '10px';
+        canvas.style.border = '1px solid #333';
+        canvas.style.background = 'white';
+        document.body.appendChild(canvas);
+
+        const ctx = canvas.getContext('2d');
+        const path = REAL_PATH;
+        const n = path[0].length;
+
+        // axes
+        ctx.strokeStyle = '#000';
+        ctx.beginPath();
+        ctx.moveTo(pad, pad);
+        ctx.lineTo(pad, H - pad);
+        ctx.lineTo(W - pad, H - pad);
+        ctx.stroke();
+
+        // map functions
+        const xToPx = (t) => pad + (t / (n - 1)) * (W - 2 * pad);
+        const yToPx = (p) => (H - pad) - ((p - 0.1) / (0.9 - 0.1)) * (H - 2 * pad);
+
+        const colors = ['#e74c3c', '#3498db', '#2ecc71'];
+        for (let b = 0; b < 3; b++) {
+            ctx.strokeStyle = colors[b];
+            ctx.beginPath();
+            for (let t = 0; t < n; t++) {
+                const x = xToPx(t);
+                const y = yToPx(path[b][t]);
+                if (t === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        }
+    }
+
+    // --- UI Helpers ---
+    // Initialize consent screen scroll detection
+    function initConsentScreen() {
+        const consentContainer = document.getElementById('consent-screen');
+        const consentBtn = document.getElementById('consent-btn');
+        
+        function checkScroll() {
+            const scrollTop = consentContainer.scrollTop;
+            const scrollHeight = consentContainer.scrollHeight;
+            const clientHeight = consentContainer.clientHeight;
+            const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
+            
+            // Enable button when scrolled to bottom (within 5px tolerance)
+            if (scrollPercentage >= 0.99 || (scrollTop + clientHeight >= scrollHeight - 5)) {
+                consentBtn.disabled = false;
+            } else {
+                consentBtn.disabled = true;
+            }
+        }
+        
+        consentContainer.addEventListener('scroll', checkScroll);
+        // Also check on load in case content fits without scrolling
+        setTimeout(checkScroll, 100);
+    }
+
+    function handleConsent() {
+        document.body.classList.remove('consent-mode');
+        document.getElementById('consent-screen').style.display = 'none';
+        document.getElementById('setup-screen-1').style.display = 'block';
+    }
+
+    function goToInstruction2() {
+        document.getElementById('setup-screen-1').style.display = 'none';
+        document.getElementById('setup-screen-2').style.display = 'block';
+    }
+
+    const BIS_ITEMS = [
+        { num: 1, text: 'I plan tasks carefully.', reverse: true },
+        { num: 2, text: 'I do things without thinking.', reverse: false },
+        { num: 5, text: 'I don\u2019t \u201cpay attention.\u201d', reverse: false },
+        { num: 8, text: 'I am self-controlled.', reverse: true },
+        { num: 9, text: 'I concentrate easily.', reverse: true },
+        { num: 12, text: 'I am a careful thinker.', reverse: false },
+        { num: 14, text: 'I say things without thinking.', reverse: false },
+        { num: 19, text: 'I act on the spur of the moment.', reverse: false }
+    ];
+    const BIS_REVERSE_ITEMS = new Set([1, 8, 9, 12]);
+    const BIS_LIKERT = ['Rarely/Never', 'Occasionally', 'Often', 'Almost Always/Always'];
+    const BIS_ATTENTION_TEXT = 'Attention check: please choose the third option.';
+    const BIS_ATTENTION_CORRECT = 3;
+
+    function renderBISQuestionnaireItems() {
+        const renderItem = (item, index) =>
+            `<li style="margin-bottom: 18px;">${item.text}<div style="margin-top: 8px;">${radioRowLabels('bis' + (index + 1), BIS_LIKERT)}</div></li>`;
+
+        const firstHalf = BIS_ITEMS.slice(0, 4).map((item, i) => renderItem(item, i)).join('');
+        const attentionCheck = `<li style="margin-bottom: 18px;">${BIS_ATTENTION_TEXT}<div style="margin-top: 8px;">${radioRowLabels('bis_attention', BIS_LIKERT)}</div></li>`;
+        const secondHalf = BIS_ITEMS.slice(4).map((item, i) => renderItem(item, i + 4)).join('');
+
+        return firstHalf + attentionCheck + secondHalf;
+    }
+
+    const PLEASURE_ITEMS = [
+        { text: 'I would enjoy my favourite television or radio programme.', scale: 'sd' },
+        { text: 'I would enjoy being with my family or close friends.', scale: 'da' },
+        { text: 'I would find pleasure in my hobbies and pastimes.', scale: 'sd' },
+        { text: 'I would be able to enjoy my favourite meal.', scale: 'da' },
+        { text: 'I would enjoy a warm bath or refreshing shower.', scale: 'da' },
+        { text: 'I would find pleasure in the scent of flowers or the smell of a fresh sea breeze or freshly baked bread.', scale: 'sd' },
+        { text: 'I would enjoy seeing other people\u2019s smiling faces.', scale: 'da' },
+        { text: 'I would enjoy looking smart when I have made an effort with my appearance.', scale: 'sd' },
+        { text: 'I would enjoy reading a book, magazine or newspaper.', scale: 'da' },
+        { text: 'I would enjoy a cup of tea or coffee or my favourite drink.', scale: 'sd' },
+        { text: 'I would find pleasure in small things, e.g. a bright sunny day, a telephone call from a friend.', scale: 'sd' },
+        { text: 'I would be able to enjoy a beautiful landscape or view.', scale: 'da' },
+        { text: 'I would get pleasure from helping others.', scale: 'sd' },
+        { text: 'I would feel pleasure when I receive praise from other people.', scale: 'da' }
+    ];
+    const PLEASURE_SCALES = {
+        sd: ['Strongly disagree', 'Disagree', 'Agree', 'Strongly agree'],
+        da: ['Definitely agree', 'Agree', 'Disagree', 'Strongly disagree']
+    };
+
+    function radioRowLabels(name, labels) {
+        return labels.map((label, i) =>
+            `<label style="display:block;margin:6px 0;"><input type="radio" name="${name}" value="${i + 1}" required> ${label}</label>`
+        ).join('');
+    }
+
+    function scoreBISItem(bisNum, raw) {
+        return BIS_REVERSE_ITEMS.has(bisNum) ? (5 - raw) : raw;
+    }
+
+    function scorePleasureItem(scaleType, raw) {
+        // SHAPS/GHQ: any Disagree = 1, any Agree = 0
+        if (scaleType === 'sd') {
+            return raw <= 2 ? 1 : 0;
+        }
+        return raw >= 3 ? 1 : 0;
+    }
+
+    function showPSWQScreen() {
+        showBirthYearQuestion();
+    }
+
+    function showBirthYearQuestion() {
+        document.body.classList.add('pswq-mode');
+        document.getElementById('game-screen').style.display = 'none';
+
+        const container = document.getElementById('pswq-screen');
+        container.innerHTML = `
+<form id="birthYearForm" class="overlay scroll" style="background: white; color: #333; padding: 30px; border-radius: 8px; max-width: 900px; margin: 0 auto; text-align: center;">
+<h2 style="margin-bottom: 20px;">Please answer the following question</h2>
+<p style="margin: 0 0 10px 0; font-size: 16px;">What is your birth year?</p>
+<p style="margin: 0 0 20px 0; font-size: 14px; color: #555;">Please enter your birth year using <b>numbers only</b> (for example: 1995).</p>
+<input id="birth-year-input" class="numeric-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="YYYY">
+<p id="birth-year-error" style="color: #e74c3c; font-size: 14px; min-height: 1.2em; margin-top: 10px;"></p>
+<button type="submit" class="btn-action" style="margin-top: 20px; display: inline-block;">Continue</button>
+</form>`;
+
+        container.style.display = 'block';
+        container.scrollTop = 0;
+
+        const birthYearInput = document.getElementById('birth-year-input');
+        birthYearInput.addEventListener('keydown', blockNonNumericKey);
+        birthYearInput.addEventListener('paste', handleNumericPaste);
+        birthYearInput.addEventListener('input', () => {
+            sanitizeNumericInput(birthYearInput);
+            document.getElementById('birth-year-error').textContent = '';
+        });
+        birthYearInput.focus();
+
+        document.getElementById('birthYearForm').onsubmit = (e) => {
+            e.preventDefault();
+            const val = birthYearInput.value.trim();
+            const errorEl = document.getElementById('birth-year-error');
+
+            if (!val) {
+                errorEl.textContent = 'Please enter your birth year using numbers only.';
+                birthYearInput.focus();
+                return;
+            }
+
+            participantBirthYear = parseInt(val, 10);
+            errorEl.textContent = '';
+            showBISQuestionnaire();
+        };
+    }
+
+    function showBISQuestionnaire() {
+        document.body.classList.add('pswq-mode');
+        document.getElementById('game-screen').style.display = 'none';
+
+        const container = document.getElementById('pswq-screen');
+        container.innerHTML = `
+<form id="qsForm" class="overlay scroll" style="background: white; color: #333; padding: 30px; border-radius: 8px; max-width: 900px; margin: 0 auto;">
+<h2 style="text-align: center; margin-bottom: 20px;">Please answer the following questions</h2>
+<p style="margin: 0 0 20px 0; font-size: 14px; line-height: 1.5;">Read each statement and indicate how much it describes you.</p>
+<p style="margin: 0 0 20px 0; font-size: 13px; color: #555;"><em>Rarely/Never</em> &nbsp;&rarr;&nbsp; <em>Almost Always/Always</em></p>
+<ol class="qs" style="list-style-position: inside; padding: 0;">
+    ${renderBISQuestionnaireItems()}
+</ol>
+<button type="submit" class="btn-action" style="margin-top: 30px; display: block; margin-left: auto; margin-right: auto;">Continue</button>
+</form>`;
+
+        container.style.display = 'block';
+        container.scrollTop = 0;
+
+        document.getElementById('qsForm').onsubmit = (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target).entries());
+
+            const attentionRaw = parseInt(data['bis_attention'], 10);
+
+            pswqResponses = {};
+            pswqResponses.bis_attention_raw = attentionRaw;
+            pswqResponses.bis_attention_passed = attentionRaw === BIS_ATTENTION_CORRECT;
+
+            let bisTotal = 0;
+            BIS_ITEMS.forEach((item, i) => {
+                const raw = parseInt(data['bis' + (i + 1)], 10);
+                const scored = scoreBISItem(item.num, raw);
+                pswqResponses['bis_' + item.num + '_raw'] = raw;
+                pswqResponses['bis_' + item.num + '_scored'] = scored;
+                bisTotal += scored;
+            });
+            pswqResponses.bis_total = bisTotal;
+
+            showPleasureQuestionnaire();
+        };
+    }
+
+    function showPleasureQuestionnaire() {
+        const container = document.getElementById('pswq-screen');
+        container.innerHTML = `
+<form id="qsForm" class="overlay scroll" style="background: white; color: #333; padding: 30px; border-radius: 8px; max-width: 900px; margin: 0 auto;">
+<h2 style="text-align: center; margin-bottom: 20px;">Please answer the following questions</h2>
+<p style="margin: 0 0 20px 0; font-size: 14px; line-height: 1.5;">Read each statement and select the response that best describes you.</p>
+<ol class="qs" style="list-style-position: inside; padding: 0;">
+    ${PLEASURE_ITEMS.map((item, i) =>
+        `<li style="margin-bottom: 18px;">${item.text}<div style="margin-top: 8px;">${radioRowLabels('pleasure' + (i + 1), PLEASURE_SCALES[item.scale])}</div></li>`
+    ).join('')}
+</ol>
+<button type="submit" class="btn-action" style="margin-top: 30px; display: block; margin-left: auto; margin-right: auto;">Submit</button>
+</form>`;
+
+        container.scrollTop = 0;
+
+        document.getElementById('qsForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target).entries());
+
+            let pleasureTotal = 0;
+            PLEASURE_ITEMS.forEach((item, i) => {
+                const raw = parseInt(data['pleasure' + (i + 1)], 10);
+                const scored = scorePleasureItem(item.scale, raw);
+                pswqResponses['pleasure_' + (i + 1) + '_raw'] = raw;
+                pswqResponses['pleasure_' + (i + 1) + '_scored'] = scored;
+                pleasureTotal += scored;
+            });
+            pswqResponses.pleasure_total = pleasureTotal;
+            pswqResponses.subject = subjectId;
+            pswqResponses.timestamp = new Date().toISOString();
+            pswqResponses.prolific_id = PROLIFIC_ID || null;
+            pswqResponses.study_id = STUDY_ID || null;
+            pswqResponses.session_id = SESSION_ID || null;
+
+            localStorage.setItem('pswq_responses', JSON.stringify(pswqResponses));
+
+            await saveAllDataToFirestore();
+
+            document.body.classList.remove('pswq-mode');
+            container.style.display = 'none';
+            document.getElementById('end-screen').style.display = 'block';
+        };
+    }
+
+
+    const preloadedStimuli = { practice: null, real: null };
+
+    function preloadStimulusSet(setKey) {
+        if (preloadedStimuli[setKey]) {
+            return Promise.resolve(preloadedStimuli[setKey]);
+        }
+        const files = STIMULI_FILES[setKey];
+        const fallback = STIMULI_FALLBACK[setKey];
+        return Promise.all(files.map((file, i) => new Promise((resolve) => {
+            const probe = new Image();
+            probe.onload = () => resolve(probe.src);
+            probe.onerror = () => resolve(fallback[i]);
+            probe.src = file;
+        }))).then((sources) => {
+            preloadedStimuli[setKey] = sources;
+            return sources;
+        });
+    }
+
+    function applyStimuli(sources) {
+        for (let i = 0; i < 3; i++) {
+            const img = document.getElementById(`img-${i}`);
+            img.alt = `Option ${i + 1}`;
+            img.onerror = null;
+            img.src = sources[i];
+        }
+    }
+
+    async function updateStimuli() {
+        const setKey = isPractice ? 'practice' : 'real';
+        const sources = await preloadStimulusSet(setKey);
+        applyStimuli(sources);
+    }
+
+    function hideAllOverlays() {
+        for (let i = 0; i < 3; i++) {
+            const o = document.getElementById(`overlay-${i}`);
+            o.style.display = 'none';
+            o.innerText = '';
+        }
+    }
+
+    function goToAgeScreen() {
+        document.getElementById('setup-screen-2').style.display = 'none';
+        document.getElementById('age-screen').style.display = 'block';
+        document.getElementById('age-input').focus();
+    }
+
+    function sanitizeNumericInput(input) {
+        input.value = input.value.replace(/\D/g, '');
+    }
+
+    function blockNonNumericKey(event) {
+        const allowed = ['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End'];
+        if (allowed.includes(event.key) || (event.ctrlKey && ['a', 'c', 'v', 'x'].includes(event.key.toLowerCase()))) {
+            return;
+        }
+        if (!/^\d$/.test(event.key)) {
+            event.preventDefault();
+        }
+    }
+
+    function handleNumericPaste(event) {
+        event.preventDefault();
+        const pasted = (event.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+        const input = event.target;
+        input.value = (input.value + pasted).replace(/\D/g, '').slice(0, input.maxLength);
+    }
+
+    function handleAgeSubmit() {
+        const ageInput = document.getElementById('age-input');
+        const val = ageInput.value.trim();
+
+        if (!val) {
+            document.getElementById('age-error').textContent = 'Please enter your age using numbers only.';
+            ageInput.focus();
+            return;
+        }
+
+        participantAge = parseInt(val, 10);
+        document.getElementById('age-error').textContent = '';
+        document.getElementById('age-screen').style.display = 'none';
+        startExperiment();
+    }
+
+    // --- LOGIC ---
+    async function startExperiment() {
+        isPractice = true;
+        hideAllOverlays();
+        document.getElementById('setup-screen-2').style.display = 'none';
+        document.getElementById('age-screen').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'flex';
+        document.getElementById('container').style.visibility = 'hidden';
+        await updateStimuli();
+        document.getElementById('container').style.visibility = 'visible';
+        maybePlotTrajectories();
+        nextTrial();
+    }
+
+    async function startRealTask() {
+        isPractice = false;
+        trialCount = 0;
+        // do NOT reset missedTrials here (cumulative rule)
+        hideAllOverlays();
+        document.getElementById('transition-screen').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'flex';
+        document.getElementById('container').style.visibility = 'hidden';
+        await updateStimuli();
+        document.getElementById('container').style.visibility = 'visible';
+        nextTrial();
+    }
+
+    function nextTrial() {
+        if (missedTrials >= MAX_MISSES_ALLOWED) {
+            return terminate("Game Over - Too Many Misses");
+        }
+
+        const limit = isPractice ? PRACTICE_TRIALS : TOTAL_TRIALS;
+        if (trialCount >= limit) {
+            document.getElementById('game-screen').style.display = 'none';
+            if (isPractice) {
+                document.getElementById('transition-screen').style.display = 'block';
+                preloadStimulusSet('real');
+            } else {
+                // Show PSWQ screen instead of end screen
+                showPSWQScreen();
+            }
+            return;
+        }
+
+        hideAllOverlays();
+        document.getElementById('trial-counter').style.display = 'block';
+        document.getElementById('trial-counter').innerText = (isPractice ? "PRACTICE " : "TRIAL ") + (trialCount + 1);
+
+        document.getElementById('fixation-cross').style.display = 'none';
+        document.getElementById('container').style.display = 'flex';
+
+        const fb = document.getElementById('feedback');
+        fb.innerText = "";
+        fb.style.color = "white";
+
+        canClick = true;
+        startTime = Date.now();
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (Date.now() - startTime >= 2000) {
+                clearInterval(timerInterval);
+                if (canClick) handleTimeout();
+            }
+        }, 20);
+    }
+
+    function handleTimeout() {
+        canClick = false;
+        missedTrials++;
+
+        // Record miss (keep existing structure)
+        saveTrial(-1, 2000, 0, 0, 1);
+
+        // Screen should be blank except message
+        hideAllOverlays();
+        document.getElementById('container').style.display = 'none';
+        document.getElementById('fixation-cross').style.display = 'none';
+        document.getElementById('trial-counter').style.display = 'none';
+
+        const fb = document.getElementById('feedback');
+        fb.innerText = "TOO SLOW!";
+        fb.style.color = "#e74c3c";
+
+        setTimeout(() => {
+            trialCount++;
+            nextTrial();
+        }, 1000);
+    }
+
+    function makeChoice(idx) {
+        if (!canClick) return;
+        canClick = false;
+        clearInterval(timerInterval);
+
+        const rt = Date.now() - startTime;
+
+        const path = currentPath(); // [3][nTrials]
+        const p = path[idx][trialCount];
+
+        const rand = window.crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296;
+        const win = rand < p ? 1 : 0;
+        const reward = win === 1 ? 1 : -1;
+
+        const iti = isPractice ? PRACTICE_ITIS[trialCount] : FIXED_ITIS[trialCount];
+
+        saveTrial(idx, rt, win, reward, iti);
+
+        // Show overlay that COVERS the chosen image
+        hideAllOverlays();
+        const overlay = document.getElementById(`overlay-${idx}`);
+        overlay.innerText = (win === 1) ? "You won $1" : "You lost $1";
+        overlay.style.color = (win === 1) ? "#2ecc71" : "#e74c3c";
+        overlay.style.display = "inline-flex";
+
+        // Keep everything else unchanged for the feedback duration
+        setTimeout(() => {
+            // Move to ITI fixation screen (as in original)
+            document.getElementById('container').style.display = 'none';
+            document.getElementById('feedback').innerText = "";
+            document.getElementById('fixation-cross').style.display = 'block';
+
+            setTimeout(() => {
+                trialCount++;
+                nextTrial();
+            }, iti * 1000);
+        }, FEEDBACK_DURATION);
+    }
+
+    function saveTrial(choice, rt, win, reward, iti) {
+        if (isPractice) {
+            return;
+        }
+
+        const path = currentPath();
+        const trialData = {
+            subject: subjectId,
+            trial: trialCount + 1,
+            choice: choice + 1,
+            rt,
+            win,
+            reward,
+            iti,
+            p1: path[0][trialCount],
+            p2: path[1][trialCount],
+            p3: path[2][trialCount],
+            timestamp: new Date().toISOString(),
+            // Prolific parameters
+            prolific_id: PROLIFIC_ID || null,
+            study_id: STUDY_ID || null,
+            session_id: SESSION_ID || null,
+            age: participantAge
+        };
+
+        results.push(trialData);
+        localStorage.setItem('slot_results', JSON.stringify(results));
+
+        // Don't save individual trials - we'll save everything as CSV at the end
+    }
+
+    function terminate(msg) {
+        document.getElementById('game-screen').style.display = 'none';
+        // If experiment was terminated early, still show PSWQ
+        if (!isPractice && results.length > 0) {
+            showPSWQScreen();
+        } else {
+            document.getElementById('end-screen').style.display = 'block';
+            document.getElementById('end-msg').innerText = msg;
+        }
+    }
+
+    function escapeCSV(value) {
+        if (value === null || value === undefined) return '';
+        const stringValue = value.toString();
+        // If the value contains comma, quote, or newline, wrap it in quotes and escape internal quotes
+        if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
+            return '"' + stringValue.replace(/"/g, '""') + '"';
+        }
+        return stringValue;
+    }
+
+    function generatePSWQCSV() {
+        let csvContent = "subject_id,prolific_id,study_id,session_id,questionnaire,item_id,question,answer_raw,answer_scored\n";
+
+        BIS_ITEMS.forEach((item) => {
+            csvContent += `${escapeCSV(subjectId)},${escapeCSV(PROLIFIC_ID)},${escapeCSV(STUDY_ID)},${escapeCSV(SESSION_ID)},q1,${item.num},${escapeCSV(item.text)},${pswqResponses['bis_' + item.num + '_raw'] ?? ''},${pswqResponses['bis_' + item.num + '_scored'] ?? ''}\n`;
+        });
+        csvContent += `${escapeCSV(subjectId)},${escapeCSV(PROLIFIC_ID)},${escapeCSV(STUDY_ID)},${escapeCSV(SESSION_ID)},q1,attention,${escapeCSV(BIS_ATTENTION_TEXT)},${pswqResponses.bis_attention_raw ?? ''},${pswqResponses.bis_attention_passed ? 1 : 0}\n`;
+        csvContent += `${escapeCSV(subjectId)},${escapeCSV(PROLIFIC_ID)},${escapeCSV(STUDY_ID)},${escapeCSV(SESSION_ID)},q1,total,${escapeCSV("Total")},,${pswqResponses.bis_total ?? ''}\n`;
+
+        PLEASURE_ITEMS.forEach((item, i) => {
+            const n = i + 1;
+            csvContent += `${escapeCSV(subjectId)},${escapeCSV(PROLIFIC_ID)},${escapeCSV(STUDY_ID)},${escapeCSV(SESSION_ID)},q2,${n},${escapeCSV(item.text)},${pswqResponses['pleasure_' + n + '_raw'] ?? ''},${pswqResponses['pleasure_' + n + '_scored'] ?? ''}\n`;
+        });
+        csvContent += `${escapeCSV(subjectId)},${escapeCSV(PROLIFIC_ID)},${escapeCSV(STUDY_ID)},${escapeCSV(SESSION_ID)},q2,total,${escapeCSV("Total")},,${pswqResponses.pleasure_total ?? ''}\n`;
+
+        return csvContent;
+    }
+
+    async function saveAllDataToFirestore() {
+        if (!results.length) {
+            console.warn('No trial data to save');
+            return;
+        }
+        
+        // Build Trials CSV content (without PSWQ columns)
+        let trialsCSV = "subject_id,prolific_id,study_id,session_id,age,birth_year,trial,choice,rt,win,reward,iti,p1,p2,p3\n";
+        
+        const trialRows = results.map(r => {
+            return [
+                r.subject,
+                r.prolific_id || '',
+                r.study_id || '',
+                r.session_id || '',
+                r.age ?? participantAge ?? '',
+                participantBirthYear ?? '',
+                r.trial,
+                r.choice,
+                r.rt,
+                r.win,
+                r.reward,
+                r.iti,
+                r.p1,
+                r.p2,
+                r.p3
+            ].join(",");
+        }).join("\n");
+        
+        trialsCSV += trialRows;
+        
+        // Generate PSWQ CSV
+        const pswqCSV = generatePSWQCSV();
+        
+        // Save to Firestore using folder-like structure (subcollections)
+        try {
+            console.log('Starting Firestore save...', {
+                hasDb: !!window.firestoreDb,
+                hasSetDoc: !!window.firestoreSetDoc,
+                hasDoc: !!window.firestoreDoc,
+                hasCollection: !!window.firestoreCollection,
+                subjectId: subjectId,
+                resultsCount: results.length
+            });
+            
+            if (window.firestoreDb && window.firestoreSetDoc && window.firestoreDoc && window.firestoreCollection) {
+                const subjectIdStr = subjectId.toString();
+                
+                // Save participant metadata
+                const participantRef = window.firestoreDoc(window.firestoreDb, 'participants', subjectIdStr);
+                const participantData = {
+                    subject_id: subjectId,
+                    prolific_id: PROLIFIC_ID || null,
+                    study_id: STUDY_ID || null,
+                    session_id: SESSION_ID || null,
+                    age: participantAge,
+                    birth_year: participantBirthYear,
+                    trial_count: results.length,
+                    bis_total: pswqResponses.bis_total ?? null,
+                    bis_attention_passed: pswqResponses.bis_attention_passed ?? null,
+                    pleasure_total: pswqResponses.pleasure_total ?? null,
+                    timestamp: new Date().toISOString(),
+                    completed: true
+                };
+                
+                console.log('Saving participant metadata...');
+                await window.firestoreSetDoc(participantRef, participantData);
+                console.log('✅ Participant metadata saved');
+                
+                // Save trials CSV in subcollection (folder-like structure: participants/{subjectId}/data/trials)
+                // Use collection(db, 'participants', subjectId, 'data') for subcollections
+                const dataCollectionRef = window.firestoreCollection(window.firestoreDb, 'participants', subjectIdStr, 'data');
+                const trialsRef = window.firestoreDoc(dataCollectionRef, 'trials');
+                
+                console.log('Saving trials CSV...', { csvLength: trialsCSV.length });
+                await window.firestoreSetDoc(trialsRef, {
+                    csv_data: trialsCSV,
+                    filename: `trials_${subjectIdStr}.csv`,
+                    timestamp: new Date().toISOString()
+                });
+                console.log('✅ Trials CSV saved');
+                
+                // Save PSWQ CSV in subcollection (folder-like structure: participants/{subjectId}/data/pswq)
+                const pswqRef = window.firestoreDoc(dataCollectionRef, 'pswq');
+                
+                console.log('Saving PSWQ CSV...', { csvLength: pswqCSV.length });
+                await window.firestoreSetDoc(pswqRef, {
+                    csv_data: pswqCSV,
+                    filename: `pswq_${subjectIdStr}.csv`,
+                    timestamp: new Date().toISOString()
+                });
+                console.log('✅ PSWQ CSV saved');
+                
+                console.log('✅ All data saved to Firestore for subject:', subjectId);
+                console.log('   - Trials CSV: participants/' + subjectIdStr + '/data/trials');
+                console.log('   - PSWQ CSV: participants/' + subjectIdStr + '/data/pswq');
+            } else {
+                console.error('❌ Firestore functions not available:', {
+                    db: !!window.firestoreDb,
+                    setDoc: !!window.firestoreSetDoc,
+                    doc: !!window.firestoreDoc,
+                    collection: !!window.firestoreCollection
+                });
+            }
+        } catch (error) {
+            console.error('❌ Error saving data to Firestore:', error);
+            console.error('Error details:', error.message, error.code, error.stack);
+            alert('Error saving to Firestore: ' + error.message + '. Check console for details.');
+        }
+    }
+
+    function exportToCSV() {
+        if (!results.length) return alert("No data recorded.");
+        
+        // Build header with PSWQ columns and Prolific parameters
+        let header = "subject_id,prolific_id,study_id,session_id,trial,choice,rt,win,reward,iti,p1,p2,p3";
+        for (let i = 1; i <= 16; i++) {
+            header += `,pswq_${i}`;
+        }
+        header += ",pswq_total\n";
+        
+        // Build rows with PSWQ data appended to each row
+        const rows = results.map(r => {
+            // Extract base values in correct order: subject, prolific_id, study_id, session_id, trial, choice, rt, win, reward, iti, p1, p2, p3
+            const baseValues = [
+                r.subject,
+                r.prolific_id || '',
+                r.study_id || '',
+                r.session_id || '',
+                r.trial,
+                r.choice,
+                r.rt,
+                r.win,
+                r.reward,
+                r.iti,
+                r.p1,
+                r.p2,
+                r.p3
+            ];
+            const pswqValues = [];
+            for (let i = 1; i <= 16; i++) {
+                pswqValues.push(pswqResponses[`pswq_${i}`] || '');
+            }
+            pswqValues.push(pswqResponses.pswq_total || '');
+            return baseValues.concat(pswqValues).join(",");
+        }).join("\n");
+        
+        const csv = header + rows;
+
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+        link.download = `results_${subjectId}.csv`;
+        link.click();
+    }
+
+    function redirectToProlific() {
+        // Get completion code from URL or use default
+        const completionCode = params.get('COMPLETION_CODE') || 'CPK67UK8';
+        
+        // Prolific completion URL format
+        const prolificCompletionUrl = `https://app.prolific.com/submissions/complete?cc=${completionCode}`;
+        
+        // Redirect to Prolific completion page
+        window.location.href = prolificCompletionUrl;
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (!canClick) return;
+        if (e.code === 'KeyQ') makeChoice(0);
+        else if (e.code === 'KeyT') makeChoice(1);
+        else if (e.code === 'KeyP') makeChoice(2);
+    });
+
+// ---- Seeded ITI sequence: exactly 50% short / 50% long ----
+function generateSeededITISequence(nTrials, seed) {
+  const rng = mulberry32(seed);
+  const seq = [];
+  const half = Math.floor(nTrials / 2);
+  for (let i = 0; i < half; i++) seq.push(ITI_SHORT);
+  for (let i = half; i < nTrials; i++) seq.push(ITI_LONG);
+
+  // Fisher–Yates shuffle with seeded RNG
+  for (let i = seq.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [seq[i], seq[j]] = [seq[j], seq[i]];
+  }
+  return seq;
+}
+
+const ITI_SEQUENCE = generateSeededITISequence(TOTAL_TRIALS, ITI_SEED);
+
+    // Test Firestore connection function (accessible from console)
+    window.testFirestore = async function() {
+        try {
+            if (!window.firestoreDb) {
+                console.error('❌ Firestore database not initialized');
+                alert('Firestore database not initialized. Make sure Firebase is loaded.');
+                return false;
+            }
+            
+            const { collection, addDoc } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+            
+            const testDoc = {
+                test: true,
+                timestamp: new Date().toISOString(),
+                message: 'Firestore connection test'
+            };
+            const testRef = await addDoc(collection(window.firestoreDb, 'test'), testDoc);
+            console.log('✅ Firestore test successful! Document ID:', testRef.id);
+            alert('Firestore connection test successful! Check console for details.');
+            return true;
+        } catch (error) {
+            console.error('❌ Firestore test failed:', error);
+            console.error('Error code:', error.code);
+            console.error('Error message:', error.message);
+            alert('Firestore test failed. Check console for details. Error: ' + error.message);
+            return false;
+        }
+    };
+
+    // Initialize consent screen on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        initConsentScreen();
+        // Show consent screen first
+        document.body.classList.add('consent-mode');
+        document.getElementById('consent-screen').style.display = 'block';
+        
+        // Clear any previous PSWQ responses to prevent pre-filling
+        localStorage.removeItem('pswq_responses');
+        pswqResponses = {};
+
+        // Preload both stimulus sets during instructions so first trials appear together
+        preloadStimulusSet('practice');
+        preloadStimulusSet('real');
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trial Probabilities & ITI Table</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .trial-num {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .prob-high {
+            background: #d4edda;
+            color: #155724;
+            font-weight: 600;
+        }
+        
+        .prob-mid {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .prob-low {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .iti-short {
+            background: #cfe2ff;
+            color: #084298;
+            font-weight: 600;
+        }
+        
+        .iti-long {
+            background: #e7d6ff;
+            color: #6610f2;
+            font-weight: 600;
+        }
+        
+        .best-indicator {
+            font-weight: bold;
+            color: #155724;
+        }
+        
+        .stats-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .stats-box strong {
+            color: #667eea;
+        }
+        
+        .download-btn {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .download-btn:hover {
+            background: #5568d3;
+        }
+        
+        .table-container {
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Trial Probabilities & ITI Table</h1>
+        <p class="subtitle">Complete list of machine probabilities and inter-trial intervals for all trials</p>
+        
+        <div style="margin-bottom: 20px;">
+            <button class="download-btn" onclick="downloadCSV('bandit_practice')">📥 Download Bandit Practice CSV</button>
+            <button class="download-btn" onclick="downloadCSV('combined_practice')">📥 Download Combined Practice CSV</button>
+            <button class="download-btn" onclick="downloadCSV('real')">📥 Download Real Trials CSV</button>
+            <button class="download-btn" onclick="downloadCSV('all')">📥 Download All CSV</button>
+        </div>
+        
+        <div class="section">
+            <h2>🎮 Practice Phase 1: Bandit-Only (6 trials)</h2>
+            <div class="stats-box" id="bandit-practice-stats"></div>
+            <div class="table-container">
+                <table id="bandit-practice-table">
+                    <thead>
+                        <tr>
+                            <th>Trial</th>
+                            <th>Machine 1<br>Probability</th>
+                            <th>Machine 2<br>Probability</th>
+                            <th>Machine 3<br>Probability</th>
+                            <th>Best<br>Machine</th>
+                            <th>ITI<br>(seconds)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bandit-practice-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🔵 Practice Phase 2: RDM-Only (10 trials)</h2>
+            <div class="stats-box" id="rdm-practice-stats"></div>
+            <div class="table-container">
+                <table id="rdm-practice-table">
+                    <thead>
+                        <tr>
+                            <th>Trial</th>
+                            <th>RDM<br>Direction Pair</th>
+                            <th>RDM<br>Target</th>
+                            <th>Duration<br>(seconds)</th>
+                            <th>Response<br>Timing</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rdm-practice-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🎮 Practice Phase 3: Combined (6 trials)</h2>
+            <div class="stats-box" id="combined-practice-stats"></div>
+            <div class="table-container">
+                <table id="combined-practice-table">
+                    <thead>
+                        <tr>
+                            <th>Trial</th>
+                            <th>Machine 1<br>Probability</th>
+                            <th>Machine 2<br>Probability</th>
+                            <th>Machine 3<br>Probability</th>
+                            <th>Best<br>Machine</th>
+                            <th>ITI<br>(seconds)</th>
+                            <th>RDM<br>Direction Pair</th>
+                            <th>RDM<br>Target</th>
+                        </tr>
+                    </thead>
+                    <tbody id="combined-practice-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🎯 Real Trials (100 trials)</h2>
+            <div class="stats-box" id="real-stats"></div>
+            <div class="table-container">
+                <table id="real-table">
+                    <thead>
+                        <tr>
+                            <th>Trial</th>
+                            <th>Machine 1<br>Probability</th>
+                            <th>Machine 2<br>Probability</th>
+                            <th>Machine 3<br>Probability</th>
+                            <th>Best<br>Machine</th>
+                            <th>ITI<br>(seconds)</th>
+                            <th>RDM<br>Direction Pair</th>
+                            <th>RDM<br>Target</th>
+                        </tr>
+                    </thead>
+                    <tbody id="real-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Constants from main experiment
+        const ITI_SHORT = 1000;   // ms (1 second)
+        const ITI_LONG = 4000;    // ms (4 seconds)
+        const TOTAL_TRIALS = 100;
+        const PRACTICE_TRIALS = 6; // Old practice (not used)
+        const BANDIT_ONLY_PRACTICE_TRIALS = 6;
+        const RDM_PRACTICE_TRIALS = 10;
+        const COMBINED_PRACTICE_TRIALS = 6;
+        const RW_SD = 0.06;
+        const RW_LOW = 0.1;
+        const RW_HIGH = 0.9;
+        const ITI_SEED = 54321;
+        const RW_SEED_REAL = 20263944;  // Correct seed that matches your CSV
+        const RW_SEED_PRACTICE = 20260106;
+        const RDM_SEED_BASE = 99999; // Base seed for RDM randomization
+        const RDM_DIRECTION_PAIRS = [
+            ['UP', 'DOWN']  // Only vertical directions
+        ];
+        
+        // Seeded RNG
+        function mulberry32(seed) {
+            let t = seed >>> 0;
+            return function () {
+                t += 0x6D2B79F5;
+                let x = Math.imul(t ^ (t >>> 15), 1 | t);
+                x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+                return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+            };
+        }
+        
+        function randn(rng) {
+            let u = 0, v = 0;
+            while (u === 0) u = rng();
+            while (v === 0) v = rng();
+            return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+        }
+        
+        function reflectToBounds(x, low, high) {
+            while (x < low || x > high) {
+                if (x < low) x = low + (low - x);
+                if (x > high) x = high - (x - high);
+            }
+            if (x < low) x = low;
+            if (x > high) x = high;
+            return x;
+        }
+        
+        function generateRandomWalkTrajectories(nTrials, startPs, sd, low, high, seed) {
+            const rng = mulberry32(seed);
+            return startPs.map(p0 => {
+                const p = new Array(nTrials);
+                p[0] = reflectToBounds(p0, low, high);
+                for (let t = 1; t < nTrials; t++) {
+                    const prev = p[t - 1];
+                    const proposal = prev + sd * randn(rng);
+                    p[t] = reflectToBounds(proposal, low, high);
+                }
+                return p;
+            });
+        }
+        
+        // Simple 50/50 ITI generation for practice (no first-10 bias)
+        function generateSimpleSeededITIs(nTrials, seed, maxRepeats = 4) {
+            const rng = mulberry32(seed);
+            
+            // Generate exactly 50/50 split
+            const shortCount = Math.floor(nTrials / 2);
+            const longCount = nTrials - shortCount;
+            
+            const sequence = [];
+            for (let i = 0; i < shortCount; i++) sequence.push(1);
+            for (let i = 0; i < longCount; i++) sequence.push(4);
+            
+            // Multiple shuffle passes for better randomization
+            for (let shuffle = 0; shuffle < 5; shuffle++) {
+                for (let i = sequence.length - 1; i > 0; i--) {
+                    const j = Math.floor(rng() * (i + 1));
+                    [sequence[i], sequence[j]] = [sequence[j], sequence[i]];
+                }
+            }
+            
+            // Fix violations of max consecutive constraint
+            let fixed = true;
+            let iterations = 0;
+            const maxIterations = 1000;
+            
+            while (fixed && iterations < maxIterations) {
+                fixed = false;
+                iterations++;
+                
+                for (let i = 0; i < sequence.length; i++) {
+                    let consecutiveCount = 1;
+                    let j = i;
+                    while (j + 1 < sequence.length && sequence[j + 1] === sequence[i]) {
+                        consecutiveCount++;
+                        j++;
+                    }
+                    
+                    if (consecutiveCount > maxRepeats) {
+                        const currentValue = sequence[i];
+                        const neededValue = currentValue === 1 ? 4 : 1;
+                        
+                        for (let k = i + consecutiveCount; k < sequence.length; k++) {
+                            if (sequence[k] === neededValue) {
+                                [sequence[i + maxRepeats], sequence[k]] = [sequence[k], sequence[i + maxRepeats]];
+                                fixed = true;
+                                break;
+                            }
+                        }
+                        if (fixed) break;
+                    }
+                }
+            }
+            
+            return sequence;
+        }
+        
+        // Seeded ITI generation: exactly 50% short (1), 50% long (4), max 4 consecutive repeats
+        // First 10 trials biased toward long ITIs for more variability (ONLY for real task)
+        function generateSeededITIs(nTrials, seed, maxRepeats = 4) {
+            const rng = mulberry32(seed);
+            
+            // Generate full sequence with 50/50 split
+            const shortCount = Math.floor(nTrials / 2);
+            const longCount = nTrials - shortCount;
+            
+            // For first 10 trials: 7-8 long, 2-3 short
+            const first10Long = 7;
+            const first10Short = 3;
+            
+            // Build first 10 with more long ITIs
+            const first10 = [];
+            for (let i = 0; i < first10Short; i++) first10.push(1);
+            for (let i = 0; i < first10Long; i++) first10.push(4);
+            
+            // Shuffle first 10
+            for (let i = first10.length - 1; i > 0; i--) {
+                const j = Math.floor(rng() * (i + 1));
+                [first10[i], first10[j]] = [first10[j], first10[i]];
+            }
+            
+            // Build remaining to balance to 50/50
+            const remaining = [];
+            const remainingShort = shortCount - first10Short;
+            const remainingLong = longCount - first10Long;
+            for (let i = 0; i < remainingShort; i++) remaining.push(1);
+            for (let i = 0; i < remainingLong; i++) remaining.push(4);
+            
+            // Shuffle remaining
+            for (let shuffle = 0; shuffle < 3; shuffle++) {
+                for (let i = remaining.length - 1; i > 0; i--) {
+                    const j = Math.floor(rng() * (i + 1));
+                    [remaining[i], remaining[j]] = [remaining[j], remaining[i]];
+                }
+            }
+            
+            // Combine
+            const sequence = first10.concat(remaining);
+            
+            // Fix violations of max consecutive constraint
+            let fixed = true;
+            let iterations = 0;
+            const maxIterations = 1000;
+            
+            while (fixed && iterations < maxIterations) {
+                fixed = false;
+                iterations++;
+                
+                for (let i = 0; i < sequence.length; i++) {
+                    // Count consecutive
+                    let consecutiveCount = 1;
+                    let j = i;
+                    while (j + 1 < sequence.length && sequence[j + 1] === sequence[i]) {
+                        consecutiveCount++;
+                        j++;
+                    }
+                    
+                    if (consecutiveCount > maxRepeats) {
+                        // Find a different value to swap with
+                        const currentValue = sequence[i];
+                        const neededValue = currentValue === 1 ? 4 : 1;
+                        
+                        // Look for the first occurrence of needed value after this run
+                        for (let k = i + consecutiveCount; k < sequence.length; k++) {
+                            if (sequence[k] === neededValue) {
+                                // Swap one from the run with the different value
+                                [sequence[i + maxRepeats], sequence[k]] = [sequence[k], sequence[i + maxRepeats]];
+                                fixed = true;
+                                break;
+                            }
+                        }
+                        if (fixed) break;
+                    }
+                }
+            }
+            
+            return sequence;
+        }
+        
+        const FIXED_ITIS = generateSeededITIs(TOTAL_TRIALS, ITI_SEED, 4); // Real task: uses first-10 bias
+        const PRACTICE_ITIS = generateSimpleSeededITIs(PRACTICE_TRIALS, ITI_SEED + 1, 4); // Old practice (not used)
+        const BANDIT_PRACTICE_ITIS = generateSimpleSeededITIs(BANDIT_ONLY_PRACTICE_TRIALS, ITI_SEED + 99, 4); // 50/50 split - changed seed for better randomization
+        const RDM_PRACTICE_ITIS = generateSimpleSeededITIs(RDM_PRACTICE_TRIALS, ITI_SEED + 4, 4); // 50/50 split
+        const COMBINED_PRACTICE_ITIS = generateSimpleSeededITIs(COMBINED_PRACTICE_TRIALS, ITI_SEED + 77, 4); // 50/50 split - changed seed for better randomization
+        
+        // Generate RDM direction sequences (25 UP, 25 DOWN for each ITI type in real trials)
+        function generateRDMDirectionSequence(nTrials, seed) {
+            const maxAttempts = 1000;
+            let attempt = 0;
+            let sequence = [];
+            
+            while (attempt < maxAttempts) {
+                const rng = mulberry32(seed + attempt);
+                
+                // Generate exactly 50/50 split
+                const upCount = Math.floor(nTrials / 2);
+                const downCount = nTrials - upCount;
+                
+                sequence = [];
+                for (let i = 0; i < upCount; i++) sequence.push('UP');
+                for (let i = 0; i < downCount; i++) sequence.push('DOWN');
+                
+                // Multiple shuffle passes for better randomization
+                for (let shuffle = 0; shuffle < 5; shuffle++) {
+                    for (let i = sequence.length - 1; i > 0; i--) {
+                        const j = Math.floor(rng() * (i + 1));
+                        [sequence[i], sequence[j]] = [sequence[j], sequence[i]];
+                    }
+                }
+                
+                // Check for max 4 consecutive directions
+                let maxConsec = 1;
+                let currentConsec = 1;
+                let valid = true;
+                for (let i = 1; i < sequence.length; i++) {
+                    if (sequence[i] === sequence[i - 1]) {
+                        currentConsec++;
+                        if (currentConsec > 4) {
+                            valid = false;
+                            break;
+                        }
+                    } else {
+                        currentConsec = 1;
+                    }
+                }
+                
+                if (valid) {
+                    console.log(`✅ RDM sequence generated with max 4 consecutive directions (attempt ${attempt})`);
+                    return sequence;
+                }
+                attempt++;
+            }
+            
+            console.warn("Could not find RDM sequence with < 5 consecutive directions within maxAttempts. Returning last attempt.");
+            return sequence;
+        }
+        
+        // Generate RDM directions for practice phases (random selection)
+        function generateRDMDirections(nTrials) {
+            const directions = [];
+            for (let trial = 1; trial <= nTrials; trial++) {
+                const rdmSeed = RDM_SEED_BASE + trial;
+                const rng = mulberry32(rdmSeed);
+                const directionPair = RDM_DIRECTION_PAIRS[0];  // Always use first (and only) pair
+                const targetDirection = directionPair[Math.floor(rng() * 2)];
+                directions.push({
+                    pair: directionPair.join('/'),
+                    target: targetDirection
+                });
+            }
+            return directions;
+        }
+        
+        // Generate RDM direction sequences for real trials (25 UP, 25 DOWN for each ITI type)
+        // We also ensure the combined sequence (mapped to ITIs) has no more than 4 consecutive directions
+        let RDM_SHORT_ITI_DIRECTIONS, RDM_LONG_ITI_DIRECTIONS;
+        let rdmCombinedAttempt = 0;
+        
+        // Helper to check consecutive directions
+        function checkConsecutive(sequence) {
+            if (!sequence || sequence.length === 0) return 0;
+            let maxConsec = 1;
+            let currentConsec = 1;
+            for (let i = 1; i < sequence.length; i++) {
+                if (sequence[i] === sequence[i - 1]) {
+                    currentConsec++;
+                    maxConsec = Math.max(maxConsec, currentConsec);
+                } else {
+                    currentConsec = 1;
+                }
+            }
+            return maxConsec;
+        }
+
+        while (rdmCombinedAttempt < 1000) {
+            RDM_SHORT_ITI_DIRECTIONS = generateRDMDirectionSequence(50, RDM_SEED_BASE + 1000 + rdmCombinedAttempt);
+            RDM_LONG_ITI_DIRECTIONS = generateRDMDirectionSequence(50, RDM_SEED_BASE + 2000 + rdmCombinedAttempt);
+            
+            // Map to actual trial sequence to check overall consecutive directions
+            let combined = [];
+            let sCount = 0, lCount = 0;
+            for (let t = 0; t < FIXED_ITIS.length; t++) {
+                const iti = FIXED_ITIS[t];
+                if (iti === 1) {
+                    combined.push(RDM_SHORT_ITI_DIRECTIONS[sCount++]);
+                } else {
+                    combined.push(RDM_LONG_ITI_DIRECTIONS[lCount++]);
+                }
+            }
+            
+            if (checkConsecutive(combined) <= 4) {
+                console.log(`✅ Combined RDM real test sequence satisfies max 4 constraint (attempt ${rdmCombinedAttempt})`);
+                break;
+            }
+            rdmCombinedAttempt++;
+        }
+        
+        // Verify RDM direction sequences
+        const shortUpCount = RDM_SHORT_ITI_DIRECTIONS.filter(d => d === 'UP').length;
+        const shortDownCount = RDM_SHORT_ITI_DIRECTIONS.filter(d => d === 'DOWN').length;
+        const longUpCount = RDM_LONG_ITI_DIRECTIONS.filter(d => d === 'UP').length;
+        const longDownCount = RDM_LONG_ITI_DIRECTIONS.filter(d => d === 'DOWN').length;
+        const shortMaxConsec = checkConsecutive(RDM_SHORT_ITI_DIRECTIONS);
+        const longMaxConsec = checkConsecutive(RDM_LONG_ITI_DIRECTIONS);
+
+        // Final combined check for validation
+        let finalCombined = [];
+        let fsCount = 0, flCount = 0;
+        for (let t = 0; t < FIXED_ITIS.length; t++) {
+            if (FIXED_ITIS[t] === 1) finalCombined.push(RDM_SHORT_ITI_DIRECTIONS[fsCount++]);
+            else finalCombined.push(RDM_LONG_ITI_DIRECTIONS[flCount++]);
+        }
+        const finalMaxConsec = checkConsecutive(finalCombined);
+
+        console.log(`✅ RDM Short ITI Directions: ${shortUpCount} UP, ${shortDownCount} DOWN, Max consecutive: ${shortMaxConsec}`);
+        console.log(`✅ RDM Long ITI Directions: ${longUpCount} UP, ${longDownCount} DOWN, Max consecutive: ${longMaxConsec}`);
+        console.log(`✅ Combined RDM Real Test: Max consecutive: ${finalMaxConsec}`);
+        
+        if (shortMaxConsec > 4) console.error(`❌ ERROR: Short ITI sequence has ${shortMaxConsec} consecutive directions (max allowed: 4)`);
+        if (longMaxConsec > 4) console.error(`❌ ERROR: Long ITI sequence has ${longMaxConsec} consecutive directions (max allowed: 4)`);
+        if (finalMaxConsec > 4) console.error(`❌ ERROR: Combined real test sequence has ${finalMaxConsec} consecutive directions (max allowed: 4)`);
+        
+        // Generate RDM directions for practice phases (random selection)
+        const BANDIT_PRACTICE_RDM = []; // No RDM in bandit-only practice
+        const RDM_PRACTICE_DIRECTIONS = generateRDMDirections(RDM_PRACTICE_TRIALS);
+        const COMBINED_PRACTICE_RDM = generateRDMDirections(COMBINED_PRACTICE_TRIALS);
+        
+        // Generate REAL_RDM using sequences based on ITI type
+        function generateRealRDM(itis) {
+            const directions = [];
+            let shortCount = 0;
+            let longCount = 0;
+            const directionPair = RDM_DIRECTION_PAIRS[0];
+            
+            for (let t = 0; t < itis.length; t++) {
+                const iti = itis[t];
+                const isShortITI = iti === 1;
+                
+                let targetDirection;
+                if (isShortITI) {
+                    targetDirection = RDM_SHORT_ITI_DIRECTIONS[shortCount];
+                    shortCount++;
+                } else {
+                    targetDirection = RDM_LONG_ITI_DIRECTIONS[longCount];
+                    longCount++;
+                }
+                
+                directions.push({
+                    pair: directionPair.join('/'),
+                    target: targetDirection
+                });
+            }
+            
+            return directions;
+        }
+        
+        const REAL_RDM = generateRealRDM(FIXED_ITIS);
+        
+        // Verify REAL_RDM has correct distribution
+        let realShortUP = 0, realShortDOWN = 0, realLongUP = 0, realLongDOWN = 0;
+        for (let t = 0; t < FIXED_ITIS.length; t++) {
+            const iti = FIXED_ITIS[t];
+            const rdm = REAL_RDM[t];
+            if (iti === 1) {
+                if (rdm.target === 'UP') realShortUP++;
+                else realShortDOWN++;
+            } else {
+                if (rdm.target === 'UP') realLongUP++;
+                else realLongDOWN++;
+            }
+        }
+        console.log(`✅ REAL_RDM Distribution - Short ITI: ${realShortUP} UP, ${realShortDOWN} DOWN`);
+        console.log(`✅ REAL_RDM Distribution - Long ITI: ${realLongUP} UP, ${realLongDOWN} DOWN`);
+        if (realShortUP !== 25 || realShortDOWN !== 25) {
+            console.error(`❌ ERROR: Short ITI RDM has incorrect counts! Expected 25/25, got ${realShortUP}/${realShortDOWN}`);
+        }
+        if (realLongUP !== 25 || realLongDOWN !== 25) {
+            console.error(`❌ ERROR: Long ITI RDM has incorrect counts! Expected 25/25, got ${realLongUP}/${realLongDOWN}`);
+        }
+        
+        // Generate trajectories
+        // Practice: Machine 1 starts best [0.75, 0.50, 0.25]
+        // Real: Machine 3 starts best [0.25, 0.50, 0.75]
+        const BANDIT_PRACTICE_PATH = generateRandomWalkTrajectories(BANDIT_ONLY_PRACTICE_TRIALS, [0.75, 0.50, 0.25], RW_SD, RW_LOW, RW_HIGH, RW_SEED_PRACTICE);
+        const COMBINED_PRACTICE_PATH = generateRandomWalkTrajectories(COMBINED_PRACTICE_TRIALS, [0.75, 0.50, 0.25], RW_SD, RW_LOW, RW_HIGH, RW_SEED_PRACTICE + 100);
+        const REAL_PATH = generateRandomWalkTrajectories(TOTAL_TRIALS, [0.25, 0.50, 0.75], RW_SD, RW_LOW, RW_HIGH, RW_SEED_REAL);
+        
+        // Store data for CSV export
+        let banditPracticeData = [];
+        let combinedPracticeData = [];
+        let realData = [];
+        
+        function argmax(arr) {
+            let maxIdx = 0;
+            let maxVal = arr[0];
+            for (let i = 1; i < arr.length; i++) {
+                if (arr[i] > maxVal) {
+                    maxVal = arr[i];
+                    maxIdx = i;
+                }
+            }
+            return maxIdx;
+        }
+        
+        function getProbClass(prob) {
+            if (prob >= 0.6) return 'prob-high';
+            if (prob >= 0.4) return 'prob-mid';
+            return 'prob-low';
+        }
+        
+        function renderBanditOnlyTable(trajectories, itis, tbodyId) {
+            const tbody = document.getElementById(tbodyId);
+            const nTrials = trajectories[0].length;
+            const data = [];
+            
+            for (let t = 0; t < nTrials; t++) {
+                const probs = [
+                    trajectories[0][t],
+                    trajectories[1][t],
+                    trajectories[2][t]
+                ];
+                const best = argmax(probs);
+                const iti = itis[t];
+                
+                data.push({
+                    trial: t + 1,
+                    p1: probs[0],
+                    p2: probs[1],
+                    p3: probs[2],
+                    best: best + 1,
+                    iti: iti
+                });
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="trial-num">${t + 1}</td>
+                    <td class="${getProbClass(probs[0])}">${probs[0].toFixed(3)}</td>
+                    <td class="${getProbClass(probs[1])}">${probs[1].toFixed(3)}</td>
+                    <td class="${getProbClass(probs[2])}">${probs[2].toFixed(3)}</td>
+                    <td class="best-indicator">${best + 1}</td>
+                    <td class="${iti === 1 ? 'iti-short' : 'iti-long'}">${iti} sec</td>
+                `;
+                tbody.appendChild(row);
+            }
+            
+            banditPracticeData = data;
+            return data;
+        }
+        
+        function renderRDMOnlyTable(rdmDirections, itis, tbodyId) {
+            const tbody = document.getElementById(tbodyId);
+            
+            for (let t = 0; t < rdmDirections.length; t++) {
+                const rdm = rdmDirections[t];
+                const iti = itis[t];
+                const answerNowDelay = iti === 4 ? '2.5s' : '0.1s';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="trial-num">${t + 1}</td>
+                    <td style="background: #f0f8ff; color: #0066cc;">${rdm.pair}</td>
+                    <td style="background: #fff3cd; color: #856404; font-weight: 600;">${rdm.target}</td>
+                    <td class="${iti === 1 ? 'iti-short' : 'iti-long'}">${iti} sec</td>
+                    <td style="background: #fff3cd; color: #856404; font-weight: 600;">${answerNowDelay} delay</td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+        
+        function renderTable(trajectories, itis, rdmDirections, tbodyId, dataStore) {
+            const tbody = document.getElementById(tbodyId);
+            const nTrials = trajectories[0].length;
+            const data = [];
+            
+            for (let t = 0; t < nTrials; t++) {
+                const probs = [
+                    trajectories[0][t],
+                    trajectories[1][t],
+                    trajectories[2][t]
+                ];
+                const best = argmax(probs);
+                const iti = itis[t];
+                const rdm = rdmDirections[t];
+                
+                data.push({
+                    trial: t + 1,
+                    p1: probs[0],
+                    p2: probs[1],
+                    p3: probs[2],
+                    best: best + 1,
+                    iti: iti,
+                    rdm_pair: rdm.pair,
+                    rdm_target: rdm.target
+                });
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="trial-num">${t + 1}</td>
+                    <td class="${getProbClass(probs[0])}">${probs[0].toFixed(3)}</td>
+                    <td class="${getProbClass(probs[1])}">${probs[1].toFixed(3)}</td>
+                    <td class="${getProbClass(probs[2])}">${probs[2].toFixed(3)}</td>
+                    <td class="best-indicator">${best + 1}</td>
+                    <td class="${iti === 1 ? 'iti-short' : 'iti-long'}">${iti} sec</td>
+                    <td style="background: #f0f8ff; color: #0066cc;">${rdm.pair}</td>
+                    <td style="background: #fff3cd; color: #856404; font-weight: 600;">${rdm.target}</td>
+                `;
+                tbody.appendChild(row);
+            }
+            
+            if (dataStore === 'combined') {
+                combinedPracticeData = data;
+            } else if (dataStore === 'real') {
+                realData = data;
+            }
+            
+            return data;
+        }
+        
+        function calculateStats(itis, trajectories) {
+            const shortCount = itis.filter(iti => iti === 1).length;
+            const longCount = itis.filter(iti => iti === 4).length;
+            
+            // Find max consecutive
+            let maxConsec = 1;
+            let currentConsec = 1;
+            for (let i = 1; i < itis.length; i++) {
+                if (itis[i] === itis[i-1]) {
+                    currentConsec++;
+                    maxConsec = Math.max(maxConsec, currentConsec);
+                } else {
+                    currentConsec = 1;
+                }
+            }
+            
+            // Calculate average probabilities
+            const avgProbs = [0, 0, 0];
+            for (let i = 0; i < 3; i++) {
+                const sum = trajectories[i].reduce((a, b) => a + b, 0);
+                avgProbs[i] = sum / trajectories[i].length;
+            }
+            
+            return {
+                shortCount,
+                longCount,
+                maxConsec,
+                avgProbs
+            };
+        }
+        
+        function displayStats(stats, elementId, nTrials) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `
+                <strong>ITI Distribution:</strong> ${stats.shortCount} short (1 sec), ${stats.longCount} long (4 sec) | 
+                <strong>Max Consecutive:</strong> ${stats.maxConsec} trials | 
+                <strong>Average Probabilities:</strong> M1=${stats.avgProbs[0].toFixed(3)}, M2=${stats.avgProbs[1].toFixed(3)}, M3=${stats.avgProbs[2].toFixed(3)}
+            `;
+        }
+        
+        function downloadCSV(type) {
+            let csvContent = "Phase,Trial,Machine_1_Probability,Machine_2_Probability,Machine_3_Probability,Best_Machine,ITI_seconds,RDM_Direction_Pair,RDM_Target\n";
+            let filename;
+            let data;
+            
+            if (type === 'bandit_practice') {
+                data = banditPracticeData.map(d => ({...d, phase: 'Bandit_Practice'}));
+                filename = 'bandit_practice_trials.csv';
+            } else if (type === 'combined_practice') {
+                data = combinedPracticeData.map(d => ({...d, phase: 'Combined_Practice'}));
+                filename = 'combined_practice_trials.csv';
+            } else if (type === 'real') {
+                data = realData.map(d => ({...d, phase: 'Real_Task'}));
+                filename = 'real_trials_probabilities.csv';
+            } else {
+                // All trials
+                data = [
+                    ...banditPracticeData.map(d => ({...d, phase: 'Bandit_Practice'})),
+                    ...combinedPracticeData.map((d, i) => ({...d, phase: 'Combined_Practice', trial: i + 1})),
+                    ...realData.map((d, i) => ({...d, phase: 'Real_Task', trial: i + 1}))
+                ];
+                filename = 'all_trials_probabilities.csv';
+            }
+            
+            data.forEach(row => {
+                const rdmPair = row.rdm_pair || 'N/A';
+                const rdmTarget = row.rdm_target || 'N/A';
+                csvContent += `${row.phase},${row.trial},${row.p1.toFixed(6)},${row.p2.toFixed(6)},${row.p3.toFixed(6)},${row.best},${row.iti},${rdmPair},${rdmTarget}\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+        
+        // Initialize all tables
+        renderBanditOnlyTable(BANDIT_PRACTICE_PATH, BANDIT_PRACTICE_ITIS, 'bandit-practice-tbody');
+        renderRDMOnlyTable(RDM_PRACTICE_DIRECTIONS, RDM_PRACTICE_ITIS, 'rdm-practice-tbody');
+        renderTable(COMBINED_PRACTICE_PATH, COMBINED_PRACTICE_ITIS, COMBINED_PRACTICE_RDM, 'combined-practice-tbody', 'combined');
+        renderTable(REAL_PATH, FIXED_ITIS, REAL_RDM, 'real-tbody', 'real');
+        
+        const banditPracticeStats = calculateStats(BANDIT_PRACTICE_ITIS, BANDIT_PRACTICE_PATH);
+        const rdmPracticeStats = calculateStats(RDM_PRACTICE_ITIS, [[0.5], [0.5], [0.5]]); // Dummy trajectories for RDM-only
+        const combinedPracticeStats = calculateStats(COMBINED_PRACTICE_ITIS, COMBINED_PRACTICE_PATH);
+        const realStats = calculateStats(FIXED_ITIS, REAL_PATH);
+        
+        displayStats(banditPracticeStats, 'bandit-practice-stats', BANDIT_ONLY_PRACTICE_TRIALS);
+        
+        // Custom stats display for RDM-only practice
+        const rdmStatsElement = document.getElementById('rdm-practice-stats');
+        rdmStatsElement.innerHTML = `
+            <strong>Note:</strong> RDM-only practice has no bandit task. Uses same "ANSWER NOW" timing as real trials (0.1s for short ITI, 2.5s for long ITI). | 
+            <strong>ITI Distribution:</strong> ${rdmPracticeStats.shortCount} short (1 sec), ${rdmPracticeStats.longCount} long (4 sec)
+        `;
+        
+        displayStats(combinedPracticeStats, 'combined-practice-stats', COMBINED_PRACTICE_TRIALS);
+        displayStats(realStats, 'real-stats', TOTAL_TRIALS);
+        
+        console.log('✅ Table generated successfully');
+        console.log('=== PRACTICE PHASES (All have EXACT 50/50 split) ===');
+        console.log('Phase 1 - Bandit Practice: 6 trials, ITIs:', BANDIT_PRACTICE_ITIS, '(seed: ' + (ITI_SEED + 99) + '), Count:', BANDIT_PRACTICE_ITIS.filter(x => x === 1).length, 'short,', BANDIT_PRACTICE_ITIS.filter(x => x === 4).length, 'long');
+        console.log('Phase 2 - RDM Practice: 10 trials, ITIs:', RDM_PRACTICE_ITIS, '(seed: ' + (ITI_SEED + 4) + '), Count:', RDM_PRACTICE_ITIS.filter(x => x === 1).length, 'short,', RDM_PRACTICE_ITIS.filter(x => x === 4).length, 'long, "ANSWER NOW" timing: 0.1s (short), 2.5s (long)');
+        console.log('Phase 3 - Combined Practice: 6 trials, ITIs:', COMBINED_PRACTICE_ITIS, '(seed: ' + (ITI_SEED + 77) + '), Count:', COMBINED_PRACTICE_ITIS.filter(x => x === 1).length, 'short,', COMBINED_PRACTICE_ITIS.filter(x => x === 4).length, 'long');
+        console.log('=== REAL TASK (First 10 trials biased: 7 long, 3 short) ===');
+        console.log('Real trials: 100 trials, ITIs (first 10):', FIXED_ITIS.slice(0, 10), '(seed: ' + ITI_SEED + ')');
+        console.log('=== SEEDS ===');
+        console.log('Probability seed (real): 20263944');
+        console.log('Probability seed (bandit practice): 20260106');
+        console.log('Probability seed (combined practice): ' + (RW_SEED_PRACTICE + 100));
+        console.log('ITI seed (bandit practice): ' + (ITI_SEED + 99));
+        console.log('ITI seed (RDM practice): ' + (ITI_SEED + 4));
+        console.log('ITI seed (combined practice): ' + (ITI_SEED + 77));
+        console.log('RDM seed base: 99999 (trial-specific: 99999 + trialNumber for practice)');
+        console.log('RDM real trials: Short ITI seed 100999, Long ITI seed 101999');
+        console.log('=== CONSTRAINTS ===');
+        console.log('Max consecutive ITI repeats: 4');
+        console.log('ITI distribution: 50% short (1s), 50% long (4s)');
+        console.log('First 10 trials (real): 7 long ITIs, 3 short ITIs');
+        console.log('RDM directions (real trials): 25 UP, 25 DOWN for short ITIs; 25 UP, 25 DOWN for long ITIs');
+        console.log('RDM directions are SEEDED - all participants see same directions per trial');
+    </script>
+</body>
+</html>

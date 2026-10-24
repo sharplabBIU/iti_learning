@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trial Probabilities & ITI Table</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .trial-num {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .prob-high {
+            background: #d4edda;
+            color: #155724;
+            font-weight: 600;
+        }
+        
+        .prob-mid {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .prob-low {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .iti-short {
+            background: #cfe2ff;
+            color: #084298;
+            font-weight: 600;
+        }
+        
+        .iti-long {
+            background: #e7d6ff;
+            color: #6610f2;
+            font-weight: 600;
+        }
+        
+        .best-indicator {
+            font-weight: bold;
+            color: #155724;
+        }
+        
+        .stats-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .stats-box strong {
+            color: #667eea;
+        }
+        
+        .download-btn {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .download-btn:hover {
+            background: #5568d3;
+        }
+        
+        .table-container {
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Trial Probabilities & ITI Table</h1>
+        <p class="subtitle">Complete list of machine probabilities and inter-trial intervals for all trials</p>
+        
+        <div style="margin-bottom: 20px;">
+            <button class="download-btn" onclick="downloadCSV('practice')">📥 Download Practice CSV</button>
+            <button class="download-btn" onclick="downloadCSV('real')">📥 Download Real Trials CSV</button>
+            <button class="download-btn" onclick="downloadCSV('combined')">📥 Download Combined CSV</button>
+        </div>
+        
+        <div class="section">
+            <h2>🎮 Practice Trials (6 trials)</h2>
+            <div class="stats-box" id="practice-stats"></div>
+            <div class="table-container">
+                <table id="practice-table">
+                    <thead>
+                        <tr>
+                            <th>Trial</th>
+                            <th>Machine 1<br>Probability</th>
+                            <th>Machine 2<br>Probability</th>
+                            <th>Machine 3<br>Probability</th>
+                            <th>Best<br>Machine</th>
+                            <th>ITI<br>(seconds)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="practice-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🎯 Real Trials (100 trials)</h2>
+            <div class="stats-box" id="real-stats"></div>
+            <div class="table-container">
+                <table id="real-table">
+                    <thead>
+                        <tr>
+                            <th>Trial</th>
+                            <th>Machine 1<br>Probability</th>
+                            <th>Machine 2<br>Probability</th>
+                            <th>Machine 3<br>Probability</th>
+                            <th>Best<br>Machine</th>
+                            <th>ITI<br>(seconds)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="real-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Constants from main experiment
+        const ITI_SHORT = 500;   // ms
+        const ITI_LONG = 1500;   // ms
+        const TOTAL_TRIALS = 100;
+        const PRACTICE_TRIALS = 6;
+        const RW_SD = 0.06;
+        const RW_LOW = 0.1;
+        const RW_HIGH = 0.9;
+        const ITI_SEED = 54321;
+        const RW_SEED_REAL = 20263944;  // Correct seed that matches your CSV
+        const RW_SEED_PRACTICE = 20260106;
+        
+        // Seeded RNG
+        function mulberry32(seed) {
+            let t = seed >>> 0;
+            return function () {
+                t += 0x6D2B79F5;
+                let x = Math.imul(t ^ (t >>> 15), 1 | t);
+                x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+                return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+            };
+        }
+        
+        function randn(rng) {
+            let u = 0, v = 0;
+            while (u === 0) u = rng();
+            while (v === 0) v = rng();
+            return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+        }
+        
+        function reflectToBounds(x, low, high) {
+            while (x < low || x > high) {
+                if (x < low) x = low + (low - x);
+                if (x > high) x = high - (x - high);
+            }
+            if (x < low) x = low;
+            if (x > high) x = high;
+            return x;
+        }
+        
+        function generateRandomWalkTrajectories(nTrials, startPs, sd, low, high, seed) {
+            const rng = mulberry32(seed);
+            return startPs.map(p0 => {
+                const p = new Array(nTrials);
+                p[0] = reflectToBounds(p0, low, high);
+                for (let t = 1; t < nTrials; t++) {
+                    const prev = p[t - 1];
+                    const proposal = prev + sd * randn(rng);
+                    p[t] = reflectToBounds(proposal, low, high);
+                }
+                return p;
+            });
+        }
+        
+        // Seeded ITI generation: exactly 50% short (1), 50% long (4), max 4 consecutive repeats
+        // First 10 trials biased toward long ITIs for more variability
+        function generateSeededITIs(nTrials, seed, maxRepeats = 4) {
+            const rng = mulberry32(seed);
+            
+            // Generate full sequence with 50/50 split
+            const shortCount = Math.floor(nTrials / 2);
+            const longCount = nTrials - shortCount;
+            
+            // For first 10 trials: 7-8 long, 2-3 short
+            const first10Long = 7;
+            const first10Short = 3;
+            
+            // Build first 10 with more long ITIs
+            const first10 = [];
+            for (let i = 0; i < first10Short; i++) first10.push(1);
+            for (let i = 0; i < first10Long; i++) first10.push(4);
+            
+            // Shuffle first 10
+            for (let i = first10.length - 1; i > 0; i--) {
+                const j = Math.floor(rng() * (i + 1));
+                [first10[i], first10[j]] = [first10[j], first10[i]];
+            }
+            
+            // Build remaining to balance to 50/50
+            const remaining = [];
+            const remainingShort = shortCount - first10Short;
+            const remainingLong = longCount - first10Long;
+            for (let i = 0; i < remainingShort; i++) remaining.push(1);
+            for (let i = 0; i < remainingLong; i++) remaining.push(4);
+            
+            // Shuffle remaining
+            for (let shuffle = 0; shuffle < 3; shuffle++) {
+                for (let i = remaining.length - 1; i > 0; i--) {
+                    const j = Math.floor(rng() * (i + 1));
+                    [remaining[i], remaining[j]] = [remaining[j], remaining[i]];
+                }
+            }
+            
+            // Combine
+            const sequence = first10.concat(remaining);
+            
+            // Fix violations of max consecutive constraint
+            let fixed = true;
+            let iterations = 0;
+            const maxIterations = 1000;
+            
+            while (fixed && iterations < maxIterations) {
+                fixed = false;
+                iterations++;
+                
+                for (let i = 0; i < sequence.length; i++) {
+                    // Count consecutive
+                    let consecutiveCount = 1;
+                    let j = i;
+                    while (j + 1 < sequence.length && sequence[j + 1] === sequence[i]) {
+                        consecutiveCount++;
+                        j++;
+                    }
+                    
+                    if (consecutiveCount > maxRepeats) {
+                        // Find a different value to swap with
+                        const currentValue = sequence[i];
+                        const neededValue = currentValue === 1 ? 4 : 1;
+                        
+                        // Look for the first occurrence of needed value after this run
+                        for (let k = i + consecutiveCount; k < sequence.length; k++) {
+                            if (sequence[k] === neededValue) {
+                                // Swap one from the run with the different value
+                                [sequence[i + maxRepeats], sequence[k]] = [sequence[k], sequence[i + maxRepeats]];
+                                fixed = true;
+                                break;
+                            }
+                        }
+                        if (fixed) break;
+                    }
+                }
+            }
+            
+            return sequence;
+        }
+        
+        const FIXED_ITIS = generateSeededITIs(TOTAL_TRIALS, ITI_SEED, 4);
+        const PRACTICE_ITIS = generateSeededITIs(PRACTICE_TRIALS, ITI_SEED + 1, 4);
+        
+        // Generate trajectories
+        // Practice: Machine 1 starts best [0.75, 0.50, 0.25]
+        // Real: Machine 3 starts best [0.25, 0.50, 0.75]
+        const PRACTICE_PATH = generateRandomWalkTrajectories(PRACTICE_TRIALS, [0.75, 0.50, 0.25], RW_SD, RW_LOW, RW_HIGH, RW_SEED_PRACTICE);
+        const REAL_PATH = generateRandomWalkTrajectories(TOTAL_TRIALS, [0.25, 0.50, 0.75], RW_SD, RW_LOW, RW_HIGH, RW_SEED_REAL);
+        
+        // Store data for CSV export
+        let practiceData = [];
+        let realData = [];
+        
+        function argmax(arr) {
+            let maxIdx = 0;
+            let maxVal = arr[0];
+            for (let i = 1; i < arr.length; i++) {
+                if (arr[i] > maxVal) {
+                    maxVal = arr[i];
+                    maxIdx = i;
+                }
+            }
+            return maxIdx;
+        }
+        
+        function getProbClass(prob) {
+            if (prob >= 0.6) return 'prob-high';
+            if (prob >= 0.4) return 'prob-mid';
+            return 'prob-low';
+        }
+        
+        function renderTable(trajectories, itis, tbodyId, isPractice) {
+            const tbody = document.getElementById(tbodyId);
+            const nTrials = trajectories[0].length;
+            const data = [];
+            
+            for (let t = 0; t < nTrials; t++) {
+                const probs = [
+                    trajectories[0][t],
+                    trajectories[1][t],
+                    trajectories[2][t]
+                ];
+                const best = argmax(probs);
+                const iti = itis[t];
+                
+                data.push({
+                    trial: t + 1,
+                    p1: probs[0],
+                    p2: probs[1],
+                    p3: probs[2],
+                    best: best + 1,
+                    iti: iti
+                });
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="trial-num">${t + 1}</td>
+                    <td class="${getProbClass(probs[0])}">${probs[0].toFixed(3)}</td>
+                    <td class="${getProbClass(probs[1])}">${probs[1].toFixed(3)}</td>
+                    <td class="${getProbClass(probs[2])}">${probs[2].toFixed(3)}</td>
+                    <td class="best-indicator">${best + 1}</td>
+                    <td class="${iti === 1 ? 'iti-short' : 'iti-long'}">${iti} sec</td>
+                `;
+                tbody.appendChild(row);
+            }
+            
+            if (isPractice) {
+                practiceData = data;
+            } else {
+                realData = data;
+            }
+            
+            return data;
+        }
+        
+        function calculateStats(itis, trajectories) {
+            const shortCount = itis.filter(iti => iti === 1).length;
+            const longCount = itis.filter(iti => iti === 4).length;
+            
+            // Find max consecutive
+            let maxConsec = 1;
+            let currentConsec = 1;
+            for (let i = 1; i < itis.length; i++) {
+                if (itis[i] === itis[i-1]) {
+                    currentConsec++;
+                    maxConsec = Math.max(maxConsec, currentConsec);
+                } else {
+                    currentConsec = 1;
+                }
+            }
+            
+            // Calculate average probabilities
+            const avgProbs = [0, 0, 0];
+            for (let i = 0; i < 3; i++) {
+                const sum = trajectories[i].reduce((a, b) => a + b, 0);
+                avgProbs[i] = sum / trajectories[i].length;
+            }
+            
+            return {
+                shortCount,
+                longCount,
+                maxConsec,
+                avgProbs
+            };
+        }
+        
+        function displayStats(stats, elementId, nTrials) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `
+                <strong>ITI Distribution:</strong> ${stats.shortCount} short (1 sec), ${stats.longCount} long (4 sec) | 
+                <strong>Max Consecutive:</strong> ${stats.maxConsec} trials | 
+                <strong>Average Probabilities:</strong> M1=${stats.avgProbs[0].toFixed(3)}, M2=${stats.avgProbs[1].toFixed(3)}, M3=${stats.avgProbs[2].toFixed(3)}
+            `;
+        }
+        
+        function downloadCSV(type) {
+            let csvContent = "Trial,Machine_1_Probability,Machine_2_Probability,Machine_3_Probability,Best_Machine,ITI_seconds\n";
+            let filename;
+            let data;
+            
+            if (type === 'practice') {
+                data = practiceData;
+                filename = 'practice_trials_probabilities.csv';
+            } else if (type === 'real') {
+                data = realData;
+                filename = 'real_trials_probabilities.csv';
+            } else {
+                // Combined
+                data = practiceData.concat(realData.map(d => ({...d, trial: d.trial + PRACTICE_TRIALS})));
+                filename = 'all_trials_probabilities.csv';
+            }
+            
+            data.forEach(row => {
+                csvContent += `${row.trial},${row.p1.toFixed(6)},${row.p2.toFixed(6)},${row.p3.toFixed(6)},${row.best},${row.iti}\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+        
+        // Initialize
+        renderTable(PRACTICE_PATH, PRACTICE_ITIS, 'practice-tbody', true);
+        renderTable(REAL_PATH, FIXED_ITIS, 'real-tbody', false);
+        
+        const practiceStats = calculateStats(PRACTICE_ITIS, PRACTICE_PATH);
+        const realStats = calculateStats(FIXED_ITIS, REAL_PATH);
+        
+        displayStats(practiceStats, 'practice-stats', PRACTICE_TRIALS);
+        displayStats(realStats, 'real-stats', TOTAL_TRIALS);
+        
+        console.log('✅ Table generated successfully');
+        console.log('Probability seed: 20263944');
+        console.log('ITI seed: 77777 (real), 77778 (practice)');
+        console.log('Practice ITIs:', PRACTICE_ITIS);
+        console.log('Real ITIs:', FIXED_ITIS);
+        console.log('Max consecutive ITI repeats: 4');
+    </script>
+</body>
+</html>

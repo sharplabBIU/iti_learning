@@ -1,0 +1,2580 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slot Machine Task</title>
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+  apiKey: "YOUR_FIREBASE_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.firebasestorage.app",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
+};
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // Make app and db available globally
+        window.firebaseApp = app;
+        window.firestoreDb = db;
+        
+        // Make Firestore functions available globally
+        window.firestoreCollection = collection;
+        window.firestoreAddDoc = addDoc;
+        window.firestoreSetDoc = setDoc;
+        window.firestoreDoc = doc;
+        
+        // Log Firestore initialization
+        console.log('Firestore initialized:', db);
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: gray;
+            color: white;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body.consent-mode,
+        body.pswq-mode {
+            background-color: white;
+            color: black;
+        }
+        
+        /* Main responsive container */
+        .main-wrapper {
+            width: 100%;
+            max-width: 1920px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2vh 2vw;
+        }
+
+        .bandit-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .bandit-image {
+            width: 24vw;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 0.3vw;
+            border: none;
+            background-color: transparent;
+            display: block;
+        }
+
+        /* Overlay that appears ON TOP of the chosen image (does NOT replace it) */
+        .outcome-overlay {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* shown only after choice */
+            align-items: center;
+            justify-content: center;
+            background: white;
+            padding: 0.35em 0.7em;
+            border-radius: 0.35em;
+            font-size: 4.5vmin;
+            font-weight: bold;
+            box-shadow: 0 0.6vmin 1.2vmin rgba(0,0,0,0.35);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8vw;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2vw;
+            flex-wrap: nowrap;
+        }
+
+        #feedback {
+            font-size: 8vmin;
+            height: 10vh;
+            margin-bottom: 2vh;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .instruction-box {
+            background: #1a1a1a;
+            padding: 3vw;
+            border-radius: 1.5vw;
+            width: 55vw;
+            max-width: 90vw;
+            border: 0.15vw solid #444;
+            line-height: 1.5;
+            text-align: left;
+            font-size: 3.5vmin;
+            box-sizing: border-box;
+        }
+
+        .consent-container {
+            background: white;
+            color: #333;
+            padding: 3vw 4vw;
+            border-radius: 0.5vw;
+            width: 60vw;
+            max-width: 900px;
+            border: 1px solid #e0e0e0;
+            line-height: 1.7;
+            text-align: left;
+            font-size: 14px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .consent-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .consent-container::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .consent-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .btn-action:disabled {
+            background: #555;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .pswq-container {
+            background: white;
+            color: #333;
+            padding: clamp(20px, 3vw, 50px) clamp(25px, 4vw, 60px);
+            border-radius: clamp(5px, 0.5vw, 12px);
+            width: clamp(400px, 70vw, 1000px);
+            max-width: 95vw;
+            border: 1px solid #e0e0e0;
+            line-height: 1.7;
+            text-align: left;
+            font-size: clamp(12px, 1.8vmin, 16px);
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 clamp(2px, 0.3vmin, 4px) clamp(4px, 0.6vmin, 8px) rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+
+        .pswq-question {
+            margin-bottom: 2.5vh;
+            padding-bottom: 1.5vh;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .pswq-question-text {
+            margin-bottom: 1.2vh;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .pswq-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2vw;
+            flex-wrap: wrap;
+        }
+
+        .pswq-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5vh;
+        }
+
+        .pswq-option input[type="radio"] {
+            width: 2vmin;
+            height: 2vmin;
+            cursor: pointer;
+        }
+
+        .pswq-option label {
+            font-size: 12px;
+            cursor: pointer;
+            text-align: center;
+            color: #333;
+        }
+
+        .pswq-scale-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 1.5vh;
+            font-size: 11px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        
+        .instruction-box b { color: #e74c3c; font-weight: bold; }
+        /* Screen 1: only Q/T/P should be red */
+        .qtp { color: #e74c3c; font-weight: bold; }
+        .btn-action {
+            display: block;
+            width: 22vw;
+            margin: 3vh auto 0;
+            padding: 1.8vw;
+            font-size: 3vmin;
+            cursor: pointer;
+            background: #2ecc71;
+            color: black;
+            border: none;
+            border-radius: 1vw;
+            font-weight: bold;
+            transition: transform 0.1s, background-color 0.2s;
+        }
+        
+        .btn-action:hover {
+            background: #27ae60;
+            transform: scale(1.02);
+        }
+        
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        .consent-container .btn-action,
+        .pswq-container .btn-action {
+            width: auto;
+            min-width: 200px;
+            padding: 12px 30px;
+            font-size: 14px;
+            border-radius: 4px;
+            background: #3498db;
+            color: white;
+            transition: background 0.2s;
+        }
+
+        .consent-container .btn-action:hover:not(:disabled),
+        .pswq-container .btn-action:hover {
+            background: #2980b9;
+        }
+
+        #fixation-cross {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 15vmin;
+            display: none;
+            z-index: 100;
+        }
+
+        /* RDM Canvas Styles */
+        #rdm-canvas {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #808080;
+            width: min(60vh, 60vw);
+            height: min(60vh, 60vw);
+            max-width: 600px;
+            max-height: 600px;
+            z-index: 100;
+        }
+
+        #rdm-arrows {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 250;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .rdm-arrow {
+            position: absolute;
+            font-size: 5vmin;
+            color: #000;
+            font-weight: normal;
+            width: 8vmin;
+            height: 8vmin;
+            border: 0.4vmin solid #000;
+            border-radius: 1.2vmin;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            box-shadow: 0 0.5vmin 1vmin rgba(0,0,0,0.4);
+            line-height: 1;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .rdm-arrow.selected {
+            background: #999999;
+            box-shadow: 0 0 2vmin rgba(150, 150, 150, 0.8);
+        }
+        
+        .arrow-up {
+            left: 50%;
+            top: calc(20vh - 61px);
+            transform: translate(-50%, 0);
+        }
+        
+        .arrow-down {
+            left: 50%;
+            bottom: calc(20vh - 61px);
+            transform: translate(-50%, 0);
+        }
+        
+        .arrow-left {
+            left: clamp(5vw, 8vw, 12vw);
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+        
+        .arrow-right {
+            right: clamp(5vw, 8vw, 12vw);
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+        
+        #rdm-feedback {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 15vmin;
+            font-weight: bold;
+            text-shadow: 0.5vmin 0.5vmin 0.8vmin rgba(0,0,0,0.7);
+            pointer-events: none;
+            z-index: 200;
+        }
+
+        #rdm-answer-now {
+            display: none;
+            position: fixed;
+            left: 50%;
+            bottom: 3vh;
+            transform: translateX(-50%);
+            font-size: 4.5vmin;
+            font-weight: bold;
+            color: #f1c40f;
+            text-shadow: 0.2vmin 0.2vmin 0.4vmin rgba(0,0,0,0.9);
+            background-color: rgba(0,0,0,0.8);
+            padding: 1.5vmin 2.5vmin;
+            border-radius: 1vmin;
+            pointer-events: none;
+            z-index: 999;
+        }
+        
+        #rdm-accuracy-summary {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 3vh;
+            transform: translateX(-50%);
+            font-size: 5vmin;
+            font-weight: bold;
+            color: #fff;
+            background-color: rgba(52, 152, 219, 0.95);
+            padding: 2vmin 4vmin;
+            border-radius: 1.5vmin;
+            pointer-events: none;
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 0.5vmin 2vmin rgba(0,0,0,0.5);
+        }
+
+        .key-hint {
+            margin-top: 1.5vh;
+            color: black;
+            font-family: monospace;
+            font-size: 5vmin;
+
+            /* white outline for better contrast */
+            text-shadow:
+                -1px -1px 0 #fff,
+                 1px -1px 0 #fff,
+                -1px  1px 0 #fff,
+                 1px  1px 0 #fff,
+                 0px  0px 2px #fff;
+        }
+
+        #trial-counter {
+            position: fixed;
+            top: 6vh;
+            left: 50%;
+            transform: translateX(-50%);
+            color: black;
+            font-size: 5.5vmin;
+            font-weight: bold;
+            z-index: 10;
+            text-align: center;
+        }
+
+        /* IMPORTANT: anything in bold should be red (instructions) */
+        #setup-screen-1 b,
+        #setup-screen-2 b {
+            color: #e74c3c;
+        }
+
+        /* Optional: if you want ALL bold text to be red globally, uncomment:
+        b { color: #e74c3c; }
+        */
+    </style>
+</head>
+<body>
+
+<!-- Informed Consent Screen -->
+<div id="consent-screen" class="consent-container">
+    <h1 style="text-align:center; color:#2c3e50; margin-bottom: 2vh; font-size: 20px; font-weight: 600;">Informed Consent</h1>
+    <p style="font-size: 14px; color: #333;">You are invited to participate in a research study about decision-making, which aims to better understand how people learn and plan.</p>
+    
+    <p style="font-size: 14px; color: #333;">This study is being conducted by researchers at Bar-Ilan University, led by Dr. Paul Sharp.</p>
+    
+    <p style="font-size: 14px; color: #333;">You will first play an online computer-based decision-making task. This session should take less than 15 minutes, and you may receive a monetary bonus based on your performance in the task.</p>
+    
+    <p style="font-size: 14px; color: #333;">After completing the task, you will complete a short questionnaire.</p>
+    
+    <p style="font-size: 14px; color: #333;"><b>Payment rate:</b> You will receive a rate of $9 per hour, calculated based on the estimated time required to complete the study.</p>
+    
+    <p style="font-size: 14px; color: #333;">By providing your consent to participate, you agree to take part in all parts of the study.</p>
+    
+    <p style="font-size: 14px; color: #333;">Participation is entirely voluntary. You may choose not to participate, or to stop participating at any time, even after you have agreed, without any negative consequences.</p>
+    
+    <p style="font-size: 14px; color: #333;">You have the right to withdraw your consent at any point. Data collected prior to withdrawal may still be used for research purposes.</p>
+    
+    <p style="font-size: 14px; color: #333;">Participation may not provide direct personal benefit; however, the knowledge gained from this study may benefit others in the future.</p>
+    
+    <p style="font-size: 14px; color: #333;">There are no known risks or discomforts associated with participation in this study.</p>
+    
+    <p style="font-size: 14px; color: #333;">All responses are fully anonymized. Your Prolific ID will be replaced with a non-identifiable code, and no personally identifying information will be stored with the data.</p>
+    
+    <p style="font-size: 14px; color: #333;">The data collected will be used for scientific research and securely stored. Research findings may be shared through academic publications, conferences, and data repositories, and may also be used for educational purposes or future research.</p>
+    
+    <p style="margin-top: 4vh; font-weight: 600; font-size: 14px; color: #2c3e50;">By clicking "I Consent" below, you indicate that you have read and understood this consent form, and you agree to participate in this research study.</p>
+    
+    <button id="consent-btn" class="btn-action" onclick="handleConsent()" disabled>I Consent</button>
+</div>
+
+<!-- Instructions screen 1 -->
+<div id="setup-screen-1" class="instruction-box" style="display:none;">
+    <h1 style="text-align:center; color:#f1c40f;">Instructions</h1>
+
+    <p><b>IMPORTANT:</b> Please ensure your browser zoom level is set to <b>100%</b> before starting.</p>
+
+    <p>The goal of the game is to win as much money as possible.</p>
+
+    <p>Choose between three images using your keyboard.<br>
+    Each image has a different probability of reward.</p>
+
+    <p><span class="qtp">Q</span> = Left image<br>
+    <span class="qtp">T</span> = Middle image<br>
+    <span class="qtp">P</span> = Right image</p>
+
+    <button class="btn-action" onclick="goToInstruction2()">NEXT</button>
+</div>
+
+<!-- Instructions screen 2 (bonus + time rule on one screen) -->
+<div id="setup-screen-2" class="instruction-box" style="display:none;">
+    <h1 style="text-align:center; color:#f1c40f;">Instructions</h1>
+
+    <p>You will receive bonus money based on your performance.<br>
+    The bonus will be calculated based on 10 random trials from the game.</p>
+
+    <p>Once the images appear on the screen, you have <b>2 seconds</b> to make your choice.</p>
+
+    <p>If you do not choose an image within <b>2 seconds</b> in <b>5 total trials or more</b>, <b>the game will end</b>.</p>
+
+    <button class="btn-action" onclick="showBanditPracticeInstructions()">CONTINUE</button>
+</div>
+
+<!-- Bandit Practice Instructions -->
+<div id="bandit-practice-screen" class="instruction-box" style="display:none;">
+    <h1 style="text-align:center; color:#f1c40f;">Practice: Decision Task</h1>
+
+    <p>First, let's practice the decision task.</p>
+    
+    <p>Choose between three images to win points. You have 2 seconds to respond.</p>
+    
+    <p>You'll complete 6 practice trials.</p>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <button class="btn-action" onclick="startBanditPractice()">START DECISION PRACTICE</button>
+    </div>
+</div>
+
+<!-- RDM Instructions (before practice) -->
+<div id="rdm-instructions-screen" class="instruction-box" style="display:none;">
+    <h1 style="text-align:center; color:#f1c40f;">Motion Perception Task</h1>
+
+    <p>Between decision trials, you will see moving dots. Your task is to indicate the direction of motion:</p>
+    
+    <div style="display: flex; justify-content: center; align-items: center; gap: 40px; margin: 30px 0; pointer-events: none;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+            <div style="font-size: 24px; color:#f1c40f; font-weight: bold;">UP</div>
+            <div style="width: 200px; height: 60px; border: 3px solid #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; background: rgba(255,255,255,0.1);">Don't press anything</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+            <div style="font-size: 24px; color: #f1c40f; font-weight: bold;">DOWN</div>
+            <div style="width: 200px; height: 60px; border: 3px solid #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; background: rgba(255,255,255,0.1);">Press Q + T + P<br>together</div>
+        </div>
+    </div>
+    
+    <p>First, practice the motion task. Respond as soon as you see the motion direction. You'll complete 10 practice trials.</p>
+
+    <div style="background: rgba(241, 196, 15, 0.1); border: 1px solid #f1c40f; padding: 15px; border-radius: 8px; margin: 20px 0;">
+        <p style="margin: 0;"><span style="font-weight: bold; color: #f1c40f;">Important Note:</span> In the real experiment, you can earn a bonus based on 10 randomly selected trials.</p>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <button class="btn-action" onclick="startRDMPractice()">START MOTION PRACTICE</button>
+    </div>
+</div>
+
+<!-- RDM Practice Instructions (no longer used, kept for safety) -->
+<div id="rdm-practice-screen" class="instruction-box" style="display:none;">
+    <h1 style="text-align:center; color:#f1c40f;">Practice: Motion Perception Task</h1>
+    <p>This screen shouldn't appear</p>
+</div>
+
+<!-- Combined Practice Instructions -->
+<div id="combined-practice-screen" class="instruction-box" style="display:none;">
+    <h1 style="text-align:center; color:#f1c40f;">Practice: Combined Task</h1>
+
+    <p>Great! Now you'll practice both tasks together.</p>
+    
+    <p>You'll make decisions between the three images, and between each decision trial, you'll see the moving dots.</p>
+    
+    <p>For the dot motion: Press Q + T + P together for DOWN, or don't press anything for UP.</p>
+    
+    <p>You'll complete 6 combined practice trials.</p>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <button class="btn-action" onclick="startCombinedPractice()">START COMBINED PRACTICE</button>
+    </div>
+</div>
+
+<div id="transition-screen" class="instruction-box" style="display:none; text-align:center;">
+    <h1>Practice Complete</h1>
+    <p>The stimuli will now change. You are starting the real experiment.</p>
+    <button class="btn-action" onclick="startRealTask()">START REAL EXPERIMENT</button>
+</div>
+
+<div id="game-screen" style="display:none; flex-direction: column; align-items: center;">
+    <div id="trial-counter"></div>
+    <div id="feedback"></div>
+
+    <div id="container">
+        <div class="bandit-container">
+            <img id="img-0" class="bandit-image" src="" alt="">
+            <div id="overlay-0" class="outcome-overlay"></div>
+            <div class="key-hint">Q</div>
+        </div>
+        <div class="bandit-container">
+            <img id="img-1" class="bandit-image" src="" alt="">
+            <div id="overlay-1" class="outcome-overlay"></div>
+            <div class="key-hint">T</div>
+        </div>
+        <div class="bandit-container">
+            <img id="img-2" class="bandit-image" src="" alt="">
+            <div id="overlay-2" class="outcome-overlay"></div>
+            <div class="key-hint">P</div>
+        </div>
+    </div>
+
+    <div id="fixation-cross">+</div>
+    <canvas id="rdm-canvas" width="500" height="500"></canvas>
+    <div id="rdm-arrows">
+        <div class="rdm-arrow arrow-up" style="font-size: 2.5vmin;">Don't press</div>
+        <div class="rdm-arrow arrow-down" style="font-size: 2.5vmin;">Q + T + P</div>
+        <div class="rdm-arrow arrow-left">◀</div>
+        <div class="rdm-arrow arrow-right">▶</div>
+    </div>
+    <div id="rdm-feedback"></div>
+    <div id="rdm-answer-now">ANSWER NOW</div>
+    <div id="rdm-accuracy-summary"></div>
+</div>
+
+<!-- PSWQ Questionnaire Screen -->
+<div id="pswq-screen" class="pswq-container" style="display:none;">
+    <h2 style="text-align:center; color:#2c3e50; margin-bottom: 3vh; font-size: 18px; font-weight: 600;">Questionnaires</h2>
+    
+    <h3 style="margin: 2vh 0 2vh 0; font-size: 14px; color: #333; line-height: 1.5;">Rate each of the following statements on a scale of 1 ("not at all typical of me") to 5 ("very typical of me")</h3>
+    
+    <!-- Worry Questionnaire (8 items) -->
+    <div class="pswq-question">
+        <div class="pswq-question-text">1. My worries overwhelm me.</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="worry_1" value="1" id="worry_1_1"><label for="worry_1_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_1" value="2" id="worry_1_2"><label for="worry_1_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_1" value="3" id="worry_1_3"><label for="worry_1_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_1" value="4" id="worry_1_4"><label for="worry_1_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_1" value="5" id="worry_1_5"><label for="worry_1_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">2. Many situations make me worry.</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="worry_2" value="1" id="worry_2_1"><label for="worry_2_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_2" value="2" id="worry_2_2"><label for="worry_2_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_2" value="3" id="worry_2_3"><label for="worry_2_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_2" value="4" id="worry_2_4"><label for="worry_2_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_2" value="5" id="worry_2_5"><label for="worry_2_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">3. I know I should not worry about things, but I just cannot help it.</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="worry_3" value="1" id="worry_3_1"><label for="worry_3_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_3" value="2" id="worry_3_2"><label for="worry_3_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_3" value="3" id="worry_3_3"><label for="worry_3_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_3" value="4" id="worry_3_4"><label for="worry_3_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_3" value="5" id="worry_3_5"><label for="worry_3_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">4. When I am under pressure I worry a lot.</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="worry_4" value="1" id="worry_4_1"><label for="worry_4_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_4" value="2" id="worry_4_2"><label for="worry_4_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_4" value="3" id="worry_4_3"><label for="worry_4_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_4" value="4" id="worry_4_4"><label for="worry_4_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_4" value="5" id="worry_4_5"><label for="worry_4_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">5. I am always worrying about something.</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="worry_5" value="1" id="worry_5_1"><label for="worry_5_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_5" value="2" id="worry_5_2"><label for="worry_5_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_5" value="3" id="worry_5_3"><label for="worry_5_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_5" value="4" id="worry_5_4"><label for="worry_5_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_5" value="5" id="worry_5_5"><label for="worry_5_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">6. As soon as I finish one task, I start to worry about everything else I have to do.</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="worry_6" value="1" id="worry_6_1"><label for="worry_6_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_6" value="2" id="worry_6_2"><label for="worry_6_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_6" value="3" id="worry_6_3"><label for="worry_6_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_6" value="4" id="worry_6_4"><label for="worry_6_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_6" value="5" id="worry_6_5"><label for="worry_6_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">7. I have been a worrier all my life.</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="worry_7" value="1" id="worry_7_1"><label for="worry_7_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_7" value="2" id="worry_7_2"><label for="worry_7_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_7" value="3" id="worry_7_3"><label for="worry_7_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_7" value="4" id="worry_7_4"><label for="worry_7_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_7" value="5" id="worry_7_5"><label for="worry_7_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">8. I notice that I have been worrying about things.</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="worry_8" value="1" id="worry_8_1"><label for="worry_8_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_8" value="2" id="worry_8_2"><label for="worry_8_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_8" value="3" id="worry_8_3"><label for="worry_8_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_8" value="4" id="worry_8_4"><label for="worry_8_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="worry_8" value="5" id="worry_8_5"><label for="worry_8_5">5</label></div>
+        </div>
+    </div>
+
+    <!-- Somatic Anxiety Questionnaire (10 items) -->
+    <h3 style="margin: 3vh 0 2vh 0; font-size: 14px; color: #333; line-height: 1.5;">Below is a list of feelings, sensations, problems, and experiences that people sometimes have. Read each item and then fill in the blank with the number that best describes how much you have felt or experienced things this way in general<br>(1 = not at all to 5 = extremely)</h3>
+    
+    <div class="pswq-question">
+        <div class="pswq-question-text">1. Was short of breath</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="phys_1" value="1" id="phys_1_1"><label for="phys_1_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_1" value="2" id="phys_1_2"><label for="phys_1_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_1" value="3" id="phys_1_3"><label for="phys_1_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_1" value="4" id="phys_1_4"><label for="phys_1_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_1" value="5" id="phys_1_5"><label for="phys_1_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">2. Felt dizzy or light-headed</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="phys_2" value="1" id="phys_2_1"><label for="phys_2_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_2" value="2" id="phys_2_2"><label for="phys_2_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_2" value="3" id="phys_2_3"><label for="phys_2_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_2" value="4" id="phys_2_4"><label for="phys_2_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_2" value="5" id="phys_2_5"><label for="phys_2_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">3. Hands were cold or sweaty</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="phys_3" value="1" id="phys_3_1"><label for="phys_3_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_3" value="2" id="phys_3_2"><label for="phys_3_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_3" value="3" id="phys_3_3"><label for="phys_3_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_3" value="4" id="phys_3_4"><label for="phys_3_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_3" value="5" id="phys_3_5"><label for="phys_3_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">4. Hands were shaky</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="phys_4" value="1" id="phys_4_1"><label for="phys_4_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_4" value="2" id="phys_4_2"><label for="phys_4_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_4" value="3" id="phys_4_3"><label for="phys_4_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_4" value="4" id="phys_4_4"><label for="phys_4_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_4" value="5" id="phys_4_5"><label for="phys_4_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">5. Had trouble swallowing</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="phys_5" value="1" id="phys_5_1"><label for="phys_5_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_5" value="2" id="phys_5_2"><label for="phys_5_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_5" value="3" id="phys_5_3"><label for="phys_5_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_5" value="4" id="phys_5_4"><label for="phys_5_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_5" value="5" id="phys_5_5"><label for="phys_5_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">6. Had hot or cold spells</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="phys_6" value="1" id="phys_6_1"><label for="phys_6_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_6" value="2" id="phys_6_2"><label for="phys_6_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_6" value="3" id="phys_6_3"><label for="phys_6_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_6" value="4" id="phys_6_4"><label for="phys_6_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_6" value="5" id="phys_6_5"><label for="phys_6_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">7. Felt like I was choking</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="phys_7" value="1" id="phys_7_1"><label for="phys_7_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_7" value="2" id="phys_7_2"><label for="phys_7_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_7" value="3" id="phys_7_3"><label for="phys_7_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_7" value="4" id="phys_7_4"><label for="phys_7_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_7" value="5" id="phys_7_5"><label for="phys_7_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">8. Muscles twitched or trembled</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="phys_8" value="1" id="phys_8_1"><label for="phys_8_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_8" value="2" id="phys_8_2"><label for="phys_8_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_8" value="3" id="phys_8_3"><label for="phys_8_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_8" value="4" id="phys_8_4"><label for="phys_8_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_8" value="5" id="phys_8_5"><label for="phys_8_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">9. Was trembling or shaking</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="phys_9" value="1" id="phys_9_1"><label for="phys_9_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_9" value="2" id="phys_9_2"><label for="phys_9_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_9" value="3" id="phys_9_3"><label for="phys_9_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_9" value="4" id="phys_9_4"><label for="phys_9_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_9" value="5" id="phys_9_5"><label for="phys_9_5">5</label></div>
+        </div>
+    </div>
+
+    <div class="pswq-question">
+        <div class="pswq-question-text">10. Had a very dry mouth</div>
+        <div class="pswq-options">
+            <div class="pswq-option"><input type="radio" name="phys_10" value="1" id="phys_10_1"><label for="phys_10_1">1</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_10" value="2" id="phys_10_2"><label for="phys_10_2">2</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_10" value="3" id="phys_10_3"><label for="phys_10_3">3</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_10" value="4" id="phys_10_4"><label for="phys_10_4">4</label></div>
+            <div class="pswq-option"><input type="radio" name="phys_10" value="5" id="phys_10_5"><label for="phys_10_5">5</label></div>
+        </div>
+    </div>
+
+    <button class="btn-action" onclick="handlePSWQSubmit()" style="margin-top: 4vh;">Continue</button>
+</div>
+
+
+<div id="end-screen" style="display:none; text-align:center;">
+    <h1 id="end-msg" style="font-size: 6vmin;">Session Complete</h1>
+    <p style="font-size: 3vmin; margin: 2vh 0;">Thank you for participating!</p>
+    <p style="font-size: 2.5vmin; color: #2ecc71;">Your data has been saved successfully.</p>
+</div>
+
+<script>
+    // --- STATE & CONFIG ---
+    let trialCount = 0;
+    let missedTrials = 0; // cumulative across practice + task
+    let missedRDMResponses = 0; // track missed RDM responses after "ANSWER NOW"
+    let isPractice = true;
+    let practicePhase = null; // 'rdm-only', 'bandit-only', 'combined', null (for real task)
+    let rdmPracticeCount = 0;
+    
+    // Read URL parameters for Prolific integration
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlSubjectId = urlParams.get('subject') || urlParams.get('PROLIFIC_PID');
+    let subjectId = urlSubjectId ? urlSubjectId : Date.now();
+    const prolificRedirectCode = urlParams.get('redirect') || 'CUW3UPHW';
+    
+    let canClick = false;
+    
+    // RDM accuracy tracking for summary feedback every 10 trials
+    let totalRDMTrials = 0;
+    let correctRDMResponses = 0;
+    
+    // Counters for RDM direction sequences in real trials
+    let shortITICount = 0; // Counter for short ITI trials (1 second)
+    let longITICount = 0; // Counter for long ITI trials (4 seconds)
+    
+    // Tracking actual usage for verification
+    let shortITI_UP_count = 0;
+    let shortITI_DOWN_count = 0;
+    let longITI_UP_count = 0;
+    let longITI_DOWN_count = 0;
+    let timerInterval;
+    let startTime;
+    let results = [];
+    let rdmResults = []; // Store RDM interference task results
+    let pswqResponses = {};
+    
+    // Practice trial counts
+    const RDM_PRACTICE_TRIALS = 10;
+    const BANDIT_ONLY_PRACTICE_TRIALS = 6;
+    const COMBINED_PRACTICE_TRIALS = 6;
+
+    // Subject ID: uses URL parameter (PROLIFIC_PID or subject) if provided, otherwise timestamp
+
+    const ITI_SHORT = 1000;   // ms (1 second)
+const ITI_LONG = 4000;   // ms (4 seconds)
+
+const TOTAL_TRIALS = 100;
+    const PRACTICE_TRIALS = 6;
+    const MAX_MISSES_ALLOWED = 5;
+    const FEEDBACK_DURATION = 1250; // ms
+
+    // === Random-walk parameters ===
+    const RW_SD = 0.06;
+    const RW_LOW = 0.1;
+    const RW_HIGH = 0.9;
+
+    // Fixed seed: every participant gets the same trajectories
+    const ITI_SEED = 54321; // fixed seed for ITI (same order for all participants)
+const RW_SEED_REAL = 20263944;  // Seed that generates the exact probabilities from your CSV
+    const RW_SEED_PRACTICE = 20260106;
+
+    // Optional debug plot toggle (kept off for participants)
+    const DEBUG_PLOT = false;
+
+    const makeSvgDataUri = (label) => {
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400">
+  <rect width="100%" height="100%" fill="white"/>
+  <circle cx="200" cy="200" r="140" fill="none" stroke="black" stroke-width="12"/>
+  <text x="200" y="225" font-size="120" text-anchor="middle" font-family="Arial" fill="black">${label}</text>
+</svg>`;
+        return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    };
+
+    // If you have your own PNG files, keep them in the same folder as this HTML.
+    // If a file is missing, we automatically fall back to simple inline SVG icons.
+    const STIMULI_FILES = {
+        practice: ["p1.png", "p2.png", "p3.png"],
+        real: ["r1.png", "r2.png", "r3.png"]
+    };
+
+    const STIMULI_FALLBACK = {
+        practice: [makeSvgDataUri("1"), makeSvgDataUri("2"), makeSvgDataUri("3")],
+        real: [makeSvgDataUri("1"), makeSvgDataUri("2"), makeSvgDataUri("3")]
+    };
+
+    // -------- Seeded RNG (needed for ITI generation) --------
+    function mulberry32(seed) {
+        let t = seed >>> 0;
+        return function () {
+            t += 0x6D2B79F5;
+            let x = Math.imul(t ^ (t >>> 15), 1 | t);
+            x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+            return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+        };
+    }
+
+    // Simple 50/50 ITI generation for practice (no first-10 bias)
+    function generateSimpleSeededITIs(nTrials, seed, maxRepeats = 4) {
+        const rng = mulberry32(seed);
+        
+        // Generate exactly 50/50 split
+        const shortCount = Math.floor(nTrials / 2);
+        const longCount = nTrials - shortCount;
+        
+        const sequence = [];
+        for (let i = 0; i < shortCount; i++) sequence.push(1);
+        for (let i = 0; i < longCount; i++) sequence.push(4);
+        
+        // Multiple shuffle passes for better randomization
+        for (let shuffle = 0; shuffle < 5; shuffle++) {
+            for (let i = sequence.length - 1; i > 0; i--) {
+                const j = Math.floor(rng() * (i + 1));
+                [sequence[i], sequence[j]] = [sequence[j], sequence[i]];
+            }
+        }
+        
+        // Fix violations of max consecutive constraint
+        let fixed = true;
+        let iterations = 0;
+        const maxIterations = 1000;
+        
+        while (fixed && iterations < maxIterations) {
+            fixed = false;
+            iterations++;
+            
+            for (let i = 0; i < sequence.length; i++) {
+                let consecutiveCount = 1;
+                let j = i;
+                while (j + 1 < sequence.length && sequence[j + 1] === sequence[i]) {
+                    consecutiveCount++;
+                    j++;
+                }
+                
+                if (consecutiveCount > maxRepeats) {
+                    const currentValue = sequence[i];
+                    const neededValue = currentValue === 1 ? 4 : 1;
+                    
+                    for (let k = i + consecutiveCount; k < sequence.length; k++) {
+                        if (sequence[k] === neededValue) {
+                            [sequence[i + maxRepeats], sequence[k]] = [sequence[k], sequence[i + maxRepeats]];
+                            fixed = true;
+                            break;
+                        }
+                    }
+                    if (fixed) break;
+                }
+            }
+        }
+        
+        return sequence;
+    }
+    
+    // Seeded ITI generation: exactly 50% short (1), 50% long (4), max 4 consecutive repeats
+    // First 10 trials biased toward long ITIs for more variability (ONLY for real task)
+    function generateSeededITIs(nTrials, seed, maxRepeats = 4) {
+        const rng = mulberry32(seed);
+        
+        // Generate full sequence with 50/50 split
+        const shortCount = Math.floor(nTrials / 2);
+        const longCount = nTrials - shortCount;
+        
+        // For first 10 trials: 7-8 long, 2-3 short
+        const first10Long = 7;
+        const first10Short = 3;
+        
+        // Build first 10 with more long ITIs
+        const first10 = [];
+        for (let i = 0; i < first10Short; i++) first10.push(1);
+        for (let i = 0; i < first10Long; i++) first10.push(4);
+        
+        // Shuffle first 10
+        for (let i = first10.length - 1; i > 0; i--) {
+            const j = Math.floor(rng() * (i + 1));
+            [first10[i], first10[j]] = [first10[j], first10[i]];
+        }
+        
+        // Build remaining to balance to 50/50
+        const remaining = [];
+        const remainingShort = shortCount - first10Short;
+        const remainingLong = longCount - first10Long;
+        for (let i = 0; i < remainingShort; i++) remaining.push(1);
+        for (let i = 0; i < remainingLong; i++) remaining.push(4);
+        
+        // Shuffle remaining
+        for (let shuffle = 0; shuffle < 3; shuffle++) {
+            for (let i = remaining.length - 1; i > 0; i--) {
+                const j = Math.floor(rng() * (i + 1));
+                [remaining[i], remaining[j]] = [remaining[j], remaining[i]];
+            }
+        }
+        
+        // Combine
+        const sequence = first10.concat(remaining);
+        
+        // Fix violations of max consecutive constraint
+        let fixed = true;
+        let iterations = 0;
+        const maxIterations = 1000;
+        
+        while (fixed && iterations < maxIterations) {
+            fixed = false;
+            iterations++;
+            
+            for (let i = 0; i < sequence.length; i++) {
+                // Count consecutive
+                let consecutiveCount = 1;
+                let j = i;
+                while (j + 1 < sequence.length && sequence[j + 1] === sequence[i]) {
+                    consecutiveCount++;
+                    j++;
+                }
+                
+                if (consecutiveCount > maxRepeats) {
+                    // Find a different value to swap with
+                    const currentValue = sequence[i];
+                    const neededValue = currentValue === 1 ? 4 : 1;
+                    
+                    // Look for the first occurrence of needed value after this run
+                    for (let k = i + consecutiveCount; k < sequence.length; k++) {
+                        if (sequence[k] === neededValue) {
+                            // Swap one from the run with the different value
+                            [sequence[i + maxRepeats], sequence[k]] = [sequence[k], sequence[i + maxRepeats]];
+                            fixed = true;
+                            break;
+                        }
+                    }
+                    if (fixed) break;
+                }
+            }
+        }
+        
+        return sequence;
+    }
+    
+    const FIXED_ITIS = generateSeededITIs(TOTAL_TRIALS, ITI_SEED, 4); // Real task: uses first-10 bias
+    const PRACTICE_ITIS = generateSimpleSeededITIs(PRACTICE_TRIALS, ITI_SEED + 1, 4); // Old practice (not used)
+    const BANDIT_PRACTICE_ITIS = generateSimpleSeededITIs(BANDIT_ONLY_PRACTICE_TRIALS, ITI_SEED + 99, 4); // 50/50 split - changed seed for better randomization
+    const RDM_PRACTICE_ITIS = generateSimpleSeededITIs(RDM_PRACTICE_TRIALS, ITI_SEED + 4, 4); // 50/50 split
+    const COMBINED_PRACTICE_ITIS = generateSimpleSeededITIs(COMBINED_PRACTICE_TRIALS, ITI_SEED + 77, 4); // 50/50 split - changed seed for better randomization
+    
+    // Generate RDM direction sequences for real trials: 25 UP and 25 DOWN for each ITI type
+    function generateRDMDirections(nTrials, seed) {
+        const maxAttempts = 1000;
+        let attempt = 0;
+        let sequence = [];
+        
+        while (attempt < maxAttempts) {
+            const rng = mulberry32(seed + attempt);
+            
+            // Generate exactly 50/50 split
+            const upCount = Math.floor(nTrials / 2);
+            const downCount = nTrials - upCount;
+            
+            sequence = [];
+            for (let i = 0; i < upCount; i++) sequence.push('UP');
+            for (let i = 0; i < downCount; i++) sequence.push('DOWN');
+            
+            // Multiple shuffle passes for better randomization
+            for (let shuffle = 0; shuffle < 5; shuffle++) {
+                for (let i = sequence.length - 1; i > 0; i--) {
+                    const j = Math.floor(rng() * (i + 1));
+                    [sequence[i], sequence[j]] = [sequence[j], sequence[i]];
+                }
+            }
+            
+            // Check for max 4 consecutive directions
+            let maxConsec = 1;
+            let currentConsec = 1;
+            let valid = true;
+            for (let i = 1; i < sequence.length; i++) {
+                if (sequence[i] === sequence[i - 1]) {
+                    currentConsec++;
+                    if (currentConsec > 4) {
+                        valid = false;
+                        break;
+                    }
+                } else {
+                    currentConsec = 1;
+                }
+            }
+            
+            if (valid) {
+                console.log(`✅ RDM sequence generated with max 4 consecutive directions (attempt ${attempt})`);
+                return sequence;
+            }
+            attempt++;
+        }
+        
+        console.warn("Could not find RDM sequence with < 5 consecutive directions within maxAttempts. Returning last attempt.");
+        return sequence;
+    }
+    
+    // RDM direction sequences will be generated after RDM_SEED_BASE is defined
+    let RDM_SHORT_ITI_DIRECTIONS = null;
+    let RDM_LONG_ITI_DIRECTIONS = null;
+    
+    // Verify ITI constraints (console output)
+    function verifyITIs(itis, name) {
+        let maxConsec = 0;
+        let currentConsec = 1;
+        let lastVal = itis[0];
+        const counts = { 1: 0, 4: 0 };
+        
+        for (let i = 0; i < itis.length; i++) {
+            counts[itis[i]]++;
+            if (i > 0) {
+                if (itis[i] === lastVal) {
+                    currentConsec++;
+                    maxConsec = Math.max(maxConsec, currentConsec);
+                } else {
+                    currentConsec = 1;
+                    lastVal = itis[i];
+                }
+            }
+        }
+        console.log(`${name} ITIs: ${itis.length} trials, Short(1)=${counts[1]}, Long(4)=${counts[4]}, Max consecutive=${maxConsec}`);
+    }
+    
+    verifyITIs(FIXED_ITIS, "REAL");
+    verifyITIs(PRACTICE_ITIS, "OLD_PRACTICE");
+    verifyITIs(BANDIT_PRACTICE_ITIS, "BANDIT_PRACTICE");
+    verifyITIs(RDM_PRACTICE_ITIS, "RDM_PRACTICE");
+    verifyITIs(COMBINED_PRACTICE_ITIS, "COMBINED_PRACTICE");
+
+    // -------- Normal distribution for random walk --------
+    function randn(rng) {
+        // Box-Muller, returns N(0,1)
+        let u = 0, v = 0;
+        while (u === 0) u = rng();
+        while (v === 0) v = rng();
+        return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    }
+
+    function reflectToBounds(x, low, high) {
+        while (x < low || x > high) {
+            if (x < low) x = low + (low - x);
+            if (x > high) x = high - (x - high);
+        }
+        if (x < low) x = low;
+        if (x > high) x = high;
+        return x;
+    }
+
+    function generateRandomWalkTrajectories(nTrials, startPs, sd, low, high, seed) {
+        const rng = mulberry32(seed);
+        return startPs.map(p0 => {
+            const p = new Array(nTrials);
+            p[0] = reflectToBounds(p0, low, high);
+            for (let t = 1; t < nTrials; t++) {
+                const prev = p[t - 1];
+                const proposal = prev + sd * randn(rng); // mean = prev, sd fixed
+                p[t] = reflectToBounds(proposal, low, high);
+            }
+            return p;
+        });
+    }
+
+    function argmax3(a, b, c) {
+        if (a >= b && a >= c) return 0;
+        if (b >= a && b >= c) return 1;
+        return 2;
+    }
+
+    function countSwitches(bestIdxArr) {
+        let switches = 0;
+        for (let t = 1; t < bestIdxArr.length; t++) {
+            if (bestIdxArr[t] !== bestIdxArr[t - 1]) switches++;
+        }
+        return switches;
+    }
+
+    function switchPositions(bestIdxArr) {
+        const pos = [];
+        for (let t = 1; t < bestIdxArr.length; t++) {
+            if (bestIdxArr[t] !== bestIdxArr[t - 1]) pos.push(t); // switch occurs at t
+        }
+        return pos;
+    }
+
+    function switchesAreSpread(bestIdxArr, minGap) {
+        const pos = switchPositions(bestIdxArr);
+        for (let i = 1; i < pos.length; i++) {
+            if (pos[i] - pos[i - 1] < minGap) return false;
+        }
+        return true;
+    }
+
+    function eachBanditBestAtLeastOnce(bestIdxArr) {
+        const seen = new Set(bestIdxArr);
+        return seen.has(0) && seen.has(1) && seen.has(2);
+    }
+
+    // Generate trajectories until constraints are met:
+    // - Random walk: mean = previous p, SD fixed
+    // - Enforce bounds [low, high]
+    // - Best bandit (argmax) switches exactly targetSwitches times across nTrials
+    // - Each bandit is best at least once
+    // Deterministic: uses seed + attempt so all participants get identical trajectories.
+    function generateTrajectoriesWithExactlyKSwitches(nTrials, startPs, sd, low, high, seed, targetSwitches, minGap=10, maxAttempts=5000) {
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            const traj = generateRandomWalkTrajectories(nTrials, startPs, sd, low, high, seed + attempt);
+
+            const best = new Array(nTrials);
+            for (let t = 0; t < nTrials; t++) {
+                best[t] = argmax3(traj[0][t], traj[1][t], traj[2][t]);
+            }
+
+            const switches = countSwitches(best);
+            const coverageOK = eachBanditBestAtLeastOnce(best);
+            const spreadOK = switchesAreSpread(best, minGap);
+
+            if (switches === targetSwitches && coverageOK && spreadOK) {
+                return { traj, best, switches, attemptUsed: attempt };
+            }
+        }
+        throw new Error("Could not find trajectories meeting constraints within maxAttempts.");
+    }
+
+    // Trajectories:
+    // - real: length TOTAL_TRIALS, start [0.25, 0.50, 0.75] (Machine 3 is best)
+    // - practice: length PRACTICE_TRIALS, start [0.75, 0.50, 0.25] (Machine 1 is best - DIFFERENT from real)
+    const REAL_GEN = generateTrajectoriesWithExactlyKSwitches(TOTAL_TRIALS, [0.25, 0.50, 0.75], RW_SD, RW_LOW, RW_HIGH, RW_SEED_REAL, 6, 10);
+    const REAL_PATH = REAL_GEN.traj;
+const PRACTICE_PATH = generateRandomWalkTrajectories(PRACTICE_TRIALS, [0.75, 0.50, 0.25], RW_SD, RW_LOW, RW_HIGH, RW_SEED_PRACTICE);
+    // Debug info (open console): shows that the best bandit switches exactly 3 times
+    console.log("REAL_PATH switches=", REAL_GEN.switches, "minGap=", 10, "attemptUsed=", REAL_GEN.attemptUsed);
+
+
+    function currentPath() {
+        return isPractice ? PRACTICE_PATH : REAL_PATH;
+    }
+
+    // Optional debug plot (simple inline canvas). Off by default.
+    function maybePlotTrajectories() {
+        if (!DEBUG_PLOT) return;
+        const W = 900, H = 350, pad = 40;
+        const canvas = document.createElement('canvas');
+        canvas.width = W; canvas.height = H;
+        canvas.style.position = 'absolute';
+        canvas.style.left = '10px';
+        canvas.style.bottom = '10px';
+        canvas.style.border = '1px solid #333';
+        canvas.style.background = 'white';
+        document.body.appendChild(canvas);
+
+        const ctx = canvas.getContext('2d');
+        const path = REAL_PATH;
+        const n = path[0].length;
+
+        // axes
+        ctx.strokeStyle = '#000';
+        ctx.beginPath();
+        ctx.moveTo(pad, pad);
+        ctx.lineTo(pad, H - pad);
+        ctx.lineTo(W - pad, H - pad);
+        ctx.stroke();
+
+        // map functions
+        const xToPx = (t) => pad + (t / (n - 1)) * (W - 2 * pad);
+        const yToPx = (p) => (H - pad) - ((p - 0.1) / (0.9 - 0.1)) * (H - 2 * pad);
+
+        const colors = ['#e74c3c', '#3498db', '#2ecc71'];
+        for (let b = 0; b < 3; b++) {
+            ctx.strokeStyle = colors[b];
+            ctx.beginPath();
+            for (let t = 0; t < n; t++) {
+                const x = xToPx(t);
+                const y = yToPx(path[b][t]);
+                if (t === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        }
+    }
+
+    // --- UI Helpers ---
+    // Initialize consent screen scroll detection
+    function initConsentScreen() {
+        const consentContainer = document.getElementById('consent-screen');
+        const consentBtn = document.getElementById('consent-btn');
+        
+        function checkScroll() {
+            const scrollTop = consentContainer.scrollTop;
+            const scrollHeight = consentContainer.scrollHeight;
+            const clientHeight = consentContainer.clientHeight;
+            const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
+            
+            // Enable button when scrolled to bottom (within 5px tolerance)
+            if (scrollPercentage >= 0.99 || (scrollTop + clientHeight >= scrollHeight - 5)) {
+                consentBtn.disabled = false;
+            } else {
+                consentBtn.disabled = true;
+            }
+        }
+        
+        consentContainer.addEventListener('scroll', checkScroll);
+        // Also check on load in case content fits without scrolling
+        setTimeout(checkScroll, 100);
+    }
+
+    function handleConsent() {
+        document.body.classList.remove('consent-mode');
+        document.getElementById('consent-screen').style.display = 'none';
+        document.getElementById('setup-screen-1').style.display = 'block';
+    }
+
+    function goToInstruction2() {
+        document.getElementById('setup-screen-1').style.display = 'none';
+        document.getElementById('setup-screen-2').style.display = 'block';
+    }
+
+    // Helper function to create radio button row
+    function radioRow(name, max) {
+        let html = '';
+        for (let i = 1; i <= max; i++) {
+            html += `<label><input type="radio" name="${name}" value="${i}" required> ${i}</label> `;
+        }
+        return html;
+    }
+
+    function showPSWQScreen() {
+        // Log RDM direction usage summary for real trials
+        if (!isPractice) {
+            console.log('=== RDM DIRECTION USAGE SUMMARY (Real Trials) ===');
+            console.log(`Short ITI: ${shortITI_UP_count} UP, ${shortITI_DOWN_count} DOWN (total: ${shortITI_UP_count + shortITI_DOWN_count})`);
+            console.log(`Long ITI: ${longITI_UP_count} UP, ${longITI_DOWN_count} DOWN (total: ${longITI_UP_count + longITI_DOWN_count})`);
+            console.log(`Expected: 25 UP, 25 DOWN for each ITI type`);
+        }
+        
+        document.body.classList.add('pswq-mode');
+        document.getElementById('game-screen').style.display = 'none';
+        
+        const pswqContainer = document.getElementById('pswq-screen');
+        pswqContainer.innerHTML = `
+<form id="qsForm" class="overlay scroll" style="background: white; color: #333; padding: 30px; border-radius: 8px; max-width: 900px; margin: 0 auto;">
+<h2 style="text-align: center; margin-bottom: 20px;">Questionnaires</h2>
+
+<h3 style="margin: 20px 0; font-size: 14px;">Rate each of the following statements on a scale of 1 ("not at all typical of me") to 5 ("very typical of me")</h3>
+<ol class="qs" style="list-style-position: inside; padding: 0;">
+    ${[
+        'My worries overwhelm me.',
+        'Many situations make me worry.',
+        'I know I should not worry about things, but I just cannot help it.',
+        'When I am under pressure I worry a lot.',
+        'I am always worrying about something.',
+        'As soon as I finish one task, I start to worry about everything else I have to do.',
+        'I have been a worrier all my life.',
+        'I notice that I have been worrying about things.'
+    ].map((t, i) =>
+        `<li style="margin-bottom: 15px;">${t}<div style="margin-top: 8px;">${radioRow('worry' + (i + 1), 5)}</div></li>`
+    ).join('')}
+</ol>
+
+<h3 style="margin: 30px 0 20px 0; font-size: 14px;">Below is a list of feelings, sensations, problems, and experiences that people sometimes have. Read each item and then fill in the blank with the number that best describes how much you have felt or experienced things this way in general<br>(1 = not at all to 5 = extremely)</h3>
+<ol class="qs" style="list-style-position: inside; padding: 0;">
+    ${[
+        'Was short of breath',
+        'Felt dizzy or light-headed',
+        'Hands were cold or sweaty',
+        'Hands were shaky',
+        'Had trouble swallowing',
+        'Had hot or cold spells',
+        'Felt like I was choking',
+        'Muscles twitched or trembled',
+        'Was trembling or shaking',
+        'Had a very dry mouth'
+    ].map((t, i) =>
+        `<li style="margin-bottom: 15px;">${t}<div style="margin-top: 8px;">${radioRow('phys' + (i + 1), 5)}</div></li>`
+    ).join('')}
+</ol>
+
+<button type="submit" class="btn-action" style="margin-top: 30px; display: block; margin-left: auto; margin-right: auto;">Submit ▶</button>
+</form>`;
+        
+        pswqContainer.style.display = 'block';
+        pswqContainer.scrollTop = 0;
+        
+        // Set up form submission
+        document.getElementById('qsForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target).entries());
+            
+            // Convert to our format
+            pswqResponses = {};
+            let worryTotal = 0;
+            let physTotal = 0;
+            
+            for (let i = 1; i <= 8; i++) {
+                const val = parseInt(data['worry' + i]);
+                pswqResponses['worry_' + i] = val;
+                worryTotal += val;
+            }
+            
+            for (let i = 1; i <= 10; i++) {
+                const val = parseInt(data['phys' + i]);
+                pswqResponses['phys_' + i] = val;
+                physTotal += val;
+            }
+            
+            pswqResponses.worry_total = worryTotal;
+            pswqResponses.phys_total = physTotal;
+            pswqResponses.subject = subjectId;
+            pswqResponses.timestamp = new Date().toISOString();
+            
+            localStorage.setItem('pswq_responses', JSON.stringify(pswqResponses));
+            
+            console.log('Calling saveAllDataToFirestore...');
+            await saveAllDataToFirestore();
+            console.log('saveAllDataToFirestore completed');
+            
+            document.body.classList.remove('pswq-mode');
+            pswqContainer.style.display = 'none';
+            document.getElementById('end-screen').style.display = 'block';
+            
+            // Redirect to Prolific after a short delay
+            setTimeout(() => {
+                window.location.href = `https://app.prolific.co/submissions/complete?cc=${prolificRedirectCode}`;
+            }, 2000);
+        };
+    }
+
+
+    // ============ RDM (Random Dot Motion) Interference Task ============
+    
+    let rdmData = {}; // Store RDM results
+    
+    // RDM Parameters
+    const RDM_COHERENCE = 0.07; // 7% coherence
+    const RDM_NUM_DOTS = 500;
+    const RDM_APERTURE_RADIUS_VH = 25; // vh units (viewport height)
+    const RDM_SPEED = 100; // Speed parameter (will be divided by 50 in calculation)
+    const RDM_DOT_SIZE = 2; // pixels
+    const RDM_FRAME_RATE = 60; // fps
+    const RDM_DIRECTION_PAIRS = [
+        ['UP', 'DOWN']  // Only vertical directions
+    ];
+    const RDM_SEED_BASE = 99999; // Base seed for RDM randomization
+    
+    // Verify RDM direction sequences helper
+    function checkConsecutive(sequence) {
+        if (!sequence || sequence.length === 0) return 0;
+        let maxConsec = 1;
+        let currentConsec = 1;
+        for (let i = 1; i < sequence.length; i++) {
+            if (sequence[i] === sequence[i - 1]) {
+                currentConsec++;
+                maxConsec = Math.max(maxConsec, currentConsec);
+            } else {
+                currentConsec = 1;
+            }
+        }
+        return maxConsec;
+    }
+
+    // Generate RDM direction sequences for real trials (25 UP, 25 DOWN for each ITI type)
+    // We also ensure the combined sequence (mapped to ITIs) has no more than 4 consecutive directions
+    let rdmCombinedAttempt = 0;
+    while (rdmCombinedAttempt < 1000) {
+        RDM_SHORT_ITI_DIRECTIONS = generateRDMDirections(50, RDM_SEED_BASE + 1000 + rdmCombinedAttempt);
+        RDM_LONG_ITI_DIRECTIONS = generateRDMDirections(50, RDM_SEED_BASE + 2000 + rdmCombinedAttempt);
+        
+        // Map to actual trial sequence to check overall consecutive directions
+        let combined = [];
+        let sCount = 0, lCount = 0;
+        for (let t = 0; t < FIXED_ITIS.length; t++) {
+            const iti = FIXED_ITIS[t];
+            if (iti === 1) {
+                combined.push(RDM_SHORT_ITI_DIRECTIONS[sCount++]);
+            } else {
+                combined.push(RDM_LONG_ITI_DIRECTIONS[lCount++]);
+            }
+        }
+        
+        if (checkConsecutive(combined) <= 4) {
+            console.log(`✅ Combined RDM real test sequence satisfies max 4 constraint (attempt ${rdmCombinedAttempt})`);
+            break;
+        }
+        rdmCombinedAttempt++;
+    }
+    
+    // Verify RDM direction sequences
+    const shortUpCount = RDM_SHORT_ITI_DIRECTIONS.filter(d => d === 'UP').length;
+    const shortDownCount = RDM_SHORT_ITI_DIRECTIONS.filter(d => d === 'DOWN').length;
+    const longUpCount = RDM_LONG_ITI_DIRECTIONS.filter(d => d === 'UP').length;
+    const longDownCount = RDM_LONG_ITI_DIRECTIONS.filter(d => d === 'DOWN').length;
+    const shortMaxConsec = checkConsecutive(RDM_SHORT_ITI_DIRECTIONS);
+    const longMaxConsec = checkConsecutive(RDM_LONG_ITI_DIRECTIONS);
+
+    // Final combined check for validation
+    let finalCombined = [];
+    let fsCount = 0, flCount = 0;
+    for (let t = 0; t < FIXED_ITIS.length; t++) {
+        if (FIXED_ITIS[t] === 1) finalCombined.push(RDM_SHORT_ITI_DIRECTIONS[fsCount++]);
+        else finalCombined.push(RDM_LONG_ITI_DIRECTIONS[flCount++]);
+    }
+    const finalMaxConsec = checkConsecutive(finalCombined);
+
+    console.log(`✅ RDM Short ITI Directions: ${shortUpCount} UP, ${shortDownCount} DOWN (expected: 25 UP, 25 DOWN), Max consecutive: ${shortMaxConsec}`);
+    console.log(`✅ RDM Long ITI Directions: ${longUpCount} UP, ${longDownCount} DOWN (expected: 25 UP, 25 DOWN), Max consecutive: ${longMaxConsec}`);
+    console.log(`✅ Combined RDM Real Test: Max consecutive: ${finalMaxConsec}`);
+    
+    if (shortMaxConsec > 4) console.error(`❌ ERROR: Short ITI sequence has ${shortMaxConsec} consecutive directions (max allowed: 4)`);
+    if (longMaxConsec > 4) console.error(`❌ ERROR: Long ITI sequence has ${longMaxConsec} consecutive directions (max allowed: 4)`);
+    if (finalMaxConsec > 4) console.error(`❌ ERROR: Combined real test sequence has ${finalMaxConsec} consecutive directions (max allowed: 4)`);
+
+    if (shortUpCount !== 25 || shortDownCount !== 25) {
+        console.error(`❌ ERROR: Short ITI sequence has incorrect counts! Expected 25/25, got ${shortUpCount}/${shortDownCount}`);
+    }
+    if (longUpCount !== 25 || longDownCount !== 25) {
+        console.error(`❌ ERROR: Long ITI sequence has incorrect counts! Expected 25/25, got ${longUpCount}/${longDownCount}`);
+    }
+    
+    function runRDMTask(duration, trialNumber, callback, isPracticeMode = false) {
+        console.log(`🎯 RDM START - Trial ${trialNumber}, Duration: ${duration}ms, isPractice: ${isPractice}, practicePhase: ${practicePhase}`);
+        
+        const canvas = document.getElementById('rdm-canvas');
+        const ctx = canvas.getContext('2d');
+        const arrowsContainer = document.getElementById('rdm-arrows');
+        const answerNowElement = document.getElementById('rdm-answer-now');
+        
+        // Set canvas size responsively (min of 60vh or 60vw, max 600px)
+        const vh60 = window.innerHeight * 0.6;
+        const vw60 = window.innerWidth * 0.6;
+        const canvasSize = Math.min(vh60, vw60, 600);
+        canvas.width = canvasSize;
+        canvas.height = canvasSize;
+        
+        // All RDM trials: immediate response allowed, no "ANSWER NOW" text
+        
+        // Create seeded RNG for this trial
+        const rdmSeed = RDM_SEED_BASE + trialNumber;
+        const rdmRng = mulberry32(rdmSeed);
+        
+        // Calculate parameters
+        const apertureRadius = Math.min(canvas.width, canvas.height) / 2;
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const dotSpeed = RDM_SPEED / 50; // Speed calculation from reference code
+        const dotSize = RDM_DOT_SIZE;
+        
+        // Helper functions (inside scope to access canvas and RNG)
+        function createRandomDot() {
+            const angle = rdmRng() * 2 * Math.PI;
+            const distance = Math.sqrt(rdmRng()) * apertureRadius;
+            return {
+                x: centerX + distance * Math.cos(angle),
+                y: centerY + distance * Math.sin(angle),
+                direction: rdmRng() * 2 * Math.PI
+            };
+        }
+        
+        function moveDot(dot) {
+            const coherence = RDM_COHERENCE;
+            const speed = RDM_SPEED / 50;
+            
+            // direction: UP=270, DOWN=90
+            const directionDegrees = targetDirection === 'UP' ? 270 : 90;
+            
+            dot.direction = rdmRng() < coherence ? directionDegrees * Math.PI / 180 : rdmRng() * Math.PI * 2;
+            
+            dot.x += speed * Math.cos(dot.direction);
+            dot.y += speed * Math.sin(dot.direction);
+            
+            let distanceFromCenter = Math.sqrt(Math.pow(dot.x - centerX, 2) + Math.pow(dot.y - centerY, 2));
+            
+            if (distanceFromCenter > apertureRadius) {
+                let angleFromCenter = Math.atan2(dot.y - centerY, dot.x - centerX);
+                let oppositeAngle = angleFromCenter + Math.PI;
+                dot.x = centerX + apertureRadius * Math.cos(oppositeAngle);
+                dot.y = centerY + apertureRadius * Math.sin(oppositeAngle);
+            }
+        }
+        
+        // Show RDM elements
+        canvas.style.display = 'block';
+        arrowsContainer.style.display = 'block';
+        answerNowElement.style.display = 'none'; // Always hidden - no "ANSWER NOW" text
+        document.getElementById('rdm-feedback').style.display = 'none'; // Hide feedback at start of each trial
+        
+        // Use UP/DOWN direction pair (only one option now)
+        const directionPair = RDM_DIRECTION_PAIRS[0];  // Always use first (and only) pair
+        
+        // For real trials: use pre-generated sequences (25 UP, 25 DOWN for each ITI type)
+        // For practice: use random selection
+        let targetDirection;
+        if (!isPractice) {
+            const isShortITI = duration < 2000; // Less than 2 seconds = short ITI
+            if (isShortITI) {
+                if (shortITICount >= RDM_SHORT_ITI_DIRECTIONS.length) {
+                    console.warn(`⚠️ Short ITI count (${shortITICount}) exceeds sequence length, wrapping around`);
+                    shortITICount = 0;
+                }
+                targetDirection = RDM_SHORT_ITI_DIRECTIONS[shortITICount];
+                console.log(`🎯 Real trial - Short ITI #${shortITICount}: ${targetDirection} (duration: ${duration}ms)`);
+                if (targetDirection === 'UP') shortITI_UP_count++;
+                else shortITI_DOWN_count++;
+                shortITICount++;
+            } else {
+                if (longITICount >= RDM_LONG_ITI_DIRECTIONS.length) {
+                    console.warn(`⚠️ Long ITI count (${longITICount}) exceeds sequence length, wrapping around`);
+                    longITICount = 0;
+                }
+                targetDirection = RDM_LONG_ITI_DIRECTIONS[longITICount];
+                console.log(`🎯 Real trial - Long ITI #${longITICount}: ${targetDirection} (duration: ${duration}ms)`);
+                if (targetDirection === 'UP') longITI_UP_count++;
+                else longITI_DOWN_count++;
+                longITICount++;
+            }
+        } else {
+            // Practice: random selection
+            targetDirection = directionPair[Math.floor(rdmRng() * 2)];
+        }
+        
+        // Show only UP/DOWN arrows (always visible since we only use vertical motion)
+        document.querySelector('.arrow-up').style.display = 'block';
+        document.querySelector('.arrow-down').style.display = 'block';
+        document.querySelector('.arrow-left').style.display = 'none';
+        document.querySelector('.arrow-right').style.display = 'none';
+        
+        // Clear any previous highlighting from arrows
+        document.querySelector('.arrow-up').classList.remove('selected');
+        document.querySelector('.arrow-down').classList.remove('selected');
+        
+        // Initialize dots
+        const dots = [];
+        for (let i = 0; i < RDM_NUM_DOTS; i++) {
+            dots.push(createRandomDot());
+        }
+        
+        // RDM state
+        let rdmStartTime = performance.now();
+        let answerNowTime = rdmStartTime; // RT calculated from RDM start for all trials
+        let userResponse = null;
+        let responseTime = null;
+        let animationId = null;
+        let answerNowShown = true; // Always true - immediate response allowed for all trials
+        let lastSecondFeedbackShown = false; // Track if we've shown feedback in the last second
+        let inputDisabled = false; // Track if input is disabled after showing feedback
+        
+        // Track which keys are currently pressed (Q, T, P)
+        const pressedKeys = new Set();
+        
+        // Keyboard handler - track Q, T, P keys
+        function handleRDMKeyDown(e) {
+            if (!answerNowShown) return;
+            if (userResponse !== null) return; // Already responded
+            if (inputDisabled) return; // Input disabled after showing feedback
+            
+            // Check if Q, T, or P was pressed
+            const key = e.key.toLowerCase();
+            if (key === 'q' || key === 't' || key === 'p') {
+                e.preventDefault();
+                pressedKeys.add(key);
+                
+                // Check if all three keys (Q, T, P) are pressed together
+                if (pressedKeys.has('q') && pressedKeys.has('t') && pressedKeys.has('p')) {
+                    // All three keys pressed - register DOWN response
+                    userResponse = 'DOWN';
+                    responseTime = performance.now() - answerNowTime;
+                    
+                    console.log(`✅ RDM Response: DOWN (Q+T+P pressed together), RT: ${responseTime.toFixed(0)}ms`);
+                    
+                    // Remove UP highlight if it was shown, then highlight DOWN arrow
+                    document.querySelector('.arrow-up').classList.remove('selected');
+                    document.querySelector('.arrow-down').classList.add('selected');
+                    
+                    // Feedback will be shown during feedback period when trial ends (not immediately)
+                }
+            }
+        }
+        
+        function handleRDMKeyUp(e) {
+            if (!answerNowShown) return;
+            if (userResponse !== null) return; // Already responded
+            if (inputDisabled) return; // Input disabled after showing feedback
+            
+            // Remove key from pressed set when released
+            const key = e.key.toLowerCase();
+            if (key === 'q' || key === 't' || key === 'p') {
+                e.preventDefault();
+                pressedKeys.delete(key);
+            }
+        }
+        
+        document.addEventListener('keydown', handleRDMKeyDown);
+        document.addEventListener('keyup', handleRDMKeyUp);
+        
+        // Animation loop
+        function animate() {
+            const elapsed = performance.now() - rdmStartTime;
+            
+            // In the last 0.1 seconds, if no response and in real task or combined practice, highlight UP arrow
+            if (userResponse === null && elapsed >= duration - 100 && (practicePhase === 'combined' || !isPractice)) {
+                document.querySelector('.arrow-up').classList.add('selected');
+            }
+            
+            if (elapsed >= duration) {
+                // Time's up - stop animation and input
+                cancelAnimationFrame(animationId);
+                document.removeEventListener('keydown', handleRDMKeyDown);
+                document.removeEventListener('keyup', handleRDMKeyUp);
+                
+                // If no response was given (Q/T/P not pressed together), register as UP
+                if (userResponse === null) {
+                    userResponse = 'UP';
+                    responseTime = performance.now() - answerNowTime;
+                    console.log(`✅ RDM Response: UP (no Q/T/P pressed), RT: ${responseTime.toFixed(0)}ms`);
+                    
+                    // Highlight UP arrow when ITI is over
+                    document.querySelector('.arrow-up').classList.add('selected');
+                }
+                
+                // Show feedback during practice only (but NOT during combined practice), for 1 second (when feedback period starts - after ITI ends)
+                if (isPractice && userResponse !== null && practicePhase !== 'combined') {
+                    const isCorrect = userResponse === targetDirection;
+                    const feedbackElement = document.getElementById('rdm-feedback');
+                    
+                    // Show feedback immediately for 1 second
+                    feedbackElement.innerText = isCorrect ? '✓' : '✗';
+                    feedbackElement.style.color = isCorrect ? '#2ecc71' : '#e74c3c';
+                    feedbackElement.style.display = 'block';
+                    
+                    // Disable input during feedback period
+                    inputDisabled = true;
+                    lastSecondFeedbackShown = true;
+                    
+                    // Hide feedback after 1 second
+                    setTimeout(() => {
+                        feedbackElement.style.display = 'none';
+                        inputDisabled = false;
+                    }, 1000);
+                }
+                
+                // Function to cleanup and continue
+                function cleanupAndContinue() {
+                    canvas.style.display = 'none';
+                    arrowsContainer.style.display = 'none';
+                    answerNowElement.style.display = 'none';
+                    document.getElementById('rdm-feedback').style.display = 'none';
+                    
+                    // Track RDM misses for data purposes only (no exclusion based on RDM misses)
+                    console.log(`RDM END - isPractice: ${isPractice}, answerNowShown: ${answerNowShown}, userResponse: ${userResponse}, missedRDMResponses: ${missedRDMResponses}`);
+                    
+                    // Note: With new system, userResponse will always be set (either DOWN from Q/T/P or UP from no press)
+                    // So we don't need to track misses the same way
+                    
+                    // Track accuracy for summary feedback
+                    totalRDMTrials++;
+                    const isCorrect = userResponse === targetDirection;
+                    if (isCorrect) {
+                        correctRDMResponses++;
+                    }
+                    
+                    // Save RDM data
+                    rdmData = {
+                        direction_pair: directionPair.join('/'),
+                        target_direction: targetDirection,
+                        user_response: userResponse || 'NO_RESPONSE',
+                        correct: isCorrect,
+                        rt_ms: responseTime || -1,
+                        duration_ms: duration,
+                        answer_now_shown: answerNowShown,
+                        responded_after_prompt: answerNowShown && userResponse !== null
+                    };
+                    
+                    // Accuracy is tracked but not shown to participants
+                    console.log(`✅ RDM Complete - Calling callback for trial ${trialNumber}`);
+                    callback(); // Only call callback if we didn't terminate
+                }
+                
+                // If feedback will be shown in practice (but NOT during combined practice), wait for feedback period (1000ms display)
+                if (isPractice && userResponse !== null && practicePhase !== 'combined') {
+                    setTimeout(() => {
+                        cleanupAndContinue();
+                    }, 1000); // Wait for 1000ms feedback display
+                } else {
+                    cleanupAndContinue();
+                }
+                return;
+            }
+            
+            // Clear canvas with gray background
+            ctx.fillStyle = '#808080';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Create circular clipping path
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, apertureRadius, 0, 2 * Math.PI);
+            ctx.clip();
+            
+            // Update and draw dots
+            for (let i = 0; i < dots.length; i++) {
+                moveDot(dots[i]);
+                
+                // Draw dot (black dots)
+                ctx.fillStyle = 'black';
+                ctx.beginPath();
+                ctx.arc(dots[i].x, dots[i].y, dotSize, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            animationId = requestAnimationFrame(animate);
+        }
+        
+        console.log(`🚀 Starting RDM animation - Canvas: ${canvas.width}x${canvas.height}, Duration: ${duration}ms`);
+        animate();
+    }
+    
+    // Show RDM accuracy summary every 10 trials
+    function showRDMAccuracySummary(callback) {
+        const accuracyPercent = Math.round((correctRDMResponses / totalRDMTrials) * 100);
+        const summaryElement = document.getElementById('rdm-accuracy-summary');
+        
+        summaryElement.innerHTML = `Motion perception performance: ${accuracyPercent}% correct`;
+        summaryElement.style.display = 'block';
+        
+        console.log(`📊 RDM Accuracy Summary: ${correctRDMResponses}/${totalRDMTrials} = ${accuracyPercent}%`);
+        
+        // Show for 2.5 seconds then hide and continue
+        setTimeout(() => {
+            summaryElement.style.display = 'none';
+            callback();
+        }, 2500);
+    }
+    
+    // ============ End of RDM Functions ============
+
+    function updateStimuli() {
+        const set = isPractice ? STIMULI_FILES.practice : STIMULI_FILES.real;
+        const fallback = isPractice ? STIMULI_FALLBACK.practice : STIMULI_FALLBACK.real;
+
+        for (let i = 0; i < 3; i++) {
+            const img = document.getElementById(`img-${i}`);
+            img.alt = `Option ${i + 1}`;
+            img.onerror = () => {
+                // If the file doesn't exist, use a built-in SVG so icons always show.
+                img.onerror = null;
+                img.src = fallback[i];
+            };
+            img.src = set[i];
+        }
+    }
+
+    function hideAllOverlays() {
+        for (let i = 0; i < 3; i++) {
+            const o = document.getElementById(`overlay-${i}`);
+            o.style.display = 'none';
+            o.innerText = '';
+        }
+    }
+
+    // --- LOGIC ---
+    function showBanditPracticeInstructions() {
+        document.getElementById('setup-screen-2').style.display = 'none';
+        document.getElementById('bandit-practice-screen').style.display = 'block';
+    }
+    
+    function startBanditPractice() {
+        console.log('Starting Bandit-only practice');
+        practicePhase = 'bandit-only';
+        isPractice = true;
+        trialCount = 0;
+        document.getElementById('bandit-practice-screen').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'flex';
+        document.getElementById('container').style.display = 'flex';
+        document.getElementById('trial-counter').style.display = 'block';
+        document.getElementById('feedback').style.display = 'block';
+        updateStimuli();
+        hideAllOverlays();
+        nextTrial();
+    }
+    
+    function startRDMPractice() {
+        console.log('Starting RDM-only practice');
+        practicePhase = 'rdm-only';
+        rdmPracticeCount = 0;
+        document.getElementById('rdm-instructions-screen').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'flex';
+        document.getElementById('container').style.display = 'none'; // Hide bandit images
+        document.getElementById('trial-counter').style.display = 'block'; // Show trial counter for RDM practice
+        document.getElementById('feedback').style.display = 'none';
+        runRDMOnlyTrial();
+    }
+    
+    function runRDMOnlyTrial() {
+        if (rdmPracticeCount >= RDM_PRACTICE_TRIALS) {
+            // RDM practice complete, move to combined practice after 1 second break
+            console.log('RDM practice complete, moving to combined practice');
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('trial-counter').style.display = 'none';
+            setTimeout(() => {
+                document.getElementById('combined-practice-screen').style.display = 'block';
+            }, 1000);
+            return;
+        }
+        
+        rdmPracticeCount++;
+        console.log(`RDM Practice Trial ${rdmPracticeCount}/${RDM_PRACTICE_TRIALS}`);
+        
+        // Show trial counter - just "PRACTICE X" without total count
+        document.getElementById('trial-counter').innerText = `PRACTICE ${rdmPracticeCount}`;
+        document.getElementById('trial-counter').style.display = 'block';
+        
+        // Get ITI duration for this RDM practice trial (1 sec or 4 sec)
+        const itiDuration = RDM_PRACTICE_ITIS[rdmPracticeCount - 1] * 1000; // Convert to ms
+        
+        // Run RDM with random ITI duration, WITH "ANSWER NOW" delay (just like real trials)
+        // For 1s ITI: "ANSWER NOW" appears at 0.1s
+        // For 4s ITI: "ANSWER NOW" appears at 2.5s
+        runRDMTask(itiDuration, rdmPracticeCount, () => {
+            // After each RDM trial, 1 second pause before next trial
+            document.getElementById('trial-counter').style.display = 'none';
+            setTimeout(() => runRDMOnlyTrial(), 1000);
+        }, false); // Pass 'false' to use normal "ANSWER NOW" timing
+    }
+    
+    function startCombinedPractice() {
+        console.log('Starting Combined practice');
+        practicePhase = 'combined';
+        isPractice = true;
+        trialCount = 0;
+        missedTrials = 0;
+        missedRDMResponses = 0;
+        document.getElementById('combined-practice-screen').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'flex';
+        document.getElementById('container').style.display = 'flex';
+        document.getElementById('trial-counter').style.display = 'block';
+        document.getElementById('feedback').style.display = 'block';
+        updateStimuli();
+        hideAllOverlays();
+        nextTrial();
+    }
+
+    function startExperiment() {
+        isPractice = true;
+        updateStimuli();
+        hideAllOverlays();
+        document.getElementById('setup-screen-3').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'flex';
+        maybePlotTrajectories();
+        nextTrial();
+    }
+
+    function startRealTask() {
+        isPractice = false;
+        practicePhase = null; // No longer in practice
+        trialCount = 0;
+        // Reset miss counters - practice misses don't count toward termination
+        missedTrials = 0;
+        missedRDMResponses = 0;
+        // Reset RDM accuracy counters - practice accuracy separate from real task
+        totalRDMTrials = 0;
+        correctRDMResponses = 0;
+        // Reset RDM direction sequence counters for real trials
+        shortITICount = 0;
+        longITICount = 0;
+        shortITI_UP_count = 0;
+        shortITI_DOWN_count = 0;
+        longITI_UP_count = 0;
+        longITI_DOWN_count = 0;
+        updateStimuli();
+        hideAllOverlays();
+        document.getElementById('transition-screen').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'flex';
+        document.getElementById('container').style.display = 'flex';
+        document.getElementById('trial-counter').style.display = 'block';
+        document.getElementById('feedback').style.display = 'block';
+        nextTrial();
+    }
+
+    function nextTrial() {
+        // Only apply miss termination rule during real task, not practice
+        if (!isPractice && missedTrials >= MAX_MISSES_ALLOWED) {
+            return terminate("Game Over - Too Many Misses");
+        }
+
+        // Determine trial limit based on practice phase
+        let limit;
+        if (practicePhase === 'bandit-only') {
+            limit = BANDIT_ONLY_PRACTICE_TRIALS;
+        } else if (practicePhase === 'combined') {
+            limit = COMBINED_PRACTICE_TRIALS;
+        } else if (isPractice) {
+            limit = PRACTICE_TRIALS; // Old practice (shouldn't be used anymore)
+        } else {
+            limit = TOTAL_TRIALS; // Real task
+        }
+        
+        if (trialCount >= limit) {
+            document.getElementById('game-screen').style.display = 'none';
+            
+            // Transition between practice phases
+            if (practicePhase === 'bandit-only') {
+                // 1 second break before showing RDM instructions
+                setTimeout(() => {
+                    document.getElementById('rdm-instructions-screen').style.display = 'block';
+                }, 1000);
+                return;
+            } else if (practicePhase === 'combined') {
+                // 1 second break before showing transition to real task
+                setTimeout(() => {
+                    document.getElementById('transition-screen').style.display = 'block';
+                }, 1000);
+                return;
+            } else if (isPractice) {
+                // Old practice flow (shouldn't happen)
+                document.getElementById('transition-screen').style.display = 'block';
+                return;
+            } else {
+                // Real task complete - show questionnaire
+                showPSWQScreen();
+                return;
+            }
+        }
+
+        hideAllOverlays();
+        document.getElementById('trial-counter').style.display = 'block';
+        document.getElementById('trial-counter').innerText = (isPractice ? "PRACTICE " : "TRIAL ") + (trialCount + 1);
+
+        document.getElementById('fixation-cross').style.display = 'none';
+        document.getElementById('container').style.display = 'flex';
+
+        const fb = document.getElementById('feedback');
+        fb.innerText = "";
+        fb.style.color = "white";
+
+        canClick = true;
+        startTime = Date.now();
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (Date.now() - startTime >= 2000) {
+                clearInterval(timerInterval);
+                if (canClick) handleTimeout();
+            }
+        }, 20);
+    }
+
+    function handleTimeout() {
+        canClick = false;
+        missedTrials++;
+
+        // Record miss (keep existing structure)
+        saveTrial(-1, 2000, 0, 0, 1);
+
+        // Screen should be blank except message
+        hideAllOverlays();
+        document.getElementById('container').style.display = 'none';
+        document.getElementById('fixation-cross').style.display = 'none';
+        document.getElementById('trial-counter').style.display = 'none';
+
+        const fb = document.getElementById('feedback');
+        fb.innerText = "TOO SLOW!";
+        fb.style.color = "#e74c3c";
+
+        setTimeout(() => {
+            trialCount++;
+            nextTrial();
+        }, 1000);
+    }
+
+    function makeChoice(idx) {
+        if (!canClick) return;
+        canClick = false;
+        clearInterval(timerInterval);
+
+        const rt = Date.now() - startTime;
+
+        const path = currentPath(); // [3][nTrials]
+        const p = path[idx][trialCount];
+
+        const rand = window.crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296;
+        const win = rand < p ? 1 : 0;
+        const reward = win === 1 ? 1 : -1;
+
+        // Select appropriate ITI based on practice phase
+        let iti;
+        if (practicePhase === 'bandit-only') {
+            iti = BANDIT_PRACTICE_ITIS[trialCount];
+        } else if (practicePhase === 'combined') {
+            iti = COMBINED_PRACTICE_ITIS[trialCount];
+        } else if (isPractice) {
+            iti = PRACTICE_ITIS[trialCount]; // Old practice (fallback)
+        } else {
+            iti = FIXED_ITIS[trialCount]; // Real task
+        }
+
+        saveTrial(idx, rt, win, reward, iti);
+
+        // Show overlay that COVERS the chosen image
+        hideAllOverlays();
+        const overlay = document.getElementById(`overlay-${idx}`);
+        overlay.innerText = (win === 1) ? "You won $1" : "You lost $1";
+        overlay.style.color = (win === 1) ? "#2ecc71" : "#e74c3c";
+        overlay.style.display = "inline-flex";
+
+        // Keep everything else unchanged for the feedback duration
+        setTimeout(() => {
+            // Hide bandit selection screen
+            document.getElementById('container').style.display = 'none';
+            document.getElementById('feedback').innerText = "";
+            
+            // Skip RDM during bandit-only practice, but still show fixation for ITI duration
+            if (practicePhase === 'bandit-only') {
+                document.getElementById('fixation-cross').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('fixation-cross').style.display = 'none';
+                    trialCount++;
+                    nextTrial();
+                }, iti * 1000); // Wait for ITI duration (1s or 4s)
+                return;
+            }
+            
+            // Show fixation for 500ms, then run RDM task
+            document.getElementById('fixation-cross').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('fixation-cross').style.display = 'none';
+                
+                // Run RDM interference task for the ITI duration
+                runRDMTask(iti * 1000, trialCount + 1, () => {
+                    // After RDM task completes, save RDM data (only for real trials) and continue
+                    if (!isPractice) {
+                        saveRDMData(trialCount + 1, rdmData);
+                    }
+                    trialCount++;
+                    nextTrial();
+                });
+            }, 500); // 500ms fixation before RDM
+        }, FEEDBACK_DURATION);
+    }
+
+    function saveTrial(choice, rt, win, reward, iti) {
+        if (isPractice) {
+            return;
+        }
+
+        const path = currentPath();
+        const trialData = {
+            subject: subjectId,
+            trial: trialCount + 1,
+            choice: choice + 1,
+            rt,
+            win,
+            reward,
+            iti,
+            p1: path[0][trialCount],
+            p2: path[1][trialCount],
+            p3: path[2][trialCount],
+            timestamp: new Date().toISOString()
+        };
+
+        results.push(trialData);
+        localStorage.setItem('slot_results', JSON.stringify(results));
+
+        // Don't save individual trials - we'll save everything as CSV at the end
+    }
+    
+    function saveRDMData(trial, rdmInfo) {
+        if (isPractice) {
+            return;
+        }
+        
+        const rdmDataEntry = {
+            subject: subjectId,
+            trial: trial,
+            rdm_direction_pair: rdmInfo.direction_pair,
+            rdm_target_direction: rdmInfo.target_direction,
+            rdm_user_response: rdmInfo.user_response,
+            rdm_correct: rdmInfo.correct ? 1 : 0,
+            rdm_rt_ms: rdmInfo.rt_ms,
+            rdm_duration_ms: rdmInfo.duration_ms,
+            rdm_answer_now_shown: rdmInfo.answer_now_shown ? 1 : 0,
+            rdm_responded_after_prompt: rdmInfo.responded_after_prompt ? 1 : 0,
+            timestamp: new Date().toISOString()
+        };
+        
+        rdmResults.push(rdmDataEntry);
+        localStorage.setItem('rdm_results', JSON.stringify(rdmResults));
+    }
+
+    function terminate(msg, showQuestionnaire = false) {
+        document.getElementById('game-screen').style.display = 'none';
+        // Only show PSWQ if explicitly requested (e.g., normal completion)
+        // Do NOT show questionnaire if terminated due to too many misses
+        if (showQuestionnaire && !isPractice && results.length > 0) {
+            showPSWQScreen();
+        } else {
+            document.getElementById('end-screen').style.display = 'block';
+            document.getElementById('end-msg').innerText = msg;
+            
+            // Try to save any collected data before redirecting
+            if (!isPractice && results.length > 0) {
+                saveAllDataToFirestore().then(() => {
+                    // Redirect to Prolific after a short delay
+                    setTimeout(() => {
+                        window.location.href = `https://app.prolific.co/submissions/complete?cc=${prolificRedirectCode}`;
+                    }, 2000);
+                }).catch(() => {
+                    // Redirect even if save fails
+                    setTimeout(() => {
+                        window.location.href = `https://app.prolific.co/submissions/complete?cc=${prolificRedirectCode}`;
+                    }, 2000);
+                });
+            } else {
+                // Redirect immediately if no data to save
+                setTimeout(() => {
+                    window.location.href = `https://app.prolific.co/submissions/complete?cc=${prolificRedirectCode}`;
+                }, 2000);
+            }
+        }
+    }
+
+    function escapeCSV(value) {
+        if (value === null || value === undefined) return '';
+        const stringValue = value.toString();
+        // If the value contains comma, quote, or newline, wrap it in quotes and escape internal quotes
+        if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
+            return '"' + stringValue.replace(/"/g, '""') + '"';
+        }
+        return stringValue;
+    }
+
+    function generatePSWQCSV() {
+        const worryQuestions = [
+            "My worries overwhelm me.",
+            "Many situations make me worry.",
+            "I know I should not worry about things, but I just cannot help it.",
+            "When I am under pressure I worry a lot.",
+            "I am always worrying about something.",
+            "As soon as I finish one task, I start to worry about everything else I have to do.",
+            "I have been a worrier all my life.",
+            "I notice that I have been worrying about things."
+        ];
+        
+        const physQuestions = [
+            "Was short of breath",
+            "Felt dizzy or light-headed",
+            "Hands were cold or sweaty",
+            "Hands were shaky",
+            "Had trouble swallowing",
+            "Had hot or cold spells",
+            "Felt like I was choking",
+            "Muscles twitched or trembled",
+            "Was trembling or shaking",
+            "Had a very dry mouth"
+        ];
+        
+        let csvContent = "subject_id,questionnaire,question_number,question,answer\n";
+        
+        // Add worry questions
+        for (let i = 1; i <= 8; i++) {
+            const question = worryQuestions[i - 1];
+            const answer = pswqResponses[`worry_${i}`] || '';
+            csvContent += `${escapeCSV(subjectId)},worry,${i},${escapeCSV(question)},${answer}\n`;
+        }
+        
+        // Add physical anxiety questions
+        for (let i = 1; i <= 10; i++) {
+            const question = physQuestions[i - 1];
+            const answer = pswqResponses[`phys_${i}`] || '';
+            csvContent += `${escapeCSV(subjectId)},physical,${i},${escapeCSV(question)},${answer}\n`;
+        }
+        
+        // Add total scores
+        csvContent += `${escapeCSV(subjectId)},worry,total,${escapeCSV("Worry Total Score")},${pswqResponses.worry_total || ''}\n`;
+        csvContent += `${escapeCSV(subjectId)},physical,total,${escapeCSV("Physical Anxiety Total Score")},${pswqResponses.phys_total || ''}\n`;
+        
+        return csvContent;
+    }
+    
+    function generateRDMCSV() {
+        // Generate RDM interference task CSV
+        let csv = "subject_id,trial,rdm_direction_pair,rdm_target_direction,rdm_user_response,rdm_correct,rdm_rt_ms,rdm_duration_ms,rdm_answer_now_shown,rdm_responded_after_prompt\n";
+        
+        const rows = rdmResults.map(r => {
+            return [
+                r.subject,
+                r.trial,
+                r.rdm_direction_pair,
+                r.rdm_target_direction,
+                r.rdm_user_response,
+                r.rdm_correct,
+                r.rdm_rt_ms,
+                r.rdm_duration_ms,
+                r.rdm_answer_now_shown,
+                r.rdm_responded_after_prompt
+            ].join(",");
+        }).join("\n");
+        
+        csv += rows;
+        return csv;
+    }
+
+    async function saveAllDataToFirestore() {
+        if (!results.length) {
+            console.warn('No trial data to save');
+            return;
+        }
+        
+        // Build Trials CSV content (without PSWQ columns)
+        let trialsCSV = "subject_id,trial,choice,rt,win,reward,iti,p1,p2,p3\n";
+        
+        const trialRows = results.map(r => {
+            return [
+                r.subject,
+                r.trial,
+                r.choice,
+                r.rt,
+                r.win,
+                r.reward,
+                r.iti,
+                r.p1,
+                r.p2,
+                r.p3
+            ].join(",");
+        }).join("\n");
+        
+        trialsCSV += trialRows;
+        
+        // Generate PSWQ CSV
+        const pswqCSV = generatePSWQCSV();
+        
+        // Save to Firestore using folder-like structure (subcollections)
+        try {
+            console.log('Starting Firestore save...', {
+                hasDb: !!window.firestoreDb,
+                hasSetDoc: !!window.firestoreSetDoc,
+                hasDoc: !!window.firestoreDoc,
+                hasCollection: !!window.firestoreCollection,
+                subjectId: subjectId,
+                resultsCount: results.length
+            });
+            
+            if (window.firestoreDb && window.firestoreSetDoc && window.firestoreDoc && window.firestoreCollection) {
+                const subjectIdStr = subjectId.toString();
+                
+                // Save participant metadata
+                const participantRef = window.firestoreDoc(window.firestoreDb, 'participants', subjectIdStr);
+                const participantData = {
+                    subject_id: subjectId,
+                    trial_count: results.length,
+                    worry_total: pswqResponses.worry_total || null,
+                    phys_total: pswqResponses.phys_total || null,
+                    timestamp: new Date().toISOString(),
+                    completed: true
+                };
+                
+                console.log('Saving participant metadata...');
+                await window.firestoreSetDoc(participantRef, participantData);
+                console.log('✅ Participant metadata saved');
+                
+                // Save trials CSV in subcollection (folder-like structure: participants/{subjectId}/data/trials)
+                // Use collection(db, 'participants', subjectId, 'data') for subcollections
+                const dataCollectionRef = window.firestoreCollection(window.firestoreDb, 'participants', subjectIdStr, 'data');
+                const trialsRef = window.firestoreDoc(dataCollectionRef, 'trials');
+                
+                console.log('Saving trials CSV...', { csvLength: trialsCSV.length });
+                await window.firestoreSetDoc(trialsRef, {
+                    csv_data: trialsCSV,
+                    filename: `trials_${subjectIdStr}.csv`,
+                    timestamp: new Date().toISOString()
+                });
+                console.log('✅ Trials CSV saved');
+                
+                // Save PSWQ CSV in subcollection (folder-like structure: participants/{subjectId}/data/pswq)
+                const pswqRef = window.firestoreDoc(dataCollectionRef, 'pswq');
+                
+                console.log('Saving PSWQ CSV...', { csvLength: pswqCSV.length });
+                await window.firestoreSetDoc(pswqRef, {
+                    csv_data: pswqCSV,
+                    filename: `pswq_${subjectIdStr}.csv`,
+                    timestamp: new Date().toISOString()
+                });
+                console.log('✅ PSWQ CSV saved');
+                
+                // Save RDM CSV in subcollection (folder-like structure: participants/{subjectId}/data/rdm)
+                const rdmRef = window.firestoreDoc(dataCollectionRef, 'rdm');
+                const rdmCSV = generateRDMCSV();
+                
+                console.log('Saving RDM CSV...', { csvLength: rdmCSV.length });
+                await window.firestoreSetDoc(rdmRef, {
+                    csv_data: rdmCSV,
+                    filename: `rdm_${subjectIdStr}.csv`,
+                    timestamp: new Date().toISOString()
+                });
+                console.log('✅ RDM CSV saved');
+                
+                console.log('✅ All data saved to Firestore for subject:', subjectId);
+                console.log('   - Trials CSV: participants/' + subjectIdStr + '/data/trials');
+                console.log('   - PSWQ CSV: participants/' + subjectIdStr + '/data/pswq');
+                console.log('   - RDM CSV: participants/' + subjectIdStr + '/data/rdm');
+            } else {
+                console.error('❌ Firestore functions not available:', {
+                    db: !!window.firestoreDb,
+                    setDoc: !!window.firestoreSetDoc,
+                    doc: !!window.firestoreDoc,
+                    collection: !!window.firestoreCollection
+                });
+            }
+        } catch (error) {
+            console.error('❌ Error saving data to Firestore:', error);
+            console.error('Error details:', error.message, error.code, error.stack);
+            alert('Error saving to Firestore: ' + error.message + '. Check console for details.');
+        }
+    }
+
+    function exportToCSV() {
+        if (!results.length) return alert("No data recorded.");
+        
+        // Build header with PSWQ columns and Prolific parameters
+        let header = "subject_id,trial,choice,rt,win,reward,iti,p1,p2,p3";
+        for (let i = 1; i <= 16; i++) {
+            header += `,pswq_${i}`;
+        }
+        header += ",pswq_total\n";
+        
+        // Build rows with PSWQ data appended to each row
+        const rows = results.map(r => {
+            // Extract base values in correct order: subject, trial, choice, rt, win, reward, iti, p1, p2, p3
+            const baseValues = [
+                r.subject,
+                r.trial,
+                r.choice,
+                r.rt,
+                r.win,
+                r.reward,
+                r.iti,
+                r.p1,
+                r.p2,
+                r.p3
+            ];
+            const pswqValues = [];
+            for (let i = 1; i <= 16; i++) {
+                pswqValues.push(pswqResponses[`pswq_${i}`] || '');
+            }
+            pswqValues.push(pswqResponses.pswq_total || '');
+            return baseValues.concat(pswqValues).join(",");
+        }).join("\n");
+        
+        const csv = header + rows;
+
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+        link.download = `results_${subjectId}.csv`;
+        link.click();
+    }
+
+
+    document.addEventListener('keydown', (e) => {
+        if (!canClick) return;
+        if (e.code === 'KeyQ') makeChoice(0);
+        else if (e.code === 'KeyT') makeChoice(1);
+        else if (e.code === 'KeyP') makeChoice(2);
+    });
+
+// ---- Seeded ITI sequence: exactly 50% short / 50% long ----
+function generateSeededITISequence(nTrials, seed) {
+  const rng = mulberry32(seed);
+  const seq = [];
+  const half = Math.floor(nTrials / 2);
+  for (let i = 0; i < half; i++) seq.push(ITI_SHORT);
+  for (let i = half; i < nTrials; i++) seq.push(ITI_LONG);
+
+  // Fisher–Yates shuffle with seeded RNG
+  for (let i = seq.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [seq[i], seq[j]] = [seq[j], seq[i]];
+  }
+  return seq;
+}
+
+const ITI_SEQUENCE = generateSeededITISequence(TOTAL_TRIALS, ITI_SEED);
+
+    // Test Firestore connection function (accessible from console)
+    window.testFirestore = async function() {
+        try {
+            if (!window.firestoreDb) {
+                console.error('❌ Firestore database not initialized');
+                alert('Firestore database not initialized. Make sure Firebase is loaded.');
+                return false;
+            }
+            
+            const { collection, addDoc } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+            
+            const testDoc = {
+                test: true,
+                timestamp: new Date().toISOString(),
+                message: 'Firestore connection test'
+            };
+            const testRef = await addDoc(collection(window.firestoreDb, 'test'), testDoc);
+            console.log('✅ Firestore test successful! Document ID:', testRef.id);
+            alert('Firestore connection test successful! Check console for details.');
+            return true;
+        } catch (error) {
+            console.error('❌ Firestore test failed:', error);
+            console.error('Error code:', error.code);
+            console.error('Error message:', error.message);
+            alert('Firestore test failed. Check console for details. Error: ' + error.message);
+            return false;
+        }
+    };
+
+    // Initialize consent screen on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        initConsentScreen();
+        // Show consent screen first
+        document.body.classList.add('consent-mode');
+        document.getElementById('consent-screen').style.display = 'block';
+        
+        // Clear any previous PSWQ responses to prevent pre-filling
+        localStorage.removeItem('pswq_responses');
+        pswqResponses = {};
+    });
+
+</script>
+</body>
+</html>

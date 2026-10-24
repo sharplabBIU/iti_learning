@@ -1,0 +1,2 @@
+Source: github.com/tomov/Exploration-Data-Analysis (data/*.csv), Tomov, Truong, Hundia & Gershman (2020), Nature Communications: fMRI two-armed bandit, n = 31.
+The repository has no licence file, so the data are analysed here but not redistributed. reproduce.sh downloads the per-participant files (uep*.csv, listed in filelist.txt) into subjects/ when they are missing; prepare_tomov2020.py then writes tidy.csv and tomov_iti_glmm.py writes model_table.csv (neither is shared).

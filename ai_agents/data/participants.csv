@@ -1,0 +1,15 @@
+subject_id,prolific_id,model,condition,run_tag,age,birth_year,trial_count,bis_total,pleasure_total,bis_attention_passed,timestamp,status,requests,cost_usd_estimate,effort,persona
+AIAGENT_blind_haiku45_timecost1_003,AIAGENT_blind_haiku45_timecost1_003,claude-haiku-4-5,time_blind,timecost1,28,1996,100,13,1,True,2026-09-28T12:40:02.120Z,completed,114,0.2029925,,Play like a human that is sensitive to time costs.
+AIAGENT_blind_opus5_human1_001,AIAGENT_blind_opus5_human1_001,claude-opus-5,time_blind,human1,27,1998,100,16,0,True,2026-09-28T12:09:23.006Z,completed,114,0.841386,,Play like a human would.
+AIAGENT_blind_opus5_pilot_001,AIAGENT_blind_opus5_pilot_001,claude-opus-5,time_blind,pilot,29,1996,100,16,0,True,2026-09-28T11:48:31.577Z,completed,114,0.86564725,,
+AIAGENT_blind_opus5_timecost1_001,AIAGENT_blind_opus5_timecost1_001,claude-opus-5,time_blind,timecost1,28,1997,100,16,0,True,2026-09-28T12:35:50.757Z,completed,114,0.8468195,,Play like a human that is sensitive to time costs.
+AIAGENT_blind_sonnet5_models1_001,AIAGENT_blind_sonnet5_models1_001,claude-sonnet-5,time_blind,models1,29,1996,100,16,0,True,2026-09-28T12:20:46.077Z,completed,114,0.38407909999999995,,Play like a human would.
+AIAGENT_blind_sonnet5_models1_003,AIAGENT_blind_sonnet5_models1_003,claude-sonnet-5,time_blind,models1,29,1995,100,16,0,True,2026-09-28T12:23:06.650Z,completed,114,0.35209380000000007,,Play like a human would.
+AIAGENT_blind_sonnet5_timecost1_002,AIAGENT_blind_sonnet5_timecost1_002,claude-sonnet-5,time_blind,timecost1,28,1997,100,16,0,True,2026-09-28T12:35:52.776Z,completed,114,0.37820159999999997,,Play like a human that is sensitive to time costs.
+AIAGENT_told_haiku45_models1_002,AIAGENT_told_haiku45_models1_002,claude-haiku-4-5,time_told,models1,28,1995,100,15,1,True,2026-09-28T12:20:43.738Z,completed,114,0.20591325,,Play like a human would.
+AIAGENT_told_haiku45_models1_004,AIAGENT_told_haiku45_models1_004,claude-haiku-4-5,time_told,models1,28,1996,100,15,0,True,2026-09-28T12:27:31.745Z,completed,114,0.20591325,,Play like a human would.
+AIAGENT_told_haiku45_timecost1_006,AIAGENT_told_haiku45_timecost1_006,claude-haiku-4-5,time_told,timecost1,28,1996,100,14,0,True,2026-09-28T12:45:02.277Z,completed,114,0.20612825,,Play like a human that is sensitive to time costs.
+AIAGENT_told_opus5_human1_002,AIAGENT_told_opus5_human1_002,claude-opus-5,time_told,human1,27,1998,100,16,0,True,2026-09-28T12:09:24.330Z,completed,114,0.86278025,,Play like a human would.
+AIAGENT_told_opus5_pilot_002,AIAGENT_told_opus5_pilot_002,claude-opus-5,time_told,pilot,29,1996,100,16,0,True,2026-09-28T11:48:34.945Z,completed,114,0.63374475,,
+AIAGENT_told_opus5_timecost1_004,AIAGENT_told_opus5_timecost1_004,claude-opus-5,time_told,timecost1,27,1998,100,16,0,True,2026-09-28T12:40:35.786Z,completed,114,0.853864,,Play like a human that is sensitive to time costs.
+AIAGENT_told_sonnet5_timecost1_005,AIAGENT_told_sonnet5_timecost1_005,claude-sonnet-5,time_told,timecost1,28,1996,100,16,0,True,2026-09-28T12:42:20.069Z,completed,114,0.40363940000000004,,Play like a human that is sensitive to time costs.

@@ -1,0 +1,11 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Research task: browser writes participant data without Firebase Auth.
+    // Tighten these rules before public/production use if needed.
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

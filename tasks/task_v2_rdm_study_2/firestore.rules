@@ -1,0 +1,39 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Participants collection
+    match /participants/{participantId} {
+      // Allow anyone to write (create) new participants
+      allow create: if true;
+      
+      // Allow anyone to read participant data (for data viewer)
+      allow read: if true;
+      
+      // Allow anyone to update participant data
+      allow update: if true;
+      
+      // Allow anyone to delete participants (for data viewer delete function)
+      allow delete: if true;
+      
+      // Data subcollection (trials, pswq, rdm CSV files)
+      match /data/{document=**} {
+        // Allow writing CSV data
+        allow create: if true;
+        allow write: if true;
+        
+        // Allow reading for data viewer
+        allow read: if true;
+        
+        // Allow deleting when parent participant is deleted
+        allow delete: if true;
+      }
+    }
+    
+    // Test collection (for debugging)
+    match /test/{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

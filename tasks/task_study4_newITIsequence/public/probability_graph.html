@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bandit Probability Graphs</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f2f5;
+            color: #1a1a2e;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #555;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .chart-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 28px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .chart-card h2 {
+            font-size: 20px;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        .chart-meta {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 14px;
+            font-size: 14px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-swatch {
+            width: 28px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-pill {
+            background: #fff;
+            border: 1px solid #dde1e7;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 13px;
+        }
+
+        .stat-pill strong {
+            color: #4a5568;
+        }
+
+        a.back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        a.back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a class="back-link" href="trial_probabilities_table.html">View full trial table</a>
+        <h1>Bandit probability graphs</h1>
+        <p class="subtitle">
+            Win probabilities for the three machines over time (Gaussian random walk, SD&nbsp;=&nbsp;0.06, bounds 0.1–0.9).
+            Identical for every participant. Q&nbsp;=&nbsp;Machine&nbsp;1 (left), T&nbsp;=&nbsp;Machine&nbsp;2 (middle), P&nbsp;=&nbsp;Machine&nbsp;3 (right).
+        </p>
+
+        <div class="stats-row" id="stats-row"></div>
+
+        <div class="chart-card">
+            <h2>Real experiment — 100 trials</h2>
+            <p class="chart-meta" id="real-meta"></p>
+            <canvas id="real-chart" width="1000" height="380"></canvas>
+            <div class="legend">
+                <div class="legend-item"><span class="legend-swatch" style="background:#e74c3c"></span> Machine 1 (Q)</div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#3498db"></span> Machine 2 (T)</div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#2ecc71"></span> Machine 3 (P)</div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h2>Practice — 6 trials</h2>
+            <p class="chart-meta" id="practice-meta"></p>
+            <canvas id="practice-chart" width="1000" height="280"></canvas>
+            <div class="legend">
+                <div class="legend-item"><span class="legend-swatch" style="background:#e74c3c"></span> Machine 1 (Q)</div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#3498db"></span> Machine 2 (T)</div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#2ecc71"></span> Machine 3 (P)</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TOTAL_TRIALS = 100;
+        const PRACTICE_TRIALS = 6;
+        const RW_SD = 0.06;
+        const RW_LOW = 0.1;
+        const RW_HIGH = 0.9;
+        const RW_SEED_REAL = 20263944;
+        const RW_SEED_PRACTICE = 20260106;
+
+        const COLORS = ['#e74c3c', '#3498db', '#2ecc71'];
+        const LABELS = ['Machine 1 (Q)', 'Machine 2 (T)', 'Machine 3 (P)'];
+
+        function mulberry32(seed) {
+            let t = seed >>> 0;
+            return function () {
+                t += 0x6D2B79F5;
+                let x = Math.imul(t ^ (t >>> 15), 1 | t);
+                x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+                return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+            };
+        }
+
+        function randn(rng) {
+            let u = 0, v = 0;
+            while (u === 0) u = rng();
+            while (v === 0) v = rng();
+            return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+        }
+
+        function reflectToBounds(x, low, high) {
+            if (x < low) x = low + (low - x);
+            if (x > high) x = high - (x - high);
+            if (x < low) x = low;
+            if (x > high) x = high;
+            return x;
+        }
+
+        function generateRandomWalkTrajectories(nTrials, startPs, sd, low, high, seed) {
+            const rng = mulberry32(seed);
+            return startPs.map(p0 => {
+                const p = new Array(nTrials);
+                p[0] = reflectToBounds(p0, low, high);
+                for (let t = 1; t < nTrials; t++) {
+                    p[t] = reflectToBounds(p[t - 1] + sd * randn(rng), low, high);
+                }
+                return p;
+            });
+        }
+
+        function argmax3(a, b, c) {
+            if (a >= b && a >= c) return 0;
+            if (b >= a && b >= c) return 1;
+            return 2;
+        }
+
+        function countSwitches(bestIdxArr) {
+            let switches = 0;
+            for (let t = 1; t < bestIdxArr.length; t++) {
+                if (bestIdxArr[t] !== bestIdxArr[t - 1]) switches++;
+            }
+            return switches;
+        }
+
+        function switchPositions(bestIdxArr) {
+            const pos = [];
+            for (let t = 1; t < bestIdxArr.length; t++) {
+                if (bestIdxArr[t] !== bestIdxArr[t - 1]) pos.push(t + 1);
+            }
+            return pos;
+        }
+
+        function switchesAreSpread(bestIdxArr, minGap) {
+            const pos = switchPositions(bestIdxArr);
+            for (let i = 1; i < pos.length; i++) {
+                if (pos[i] - pos[i - 1] < minGap) return false;
+            }
+            return true;
+        }
+
+        function eachBanditBestAtLeastOnce(bestIdxArr) {
+            const seen = new Set(bestIdxArr);
+            return seen.has(0) && seen.has(1) && seen.has(2);
+        }
+
+        function generateTrajectoriesWithExactlyKSwitches(nTrials, startPs, sd, low, high, seed, targetSwitches, minGap = 10, maxAttempts = 5000) {
+            for (let attempt = 0; attempt < maxAttempts; attempt++) {
+                const traj = generateRandomWalkTrajectories(nTrials, startPs, sd, low, high, seed + attempt);
+                const best = new Array(nTrials);
+                for (let t = 0; t < nTrials; t++) {
+                    best[t] = argmax3(traj[0][t], traj[1][t], traj[2][t]);
+                }
+                const switches = countSwitches(best);
+                if (switches === targetSwitches && eachBanditBestAtLeastOnce(best) && switchesAreSpread(best, minGap)) {
+                    return { traj, best, switches };
+                }
+            }
+            throw new Error('Could not generate real trajectories.');
+        }
+
+        const REAL_GEN = generateTrajectoriesWithExactlyKSwitches(
+            TOTAL_TRIALS, [0.25, 0.50, 0.75], RW_SD, RW_LOW, RW_HIGH, RW_SEED_REAL, 6, 10
+        );
+        const REAL_PATH = REAL_GEN.traj;
+        const PRACTICE_PATH = generateRandomWalkTrajectories(
+            PRACTICE_TRIALS, [0.75, 0.50, 0.25], RW_SD, RW_LOW, RW_HIGH, RW_SEED_PRACTICE
+        );
+
+        function drawProbabilityChart(canvasId, trajectories, titleTrialCount) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width;
+            const H = canvas.height;
+            const padL = 56;
+            const padR = 24;
+            const padT = 24;
+            const padB = 48;
+            const n = trajectories[0].length;
+            const yMin = RW_LOW;
+            const yMax = RW_HIGH;
+
+            ctx.clearRect(0, 0, W, H);
+            ctx.fillStyle = '#fafafa';
+            ctx.fillRect(0, 0, W, H);
+
+            const xToPx = t => padL + (t / (n - 1)) * (W - padL - padR);
+            const yToPx = p => padT + (1 - (p - yMin) / (yMax - yMin)) * (H - padT - padB);
+
+            // Grid + y-axis labels
+            ctx.strokeStyle = '#e8e8e8';
+            ctx.fillStyle = '#666';
+            ctx.font = '12px Segoe UI, Arial, sans-serif';
+            ctx.textAlign = 'right';
+            for (let p = 0.1; p <= 0.9 + 0.001; p += 0.2) {
+                const y = yToPx(p);
+                ctx.beginPath();
+                ctx.moveTo(padL, y);
+                ctx.lineTo(W - padR, y);
+                ctx.stroke();
+                ctx.fillText(p.toFixed(1), padL - 8, y + 4);
+            }
+
+            // X-axis labels
+            ctx.textAlign = 'center';
+            const xStep = n <= 10 ? 1 : n <= 30 ? 5 : 10;
+            for (let t = 0; t < n; t += xStep) {
+                const x = xToPx(t);
+                ctx.fillText(String(t + 1), x, H - padB + 20);
+            }
+            if ((n - 1) % xStep !== 0) {
+                ctx.fillText(String(n), xToPx(n - 1), H - padB + 20);
+            }
+
+            // Axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(padL, padT);
+            ctx.lineTo(padL, H - padB);
+            ctx.lineTo(W - padR, H - padB);
+            ctx.stroke();
+            ctx.lineWidth = 1;
+
+            // Axis titles
+            ctx.fillStyle = '#333';
+            ctx.font = '13px Segoe UI, Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Trial', padL + (W - padL - padR) / 2, H - 8);
+            ctx.save();
+            ctx.translate(16, padT + (H - padT - padB) / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Win probability', 0, 0);
+            ctx.restore();
+
+            // Lines
+            for (let b = 0; b < 3; b++) {
+                ctx.strokeStyle = COLORS[b];
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                for (let t = 0; t < n; t++) {
+                    const x = xToPx(t);
+                    const y = yToPx(trajectories[b][t]);
+                    if (t === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            }
+        }
+
+        const switchTrials = switchPositions(REAL_GEN.best);
+
+        document.getElementById('real-meta').textContent =
+            'Start probabilities: M1=0.25, M2=0.50, M3=0.75 (Machine 3 best at trial 1). ' +
+            'Best machine switches ' + REAL_GEN.switches + ' times at trials: ' + switchTrials.join(', ') + '.';
+
+        document.getElementById('practice-meta').textContent =
+            'Start probabilities: M1=0.75, M2=0.50, M3=0.25 (Machine 1 best). Separate random-walk seed from the real task.';
+
+        document.getElementById('stats-row').innerHTML = [
+            '<div class="stat-pill"><strong>Random walk SD:</strong> ' + RW_SD + '</div>',
+            '<div class="stat-pill"><strong>Bounds:</strong> ' + RW_LOW + ' – ' + RW_HIGH + '</div>',
+            '<div class="stat-pill"><strong>Real seed:</strong> ' + RW_SEED_REAL + '</div>',
+            '<div class="stat-pill"><strong>Practice seed:</strong> ' + RW_SEED_PRACTICE + '</div>'
+        ].join('');
+
+        drawProbabilityChart('real-chart', REAL_PATH, TOTAL_TRIALS);
+        drawProbabilityChart('practice-chart', PRACTICE_PATH, PRACTICE_TRIALS);
+    </script>
+</body>
+</html>

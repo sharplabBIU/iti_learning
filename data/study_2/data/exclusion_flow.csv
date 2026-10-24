@@ -1,0 +1,7 @@
+stage,n
+participants with trial data,96
+main sample: session reached trial 90 of 100,96
+  not in the main sample: session ended before trial 90,0
+"  main sample, completed all 100 trials",94
+"  main sample, at least one missed trial",33
+"  main sample, largest number of missed trials of a participant",5

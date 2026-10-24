@@ -1,0 +1,4 @@
+generating,m10_iti_bias,m11_iti_target,m12_iti_compete
+m10_iti_bias,1.0,0.0,0.0
+m11_iti_target,0.0,1.0,0.0
+m12_iti_compete,0.0,0.0,1.0
